@@ -61,7 +61,12 @@ This is using autodiscovery to find the feeds.So when you add a new feed, it wil
     Email: stefan@lzomedia.com
     Password: password
     ```
-
+9. Configure Redis Database
+    ```bash
+    REDIS_HOST=127.0.0.1
+    REDIS_PASSWORD=null
+    REDIS_PORT=6379
+    ```
 
 ## Python Script
 This project uses Python 3 for extracting the content from the feeds.

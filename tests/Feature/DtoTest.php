@@ -23,7 +23,7 @@ class DtoTest extends TestCase
             'title' => 'title',
             'authors' => ['author'],
             'source' => 'https://test.com',
-            'date' => '2020-01-01',
+            'date' => '2020-01-01 00:00:00',
             'content' => 'content',
             'images' => 'images',
         ];
@@ -33,7 +33,7 @@ class DtoTest extends TestCase
         $this->assertEquals('title', $dto->getTitle());
         $this->assertEquals('author', $dto->getAuthors());
         $this->assertEquals('https://test.com', $dto->getSource());
-        $this->assertEquals('2020-01-01', $dto->getDate());
+        $this->assertEquals('2020-01-01 00:00:00', $dto->getDate());
         $this->assertEquals('content', $dto->getContent());
         $this->assertEquals('images', $dto->getImage());
 

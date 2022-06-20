@@ -39,6 +39,6 @@ class FeedRepository implements FeedDatabaseContract
 
     public function createFeed(array $feed): ?Feed
     {
-        return (new \App\Models\Feed)->create($feed);
+        return (new \App\Models\Feed)->firstOrCreate($feed);
     }
 }

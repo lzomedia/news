@@ -21,7 +21,7 @@ class SyncManager implements SyncContract
     public function syncAll(): bool
     {
 
-        Feed::all()->each(function (Feed $feed) {
+        Feed::where('status', Feed::COMPLETED)->all()->each(function (Feed $feed) {
             ExtractorFactory::extract($feed);
         });
 

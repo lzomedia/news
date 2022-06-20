@@ -15,8 +15,11 @@ use Illuminate\Support\Carbon;
  * @property int $id
  * @property string $title
  * @property string $content
+ * @property string $image
+ * @property string $author
  * @property int $category_id
  * @property int $feed_id
+ * @property Carbon $published_at
  * @property Carbon $created_at
  * @property Carbon $updated_at
  */
@@ -34,6 +37,7 @@ class Article extends Model
         'image',
         'source',
         'feed_id',
+        'published_at',
     ];
 
     public function feed(): BelongsTo

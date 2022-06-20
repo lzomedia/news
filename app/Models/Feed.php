@@ -21,6 +21,7 @@ use Illuminate\Database\Query\Builder as QueryBuilder;
  * @property string $title
  * @property string $url
  * @property Carbon $sync
+ * @property string $status
  */
 class Feed extends Model
 {

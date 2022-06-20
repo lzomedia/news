@@ -48,7 +48,8 @@ class Article extends DataTransferObject
 
     public function getDate(): ?string
     {
-        return $this->date ?? Carbon::now()->toDateTimeString();
+        return Carbon::parse($this->date)->toDateTimeString()  ??
+            Carbon::now()->toDateTimeString();
     }
 
     public function getContent(): ?string

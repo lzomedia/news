@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('source')->index()->nullable();
             $table->foreign('feed_id')->references('id')->on('feeds')->onDelete('cascade');
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
+            $table->timestamp('published_at')->index()->default(\Carbon\Carbon::now());
             $table->timestamps();
         });
     }

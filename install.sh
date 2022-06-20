@@ -4,7 +4,6 @@ pip3.9 install newspaper3k
 pip3.9 install pandas
 pip3.9 install sqlalchemy
 pip3.9 install pymysql
-pip3.9 install mysql.connector
 pip3.9 install simplejson
 pip3.9 install minet
 pip3.9 install dotenv

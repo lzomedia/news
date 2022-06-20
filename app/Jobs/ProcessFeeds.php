@@ -57,8 +57,6 @@ class ProcessFeeds implements ShouldQueue
 
             $dto = new Article($data);
 
-            $data->discoverFeeds();
-
             dispatch(new SaveToDatabase($dto));
 
         });

@@ -27,6 +27,7 @@ class Article extends Model
     protected $fillable = [
         'title',
         'content',
+        'feed_id',
         'category_id',
         'pubDate',
         'author',
@@ -48,6 +49,11 @@ class Article extends Model
     public function tags(): BelongsToMany
     {
         return $this->belongsToMany(Tag::class);
+    }
+
+    public function getFeedId(): int
+    {
+        return $this->feed_id;
     }
 }
 

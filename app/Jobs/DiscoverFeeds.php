@@ -15,7 +15,6 @@ class DiscoverFeeds implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-
     private Collection $links;
 
     public function __construct(Collection $links)
@@ -29,8 +28,9 @@ class DiscoverFeeds implements ShouldQueue
 
             $feed = Feed::where('url', $link)->first();
 
-            if (is_null($feed)) {
-                $feed = Feed::create([
+            if (is_null($feed))
+            {
+               Feed::create([
                     'url' => $link,
                 ]);
             }

@@ -196,6 +196,10 @@ return [
         App\Providers\HorizonServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+
+        //Custom providers
+        App\Providers\ArticleContractServiceProvider::class,
+        App\Providers\FeedContractServiceProvider::class,
     ],
 
     /*

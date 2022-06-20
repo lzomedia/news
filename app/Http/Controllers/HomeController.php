@@ -2,27 +2,25 @@
 
 namespace App\Http\Controllers;
 
+use App\Contracts\FeedDatabaseContract;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
+
+    private FeedDatabaseContract $feedDatabaseContract;
+
+    public function __construct(FeedDatabaseContract $feedDatabaseContract)
     {
         $this->middleware('auth');
+        $this->feedDatabaseContract = $feedDatabaseContract;
     }
 
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
-    public function index()
+
+    public function home()
     {
-        return view('home');
+        $feeds = $this->feedDatabaseContract->getAllFeeds();
+
+        return view('home', compact ('feeds'));
     }
 }

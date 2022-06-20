@@ -28,7 +28,10 @@ class SaveToDatabase implements ShouldQueue
     {
         $article =  (new \App\Models\Article)->create([
             'title' => $this->article->getTitle(),
-            'category_id' => $this->createOrAttachCategory()->id ?? (new \App\Models\Category)->first()->id,
+            'feed_id' => $this->article->getFeedId() ??
+                (new \App\Models\Feed)->first()->id,
+            'category_id' => $this->createOrAttachCategory()->id ??
+                (new \App\Models\Category)->first()->id,
             'image' => ($this->article->getImage()),
             'author' => ($this->article->getAuthors()),
             'source' => $this->article->getSource(),

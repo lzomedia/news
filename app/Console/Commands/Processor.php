@@ -9,39 +9,18 @@ use Illuminate\Console\Command;
 
 class Processor extends Command
 {
-    protected $signature = 'processor:run';
+    protected $signature = 'processor:run {url}';
 
     protected $description = 'This command will run and extract the data from the feeds';
 
 
     public function handle(): void
     {
-        $feeds = Feed::all();
 
-        $this->info('Start processing of feeds...');
+        $url = $this->argument('url');
 
-        $this->output->progressStart($feeds->count());
+        $feed = Feed::where('url', '=', $url)->get()->first();
 
-        $feeds->each(function ($feed) {
-
-            $this->output->progressAdvance();
-
-            if(!$this->hasBeenSyncInLastHour($feed))
-            {
-
-                $this->processFeed($feed);
-
-            }
-
-        });
-
-        $this->output->progressFinish();
-
-        $this->info('Processing of feeds finished & jobs where dispatched.');
-    }
-
-    private function processFeed(Feed $feed): void
-    {
         $feed->sync = now();
 
         dispatch(new ProcessFeeds($feed->url));
@@ -49,10 +28,8 @@ class Processor extends Command
         $this->info('Processing of feed: ' . $feed->url);
 
         $feed->save();
+
+        $this->info('Processing of feeds finished & jobs where dispatched.');
     }
 
-    private function hasBeenSyncInLastHour(Feed $feed): bool
-    {
-        return $feed->sync->diffInMinutes() < 1;
-    }
 }

@@ -9,6 +9,10 @@ use Spatie\DataTransferObject\DataTransferObject;
 
 class Article extends DataTransferObject
 {
+
+    #[MapFrom('id')]
+    public ?string $id;
+
     #[MapFrom('title')]
     public ?string $title;
 
@@ -78,5 +82,10 @@ class Article extends DataTransferObject
         $links = Crawler::links($this->getContent());
 
         dispatch(new DiscoverFeeds($links));
+    }
+
+    public function getFeedId(): ?string
+    {
+        return $this->feed_id ?? "1";
     }
 }

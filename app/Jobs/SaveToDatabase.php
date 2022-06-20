@@ -36,8 +36,9 @@ class SaveToDatabase implements ShouldQueue
             'author' => ($this->article->getAuthors()),
             'source' => $this->article->getSource(),
             'content' => $this->article->getContent(),
+            'published_at' => $this->article->getDate(),
         ]);
-        $article->category()->associate($this->createOrAttachCategory());
+
         $article->category()->increment('count');
 
         foreach ($this->article->getKeywords() as $tag) {

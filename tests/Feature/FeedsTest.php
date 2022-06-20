@@ -52,12 +52,7 @@ class FeedsTest extends TestCase
 
     }
 
-    public function test_delete_all(): void
-    {
-        $manager = new FeedRepository();
-        $manager->deleteAll();
-        $this->assertDatabaseCount('feeds', 0);
-    }
+
 
     public function test_can_view_all_feeds(): void
     {

@@ -31,6 +31,8 @@ class Feed extends Model
 
     const COMPLETED = 'completed';
 
+    const FAILED = 'failed';
+
 
     protected $table = 'feeds';
 

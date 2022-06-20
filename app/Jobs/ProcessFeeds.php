@@ -85,6 +85,7 @@ class ProcessFeeds implements ShouldQueue
             'author' => ($articleDTO->getAuthors()),
             'source' => $articleDTO->getSource(),
             'content' => $articleDTO->getContent(),
+            'created_at' => $articleDTO->getDate(),
         ]);
 
         $save->category()->increment('count');
@@ -110,5 +111,11 @@ class ProcessFeeds implements ShouldQueue
         return $category;
     }
 
+
+    public function failed(): void
+    {
+        $this->feed->status = Feed::FAILED;
+        $this->feed->save();
+    }
 }
 

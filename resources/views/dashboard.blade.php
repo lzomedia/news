@@ -73,7 +73,7 @@
                             <tr>
                                 <th scope="col">#</th>
                                 <th scope="col">Title</th>
-                                <th scope="col">Url</th>
+
                                 <th scope="col">Status</th>
                                 <th scope="col">Handle</th>
                             </tr>
@@ -82,8 +82,12 @@
                             @foreach($feeds as $feed)
                                 <tr>
                                     <th scope="row">{{ $feed->id }}</th>
-                                    <td>{{ $feed->title }}</td>
-                                    <td>{{ $feed->url }}</td>
+                                    <td>
+                                        <a target="_blank" href="{{ $feed->url }}">
+                                            {{ $feed->title }}
+                                        </a>
+                                    </td>
+
                                     <td>{{ $feed->status }}</td>
                                     <td>
                                         <a href="{{ route('feeds.sync-single', $feed->id ) }}">

@@ -23,7 +23,7 @@ class   SeedArticlesTableSeeder extends Seeder
         Article::create([
             'feed_id' => Feed::first()->id,
             'title' => "It Foss",
-            'image' => 'image.jpg',
+            'image' => 'http://placekitten.com/200/300',
             'author' => 'Stefan',
             'category_id' => Category::first()->id,
             'content' => 'Some long content',

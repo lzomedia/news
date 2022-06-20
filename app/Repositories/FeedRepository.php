@@ -30,15 +30,6 @@ class FeedRepository implements FeedDatabaseContract
         return $feed->delete();
     }
 
-    public function deleteAll(): void
-    {
-        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
-        (new \App\Models\Article)->truncate();
-        (new \App\Models\Feed)->truncate();
-        (new \App\Models\Category())->truncate();
-        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
-    }
-
     public function importFeeds(Collection $feeds): void
     {
         $feeds->each(function ($feed) {

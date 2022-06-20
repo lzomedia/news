@@ -20,12 +20,12 @@ class ArticleRepository implements ArticleDatabaseContract
             Article::with('category')
                 ->with('feed')
                 ->orderBy('id', 'desc')
-                ->paginate(5)
+                ->paginate(10)
         );
     }
 
     public function createArticle(array $data): Article
     {
-        return Article::fake()->create($data);
+        return (new \App\Models\Article)->firstOrCreate($data);
     }
 }

@@ -26,7 +26,7 @@ class SaveToDatabase implements ShouldQueue
 
     public function handle(): void
     {
-        $article =  (new \App\Models\Article)->create([
+        $article =  (new \App\Models\Article)->firstOrCreate([
             'title' => $this->article->getTitle(),
             'feed_id' => $this->article->getFeedId() ??
                 (new \App\Models\Feed)->first()->id,

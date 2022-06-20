@@ -79,7 +79,7 @@
                                         {{ __('Logout') }}
                                     </a>
 
-                                    <a class="dropdown-item" href="{{ route('home') }}">
+                                    <a class="dropdown-item" href="{{ route('dashboard') }}">
                                         {{ __('Dashboard') }}
                                     </a>
 

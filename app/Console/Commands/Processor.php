@@ -2,10 +2,14 @@
 
 namespace App\Console\Commands;
 
+use App\DTO\Article;
 use App\Factories\ExtractorFactory;
 use App\Jobs\ProcessFeeds;
+use App\Jobs\SaveToDatabase;
 use App\Models\Feed;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Log;
+use Symfony\Component\Process\Process;
 
 class Processor extends Command
 {
@@ -16,18 +20,42 @@ class Processor extends Command
 
     public function handle(): void
     {
-
         $url = $this->argument('url');
 
-        $feed = Feed::where('url', '=', $url)->get()->first();
+        $process = new Process([
+            'python3',
+            base_path('python/extractor-realtime.py'),
+           $url
+        ]);
 
-        $feed->sync = now();
+        $process->run(function ($type, $buffer)  use ($url)
+        {
 
-        dispatch(new ProcessFeeds($feed->url));
+            Log::error("Output: {$buffer}");
 
-        $this->info('Processing of feed: ' . $feed->url);
+            if(strlen($buffer) > 10) {
 
-        $feed->save();
+                Log::error("Output: {$buffer}");
+
+                Log::error("Url: {$url}");
+
+                Log::error("Output: {$buffer}");
+
+                $data = json_decode(
+                    $buffer,
+                    true,
+                    512,
+                    JSON_THROW_ON_ERROR
+                );
+
+                if (json_last_error() === 0) {
+                    $dto = new Article($data);
+                    dispatch(new SaveToDatabase($dto));
+                }
+
+            }
+
+        });
 
         $this->info('Processing of feeds finished & jobs where dispatched.');
     }

@@ -1,6 +1,5 @@
 <template>
     <div class="container">
-
         <div class="row">
             <aside class="col-lg-3">
                 <h3>
@@ -16,20 +15,25 @@
             </aside>
 
             <div class="col-lg-6 ">
+                <h3>
+                    Latest News.
+                </h3>
+                <article class="card mb-3" v-for="article in articles">
 
-                <article class="card p-2" v-for="article in articles">
-
-                    <img class="card-img-top"  :src="article.image" alt="Card image cap">
+                    <img class="card-img-top"  :src="article.image" @error="imageLoadError" alt="Card image cap">
                     <div class="card-body">
                         <h5 class="card-title">
                             {{article.title}}
                         </h5>
-                        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                        <p class="card-text">
+                            <small class="text-muted">
+                                {{article.created_at}}
+                            </small>
+                        </p>
                     </div>
 
-
                 </article>
+                <InfiniteLoading @infinite="handleLoadMore" />
 
             </div>
 
@@ -49,9 +53,8 @@
             </aside>
 
         </div>
-
-
     </div>
+
 
 
 </template>
@@ -74,24 +77,25 @@ export default {
         }
     },
     methods: {
-        handleLoadMore($state) {
+        handleLoadMore() {
 
+            console.log('handleLoadMore');
             axios
-                .get('v1/articles?page=' + this.page + '&category=' + this.filterCategories)
+                .get('/v1/articles?page=' + this.page + '&category=' + this.filterCategories)
                 .then(response => {
-
+                    this.page++;
                     this.articles = this.articles.concat(response.data.articles);
                     this.categories = response.data.categories;
-                    this.page++;
-                    $state.loaded();
+
                 })
                 .catch(error => {
                     console.log(error)
                     this.errored = true
                 })
                 .finally(() => {
-                    $state.loaded()
+
                 })
+
 
         },
         showArticle(article) {
@@ -100,6 +104,10 @@ export default {
         setCategory(category) {
             this.filterCategories.push(category);
             console.log(category)
+        },
+        imageLoadError () {
+            console.log('imageLoadError')
+            console.log('Image failed to load');
         }
     },
     mounted() {

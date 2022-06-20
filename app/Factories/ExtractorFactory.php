@@ -15,8 +15,8 @@ use Symfony\Component\Process\Process;
 
 class ExtractorFactory
 {
-    public static function extract(string $url): void
+    public static function extract(Feed $feed): void
     {
-        dispatch(new ProcessFeeds($url));
+        dispatch(new ProcessFeeds($feed));
     }
 }

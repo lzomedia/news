@@ -25,9 +25,9 @@ class FeedRepository implements FeedDatabaseContract
        return Feed::all();
     }
 
-    public function deleteFeed(int $feedID): ?bool
+    public function deleteFeed(Feed $feed): ?bool
     {
-        return (new \App\Models\Feed)->find($feedID)->delete();
+        return $feed->delete();
     }
 
     public function deleteAll(): void

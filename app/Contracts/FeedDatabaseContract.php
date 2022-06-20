@@ -12,7 +12,7 @@ interface FeedDatabaseContract
 {
     public function getFeedById(int $feedId): Feed;
     public function getAllFeeds(): Collection;
-    public function deleteFeed(int $feedID);
+    public function deleteFeed(Feed $feed): ?bool;
     public function deleteAll():void;
     public function importFeeds(Collection $feeds): void;
     public function createFeed(array $feed): ?Feed;

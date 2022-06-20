@@ -1,8 +1,12 @@
 <?php
 
 use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FeedsController;
-use App\Http\Controllers\HomeController;
+use Illuminate\Cache\RateLimiting\Limit;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\RateLimiter;
+use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -35,7 +39,12 @@ RateLimiter::for('articles', static function (Request $request) {
 
 
 
-Route::get('/dashboard', [HomeController::class, 'home'])->name('home');
-Route::post('/feeds/sync', [FeedsController::class, 'import'])->name('feeds.import');
-Route::get('/feeds/sync/{$feed}', [FeedsController::class, 'syncSingle'])->name('feeds.syncSingle');
-Route::get('/feeds/sync', [FeedsController::class, 'syncAll'])->name('feeds.syncAll');
+Route::get('/dashboard', [DashboardController::class, 'dashboard'])
+    ->name('dashboard');
+Route::post('/feeds/import', [FeedsController::class, 'import'])
+    ->name('feeds.import');
+Route::get('/feeds/syncAll', [FeedsController::class, 'syncAll'])
+    ->name('feeds.sync-all');
+
+Route::get('/feeds/single/sync/{feed}', [FeedsController::class, 'syncSingle'])
+    ->name('feeds.sync-single');

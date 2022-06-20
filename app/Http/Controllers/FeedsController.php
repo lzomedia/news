@@ -7,6 +7,8 @@ use App\Contracts\ArticleDatabaseContract;
 use App\Contracts\FeedDatabaseContract;
 
 use App\Contracts\SyncContract;
+use App\Enums\FeedStatus;
+use App\Factories\ExtractorFactory;
 use App\Models\Feed;
 use App\Parsers\OpmlParser;
 use App\Requests\SaveFileRequest;
@@ -38,11 +40,12 @@ class FeedsController extends Controller
     public function syncSingle(Feed $feed): RedirectResponse
     {
 
-        $this->syncContract->syncSingle($feed);
 
         Session::flash('status', 'Feeds sync started successfully');
 
-        return redirect('home');
+        $this->syncContract->syncSingle($feed);
+
+        return redirect('dashboard');
     }
 
     public function syncAll(): RedirectResponse
@@ -51,7 +54,7 @@ class FeedsController extends Controller
 
         Session::flash('status', 'Feeds sync started successfully');
 
-        return redirect('home');
+        return redirect('dashboard');
     }
 
     public function import( SaveFileRequest $request): RedirectResponse
@@ -69,27 +72,31 @@ class FeedsController extends Controller
 
         $collection = (collect($parser->getContents()));
 
-        $collection->each(function($data)
+        $collection->each(function($data, $index)
         {
 
-            $normLink = strtolower('xmlUrl');
+            if(array_key_exists('xmlurl', $data)  || array_key_exists('xmlUrl', $data))
+            {
 
-            $item = [
-                'user_id' => auth()->user()->id,
-                'title' => $data['text'],
-                'url' => $data[$normLink],
-            ];
 
-            $feed = $this->feedDatabaseContract->createFeed($item);
+                $feed = $this->feedDatabaseContract->createFeed([
+                    'title' => $data['title'] ?? 'Title' . $index,
+                    'url' => $data['xmlurl'] ?? $data['xmlUrl'],
+                    'status' => Feed::INITIAL,
+                    'user_id' => auth()->user()->id,
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now()
+                ]);
 
-            $this->syncSingle($feed);
+                $this->syncContract->syncSingle($feed);
+            }
 
         });
 
 
         Session::flash('status', 'Feeds imported successfully');
 
-        return redirect('home');
+        return redirect('dashboard');
     }
 
 }

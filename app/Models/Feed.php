@@ -24,6 +24,14 @@ use Illuminate\Database\Query\Builder as QueryBuilder;
  */
 class Feed extends Model
 {
+
+    const INITIAL =  'initial';
+
+    const SYNCYING =  'synchronizing';
+
+    const COMPLETED = 'completed';
+
+
     protected $table = 'feeds';
 
     protected $fillable = [

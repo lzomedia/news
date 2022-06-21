@@ -29,7 +29,6 @@ jobs:
         run: |
           cp .env.testing .env
           php artisan key:generate
-          php artisan migrate:fresh --seed
 
       - name: Run Testsuite
         run: vendor/bin/phpunit tests/

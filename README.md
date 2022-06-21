@@ -73,12 +73,21 @@ This project uses Python 3 for extracting the content from the feeds.
 In order to use this script, you need to install the following packages:
 ```bash
 su -c "pip3 install newspaper3k"
+su -c "pip3 install pandas"
+su -c "pip3 install simplejson"
+su -c "pip3 install dotenv"
 su -c "pip3 install spacy"
+su -c "pip3 install supervisor"
 su -c "pip3 install nltk"
 su -c "pip3 install lxml"
+su -c "pip3 install textblob"
+su -c "pip3 install spacytextblob"
+su -c "pip3 install vaderSentiment"
 su -c "python3 -m spacy download en_core_web_md"
 su -c "python3 -m nltk.downloader -d /usr/local/share/nltk_data punkt"
 su -c "python3 -m nltk.downloader -d /usr/local/share/nltk_data stopwords"
+su -c "python3 -m nltk.downloader -d /usr/local/share/nltk_data vader_lexicon"
+su -c "python3 -m textblob.download_corpora"
 ```
 
 

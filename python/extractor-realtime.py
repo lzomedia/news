@@ -27,7 +27,7 @@ def extractArticle(url):
     nlp = spacy.load("en_core_web_md")
     nlp.add_pipe('spacytextblob')
     doc = nlp(article.text)
-    words = len(doc)
+    words = len([token.text for token in doc if token.is_stop != True and token.is_punct != True])
     timetoread = words / 200
     sid_obj = SentimentIntensityAnalyzer()
 

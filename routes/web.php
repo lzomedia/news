@@ -48,3 +48,6 @@ Route::get('/feeds/syncAll', [FeedsController::class, 'syncAll'])
 
 Route::get('/feeds/single/sync/{feed}', [FeedsController::class, 'syncSingle'])
     ->name('feeds.sync-single');
+
+Route::get('/articles/{id}/{slug}', [ArticleController::class, 'view'])
+    ->name('article.view');

@@ -1,62 +1,82 @@
 <template>
+
+
+    <!-- Page content-->
     <div class="container">
         <div class="row">
-            <aside class="col-lg-3">
-                <h3>
-                    Category
-                </h3>
-                <div class="card">
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item" v-for="category in categories">
-                            <a v-on:click="setCategory(category.id)">{{ category.name }}</a>
-                        </li>
-                    </ul>
-                </div>
-            </aside>
+            <!-- Blog entries-->
+            <div class="col-lg-8">
 
-            <div class="col-lg-6 ">
-                <h3>
-                    Latest News.
-                </h3>
-                <article class="card mb-3" v-for="article in articles">
 
-                    <img class="card-img-top"  :src="article.image" @error="imageLoadError" alt="Card image cap">
+                <div v-for="(article, index) in articles">
+                    <div v-if="index ===0">
+                        <div class="card mb-4">
+                            <a href="#!"><img class="card-img-top" :src="article.image" /></a>
+                            <div class="card-body">
+                                <div class="small text-muted">
+                                    <format class="text-muted" :value="article.published_at" fn="ago" />
+                                </div>
+                                <h2 class="card-title">
+                                    <a :href="article.url">{{ article.title }}</a>
+                                </h2>
 
-                    <div class="card-body">
-                        <h5 class="card-title">
-                            {{article.title}}
-                        </h5>
-                        <p class="card-text">
-                            <format class="text-muted" :value="article.published_at" fn="ago" />
-                        </p>
+                            </div>
+                        </div>
                     </div>
 
-                </article>
-
-                <InfiniteLoading @infinite="handleLoadMore" />
-
-            </div>
-
-            <aside class="col-lg-3">
-                <h3>
-                    Tags
-                </h3>
-                <div class="card">
-
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item" v-for="category in categories">
-                            <a v-on:click="setCategory(category.id)">{{ category.name }}</a>
-                        </li>
-                    </ul>
+                    <div v-else class="row">
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <div class="small text-muted">
+                                    <format class="text-muted" :value="article.published_at" fn="ago" />
+                                </div>
+                                <h3 class="card-title">
+                                    <a :href="article.url">{{ article.title }}</a>
+                                </h3>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
-            </aside>
-
+            </div>
+            <!-- Side widgets-->
+            <div class="col-lg-4 sticky-top">
+                <!-- Search widget-->
+                <div class="card mb-4">
+                    <div class="card-header">Search</div>
+                    <div class="card-body">
+                        <div class="input-group">
+                            <input class="form-control" type="text" placeholder="Enter search term..." aria-label="Enter search term..." aria-describedby="button-search" />
+                            <button class="btn btn-primary" id="button-search" type="button">Go!</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Categories widget-->
+                <div class="card mb-4">
+                    <div class="card-header">Categories</div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <ul class="list-unstyled mb-0">
+                                    <li  v-for="category in categories">
+                                        <a class="text-left" v-on:click="setCategory(category.id)">{{ category.name }}</a>
+                                        <span class="float-end">
+                                   ({{ category.count }})
+                                </span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Side widget-->
+                <div class="card mb-4">
+                    <div class="card-header">Side Widget</div>
+                    <div class="card-body">You can put anything you want inside of these side widgets. They are easy to use, and feature the Bootstrap 5 card component!</div>
+                </div>
+            </div>
         </div>
     </div>
-
-
-
 </template>
 <script>
 console.log('App.vue');

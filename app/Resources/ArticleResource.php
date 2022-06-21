@@ -19,6 +19,7 @@ class ArticleResource extends JsonResource
             'category' => $this->category,
             'feed' => $this->feed,
             'author' => $this->author,
+            'url'=> url('articles/' . $this->id . '/' . Str::slug($this->title)),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];

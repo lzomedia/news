@@ -11,7 +11,10 @@ class ArticleRepository implements ArticleDatabaseContract
 {
     public function getArticleById(int $articleId): Article
     {
-       return new Article();
+       return Article::with('category')
+           ->with('tags')
+           ->with('info')
+           ->find($articleId);
     }
 
     public function getAllArticles(): ArticleResourceCollection

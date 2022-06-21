@@ -50,6 +50,13 @@ class Article extends Model
         return $this->belongsTo(Category::class);
     }
 
+    public function info(): BelongsTo
+    {
+        return $this->belongsTo(ArticleInfo::class);
+    }
+
+
+
     public function tags(): BelongsToMany
     {
         return $this->belongsToMany(Tag::class);

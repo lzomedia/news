@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 use App\Contracts\ArticleDatabaseContract;
 use App\Contracts\FeedDatabaseContract;
 
+use App\DTO\Article;
 use App\Http\Controllers\Api\ArticlesApiController;
 use App\Parsers\OpmlParser;
 use App\Requests\SaveFileRequest;
@@ -30,10 +31,12 @@ class ArticleController extends Controller
     }
 
 
-    public function index(): View
+    public function view(Request $request): View
     {
-        return view('articles.index', [
-            'articles' => $this->articleDatabaseContract->getAllArticles(),
+        $article = $this->articleDatabaseContract->getArticleById($request->id);
+
+        return view('article-view', [
+            'article' =>$article,
         ]);
     }
 

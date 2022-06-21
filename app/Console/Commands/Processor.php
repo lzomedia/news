@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Contracts\ArticleDatabaseContract;
 use App\DTO\Article;
 use App\Factories\ExtractorFactory;
 use App\Jobs\ProcessFeeds;
@@ -17,6 +18,13 @@ class Processor extends Command
 
     protected $description = 'This command will run and extract the data from the feeds';
 
+    private ArticleDatabaseContract $articleDatabaseContract;
+    public function __construct(ArticleDatabaseContract $articleDatabaseContract)
+    {
+        parent::__construct();
+
+        $this->articleDatabaseContract = $articleDatabaseContract;
+    }
 
     public function handle(): void
     {
@@ -50,7 +58,9 @@ class Processor extends Command
 
                 if (json_last_error() === 0) {
                     $dto = new Article($data);
-                    dispatch(new SaveToDatabase($dto));
+
+                    $this->articleDatabaseContract->createArticle($dto);
+
                 }
 
             }

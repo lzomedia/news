@@ -18,21 +18,22 @@ use Illuminate\Database\Query\Builder as QueryBuilder;
  * @mixin EloquentBuilder
  * @mixin QueryBuilder
  * @property int $id
+ * @property int $user_id
  * @property string $title
  * @property string $url
  * @property Carbon $sync
  * @property string $status
  */
-class Feed extends Model
+class Feed extends BaseModel
 {
 
-    const INITIAL =  'initial';
+    public const INITIAL =  'initial';
 
-    const SYNCYING =  'synchronizing';
+    public const SYNCYING =  'synchronizing';
 
-    const COMPLETED = 'completed';
+    public const COMPLETED = 'completed';
 
-    const FAILED = 'failed';
+    public const FAILED = 'failed';
 
 
     protected $table = 'feeds';
@@ -46,9 +47,6 @@ class Feed extends Model
     protected $dates = [
         'sync',
     ];
-
-    private int $id;
-
 
     public function user(): BelongsTo
     {

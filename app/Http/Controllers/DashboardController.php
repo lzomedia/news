@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Contracts\FeedDatabaseContract;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\View;
 
 class DashboardController extends Controller
 {
@@ -17,7 +18,7 @@ class DashboardController extends Controller
     }
 
 
-    public function dashboard()
+    public function dashboard(): \Illuminate\View\View
     {
         $feeds = $this->feedDatabaseContract->getAllFeeds();
 

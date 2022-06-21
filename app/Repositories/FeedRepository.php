@@ -9,13 +9,14 @@ use App\Models\Feed;
 use App\Parsers\OpmlParser;
 use App\Requests\SaveFileRequest;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class FeedRepository implements FeedDatabaseContract
 {
-    public function getFeedById(int $feedId): Feed
+    public function getFeedById(int $feedId): Feed | Model
     {
         return (new \App\Models\Feed)->find($feedId);
     }
@@ -25,7 +26,7 @@ class FeedRepository implements FeedDatabaseContract
        return Feed::all();
     }
 
-    public function deleteFeed(Feed $feed): ?bool
+    public function deleteFeed(Feed | Model $feed): bool
     {
         return $feed->delete();
     }
@@ -37,7 +38,7 @@ class FeedRepository implements FeedDatabaseContract
         });
     }
 
-    public function createFeed(array $feed): ?Feed
+    public function createFeed(array $feed): Model | Feed
     {
         return (new \App\Models\Feed)->firstOrCreate($feed);
     }

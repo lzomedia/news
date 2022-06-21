@@ -34,6 +34,13 @@ class Article extends DataTransferObject
     #[MapFrom('keywords')]
     public ?array $keywords;
 
+    #[MapFrom('vader')]
+    public ?array $vader;
+
+    #[MapFrom('timetoread')]
+    public string $timetoread;
+
+
     public ?string $category;
 
     public function getTitle(): ?string
@@ -88,5 +95,15 @@ class Article extends DataTransferObject
     public function getFeedId(): ?string
     {
         return $this->feed_id ?? "1";
+    }
+
+    public function getVader(): ?array
+    {
+        return $this->vader;
+    }
+
+    public function getTimetoread(): ?string
+    {
+        return $this->timetoread;
     }
 }

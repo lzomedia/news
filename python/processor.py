@@ -3,6 +3,8 @@ import feedparser
 import json
 import mysql.connector
 import sys
+from spacytextblob.spacytextblob import SpacyTextBlob
+from collections import Counter
 
 import spacy
 from lxml.html.clean import Cleaner
@@ -28,8 +30,13 @@ def extractArticle(url):
     article.download()
     article.parse()
     article.nlp()
+
     nlp = spacy.load("en_core_web_md")
+    nlp.add_pipe('spacytextblob')
     doc = nlp(article.text)
+    words = len(doc)
+    timetoread = words / 200
+
     value = {
         "title": article.title,
         "date": article.publish_date,
@@ -39,7 +46,12 @@ def extractArticle(url):
         "keywords": article.keywords,
         "authors": article.authors,
         "entities": doc.ents,
-        "source": url
+        "source": url,
+        "wordCount": words,
+        'timeToRead': round(timetoread)
+        "polarity": doc._.blob.polarity,
+        "subjectivity": doc._.blob.subjectivity,
+
     }
     return value
 

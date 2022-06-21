@@ -5,6 +5,7 @@ namespace App\Jobs;
 use App\DTO\Article;
 use App\Models\Category;
 use App\Models\Tag;
+use App\Models\Article as ArticleModel;
 use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
@@ -24,6 +25,9 @@ class SaveToDatabase implements ShouldQueue
         $this->article = $article;
     }
 
+    /**
+     * @throws \JsonException
+     */
     public function handle(): void
     {
         $article =  (new \App\Models\Article)->firstOrCreate([
@@ -46,6 +50,7 @@ class SaveToDatabase implements ShouldQueue
                 (new \App\Models\Tag)->firstOrCreate(['name' => $tag])
             );
         }
+        $this->createArticleInfo($article);
     }
 
 
@@ -61,5 +66,17 @@ class SaveToDatabase implements ShouldQueue
             ]);
         }
         return $category;
+    }
+
+    private function createArticleInfo(ArticleModel $article): void
+    {
+
+        $articleInfo = (new \App\Models\ArticleInfo)->firstOrCreate([
+            'article_id' => $article->id,
+            'time_to_read' => $this->article->getTimetoread(),
+            'vader' => json_encode($this->article->getVader(), JSON_THROW_ON_ERROR),
+        ]);
+
+        $article->save();
     }
 }

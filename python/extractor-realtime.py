@@ -3,6 +3,8 @@ import feedparser
 import json
 import sys
 from multiprocessing import Process, Queue
+from spacytextblob.spacytextblob import SpacyTextBlob
+from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 
 import spacy
 from lxml.html.clean import Cleaner
@@ -23,8 +25,11 @@ def extractArticle(url):
     article.parse()
     article.nlp()
     nlp = spacy.load("en_core_web_md")
+    nlp.add_pipe('spacytextblob')
     doc = nlp(article.text)
-
+    words = len(doc)
+    timetoread = words / 200
+    sid_obj = SentimentIntensityAnalyzer()
 
     entities = {"text": [], "type": []}
     for ent in doc.ents:
@@ -42,7 +47,11 @@ def extractArticle(url):
         "keywords": article.keywords,
         "authors": article.authors,
         "entities": entities,
-        "source": url
+        "timetoread": round(timetoread),
+        "polarity": doc._.blob.polarity,
+        "subjectivity": doc._.blob.subjectivity,
+        "source": url,
+        "vader": (sid_obj.polarity_scores(article.text))
     }
     print(
         json.dumps(value, indent=4, sort_keys=True, default=str)

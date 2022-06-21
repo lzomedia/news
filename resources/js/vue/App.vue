@@ -21,18 +21,18 @@
                 <article class="card mb-3" v-for="article in articles">
 
                     <img class="card-img-top"  :src="article.image" @error="imageLoadError" alt="Card image cap">
+
                     <div class="card-body">
                         <h5 class="card-title">
                             {{article.title}}
                         </h5>
                         <p class="card-text">
-                            <small class="text-muted">
-                                {{article.created_at}}
-                            </small>
+                            <format class="text-muted" :value="article.published_at" fn="ago" />
                         </p>
                     </div>
 
                 </article>
+
                 <InfiniteLoading @infinite="handleLoadMore" />
 
             </div>

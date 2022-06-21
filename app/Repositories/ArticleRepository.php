@@ -36,19 +36,14 @@ class ArticleRepository implements ArticleDatabaseContract
     public function createArticle(\App\DTO\Article $articleDTO): Model
     {
 
-        $category = (new \App\Models\Category())->firstOrCreate([
-            'name' => $articleDTO->getCategory()
-        ]);
-
         $articleModel =  (new \App\Models\Article)->firstOrCreate([
-            'title' => $articleDTO->getTitle(),
             'feed_id' => $articleDTO->getFeedId(),
-            'category_id' => $category->get('id'),
+            'category_id' => $articleDTO->getCategory()->id,
+            'title' => $articleDTO->getTitle(),
             'image' => $articleDTO->getImage(),
+            'content' => $articleDTO->getContent(),
             'author' => $articleDTO->getAuthors(),
             'source' => $articleDTO->getSource(),
-            'content' => $articleDTO->getContent(),
-            'published_at' => $articleDTO->getDate(),
         ]);
 
         $articleModel->category()->increment('count');
@@ -60,7 +55,7 @@ class ArticleRepository implements ArticleDatabaseContract
         }
 
         (new \App\Models\ArticleInfo)->firstOrCreate([
-            'article_id' => $articleModel->get('id'),
+            'article_id' => $articleModel->id,
             'time_to_read' => $articleDTO->getTimetoread(),
             'vader' => json_encode($articleDTO->getVader(), JSON_THROW_ON_ERROR),
         ]);

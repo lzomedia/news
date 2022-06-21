@@ -19,9 +19,7 @@ use Illuminate\Support\Carbon;
  * @property string $author
  * @property int $category_id
  * @property int $feed_id
- * @property Carbon $published_at
- * @property Carbon $created_at
- * @property Carbon $updated_at
+
  */
 class Article extends Model
 {
@@ -54,7 +52,6 @@ class Article extends Model
     {
         return $this->belongsTo(ArticleInfo::class);
     }
-
 
 
     public function tags(): BelongsToMany

@@ -3,6 +3,7 @@
 namespace App\DTO;
 
 use App\Jobs\DiscoverFeeds;
+use App\Models\Category;
 use Carbon\Carbon;
 use Spatie\DataTransferObject\Attributes\MapFrom;
 use Spatie\DataTransferObject\DataTransferObject;
@@ -40,8 +41,7 @@ class Article extends DataTransferObject
     #[MapFrom('timetoread')]
     public ?string $timetoread;
 
-
-    public ?string $category;
+    public ?Category $category;
 
     public function getTitle(): ?string
     {
@@ -73,9 +73,11 @@ class Article extends DataTransferObject
         return $this->source;
     }
 
-    public function getCategory(): string
+    public function getCategory(): Category
     {
-        return $this->getKeywords()[0] ?? 'News';
+        return (new \App\Models\Category())->firstOrCreate([
+            'name' => $this->getKeywords()[0] ?? "News"
+        ]);
     }
 
     public function getKeywords(): ?array

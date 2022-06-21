@@ -2,7 +2,7 @@
 
 namespace App\Jobs;
 
-use App\DTO\Article;
+use App\DTO\Article as ArticleDTO;
 use App\Models\Category;
 use App\Models\Feed;
 use App\Models\Article as ArticleModel;
@@ -42,61 +42,81 @@ class ProcessFeeds implements ShouldQueue
     final public function handle(): void
     {
 
-        $process = new Process([
-            self::PYTHON,
-            base_path(self::PYTHON_FILE_EXTRACT_REALTIME),
-            $this->feed->url
-        ]);
+        try {
+            $process = new Process([
+                self::PYTHON,
+                base_path(self::PYTHON_FILE_EXTRACT_REALTIME),
+                $this->feed->url
+            ]);
 
-        $url = $this->feed->url;
+            $process->run(function ($type, $buffer)
+            {
+                Log::error("Output: {$buffer}");
 
-        $process->run(function ($type, $buffer)
-        {
+                if(strlen($buffer) > 10) {
 
-            if(strlen($buffer) > 10) {
+                    Log::error("Output: {$buffer}");
 
-                $data = json_decode(
-                    $buffer,
-                    true,
-                    512,
-                    JSON_THROW_ON_ERROR
-                );
+                    $data = json_decode(
+                        $buffer,
+                        true,
+                        512,
+                        JSON_THROW_ON_ERROR
+                    );
 
-                if (json_last_error() === 0) {
-                    $dto = new Article($data);
-                    $this->saveToDatabase($dto);
+                    if (json_last_error() === 0) {
+                        $dto = new ArticleDTO($data);
+                        $this->saveToDatabase($dto);
+                    }
+
                 }
 
-            }
+            });
+        }catch (\Exception $exception){
+            Log::error($exception->getTraceAsString());
+            $this->feed->status = Feed::FAILED;
+            $this->feed->save();
+            $this->delete();
 
-        });
+        }
         $this->feed->status = Feed::COMPLETED;
         $this->feed->save();
     }
 
 
-    public function saveToDatabase(Article $articleDTO): void
+    /**
+     * @throws \JsonException
+     */
+    public function saveToDatabase(ArticleDTO $articleDTO): void
     {
-        $feed = (new \App\Models\Feed)->get()->first();
 
-        $save =  (new \App\Models\Article)->firstOrCreate([
-            'title' =>$articleDTO->getTitle(),
-            'feed_id' => $articleDTO->getFeedId() ?? $feed->id,
-            'category_id' => $this->createOrAttachCategory($articleDTO->getCategory())->id ?? (new \App\Models\Category)->first()->id,
-            'image' => ($articleDTO->getImage()),
-            'author' => ($articleDTO->getAuthors()),
+        //create a category
+        $category =  $this->createOrAttachCategory($articleDTO->getCategory());
+
+        //create article
+        $articleModel =  (new \App\Models\Article)->firstOrCreate([
+            'title' => $articleDTO->getTitle(),
+            'feed_id' => $this->feed->id,
+            'category_id' => $category->id,
+            'image' => $articleDTO->getImage(),
+            'author' => $articleDTO->getAuthors(),
             'source' => $articleDTO->getSource(),
             'content' => $articleDTO->getContent(),
-            'created_at' => $articleDTO->getDate(),
+            'published_at' => $articleDTO->getDate(),
         ]);
 
-        $save->category()->increment('count');
+        //increment category
+        $articleModel->category()->increment('count');
 
+        //create tags
         foreach ($articleDTO->getKeywords() as $tag) {
-            $save->tags()->attach(
+            $articleModel->tags()->attach(
                 (new \App\Models\Tag)->firstOrCreate(['name' => $tag])
             );
         }
+
+        //create article info
+        $this->createArticleInfo($articleModel, $articleDTO);
     }
 
     private function createOrAttachCategory(string $categoryName): Category
@@ -114,10 +134,24 @@ class ProcessFeeds implements ShouldQueue
     }
 
 
+    private function createArticleInfo(ArticleModel $article, ArticleDTO $articleDTO): void
+    {
+
+        $articleInfo = (new \App\Models\ArticleInfo)->firstOrCreate([
+            'article_id' => $article->id,
+            'time_to_read' => $articleDTO->getTimetoread(),
+            'vader' => json_encode($articleDTO->getVader(), JSON_THROW_ON_ERROR),
+        ]);
+
+        $article->save();
+    }
+
     public function failed(): void
     {
         $this->feed->status = Feed::FAILED;
         $this->feed->save();
+        $this->delete();
+
     }
 }
 

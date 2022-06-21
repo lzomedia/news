@@ -170,6 +170,11 @@ return [
             'queue' => ['default'],
             'balance' => 'auto',
             'maxProcesses' => 3,
+            'retry' => [
+                'max_attempts' => 0,
+                'delay' => 0,
+                'jitter' => 0,
+            ],
             'memory' => 512,
             'timeout' => 240,
             'nice' => 0,
@@ -179,15 +184,19 @@ return [
     'environments' => [
         'production' => [
             'supervisor-1' => [
-                'maxProcesses' => 10,
+                'maxProcesses' => 3,
                 'balanceMaxShift' => 1,
                 'balanceCooldown' => 3,
+                'memory' => 512,
+                'timeout' => 240,
             ],
         ],
 
         'local' => [
             'supervisor-1' => [
                 'maxProcesses' => 3,
+                'memory' => 512,
+                'timeout' => 240,
             ],
         ],
     ],

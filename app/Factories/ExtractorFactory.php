@@ -17,6 +17,6 @@ class ExtractorFactory
 {
     public static function extract(Feed $feed): void
     {
-        dispatch(new ProcessFeeds($feed));
+        dispatch(new ProcessFeeds($feed))->delay(now()->addSeconds(10));
     }
 }

@@ -2,6 +2,7 @@ import json
 import feedparser
 import json
 import sys
+import datetime
 from multiprocessing import Process, Queue
 from spacytextblob.spacytextblob import SpacyTextBlob
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
@@ -10,8 +11,8 @@ import spacy
 from lxml.html.clean import Cleaner
 from newspaper import Article
 
-cleaner = Cleaner(javascript=False, style=False, links=True, add_nofollow=True, page_structure=False,
-                  safe_attrs_only=True, safe_attrs=['src', 'alt'], remove_tags=['script', 'a', 'style'],
+cleaner = Cleaner(javascript=False, style=False, links=True, add_nofollow=True, page_structure=True,
+                  safe_attrs_only=True, safe_attrs=['src', 'alt'], remove_tags=['script', 'iframe' , 'style'],
                   allow_tags=['img', 'p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'b', 'i', 'strong', 'em', 'span', 'ul',
                               'li', 'ol', 'br', 'hr', 'pre', 'code', 'blockquote'])
 
@@ -37,6 +38,13 @@ def extractArticle(url):
         entities["type"].append(ent.label_)
 
     content = cleaner.clean_html(article.article_html)
+
+    published_date = article.publish_date
+
+    now = datetime.datetime.now()
+
+    if published_date is None:
+        publish_date = now
 
     value = {
         "title": article.title,

@@ -21,7 +21,7 @@ class SeedFeedsTableSeeder extends Seeder
         Feed::create([
             'title' => "TechCrunch",
             'user_id' => User::first()->id,
-            'url' => "https://techcrunch.com/feed/",
+            'url' => "https://broke.com",
             'sync' => now()
         ]);
     }

@@ -20,7 +20,7 @@ class Article extends DataTransferObject
     public ?array $authors;
 
     #[MapFrom('date')]
-    public string $date;
+    public ?string $date;
 
     #[MapFrom('content')]
     public ?string $content;
@@ -53,10 +53,9 @@ class Article extends DataTransferObject
         return $this->authors[0] ?? 'Stefan';
     }
 
-    public function getDate(): string
+    public function getDate(): ?string
     {
-        return Carbon::parse($this->date)->toDateTimeString()  ??
-            Carbon::now()->toDateTimeString();
+        return Carbon::parse($this->date)->toDateTimeString();
     }
 
     public function getContent(): ?string

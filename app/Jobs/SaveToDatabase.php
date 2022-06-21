@@ -13,6 +13,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Log;
 
 class SaveToDatabase implements ShouldQueue
 {
@@ -30,27 +31,32 @@ class SaveToDatabase implements ShouldQueue
      */
     public function handle(): void
     {
-        $article =  (new \App\Models\Article)->firstOrCreate([
-            'title' => $this->article->getTitle(),
-            'feed_id' => $this->article->getFeedId() ??
-                (new \App\Models\Feed)->first()->id,
-            'category_id' => $this->createOrAttachCategory()->id ??
-                (new \App\Models\Category)->first()->id,
-            'image' => ($this->article->getImage()),
-            'author' => ($this->article->getAuthors()),
-            'source' => $this->article->getSource(),
-            'content' => $this->article->getContent(),
-            'published_at' => $this->article->getDate(),
-        ]);
+        try{
+            $article =  (new \App\Models\Article)->firstOrCreate([
+                'title' => $this->article->getTitle(),
+                'feed_id' => $this->article->getFeedId() ??
+                    (new \App\Models\Feed)->first()->id,
+                'category_id' => $this->createOrAttachCategory()->id ??
+                    (new \App\Models\Category)->first()->id,
+                'image' => ($this->article->getImage()),
+                'author' => ($this->article->getAuthors()),
+                'source' => $this->article->getSource(),
+                'content' => $this->article->getContent(),
+                'published_at' => $this->article->getDate(),
+            ]);
 
-        $article->category()->increment('count');
+            $article->category()->increment('count');
 
-        foreach ($this->article->getKeywords() as $tag) {
-            $article->tags()->attach(
-                (new \App\Models\Tag)->firstOrCreate(['name' => $tag])
-            );
+            foreach ($this->article->getKeywords() as $tag) {
+                $article->tags()->attach(
+                    (new \App\Models\Tag)->firstOrCreate(['name' => $tag])
+                );
+            }
+            $this->createArticleInfo($article);
+        }catch (\Exception $exception){
+            Log::info($exception->getMessage());
+            $this->delete();
         }
-        $this->createArticleInfo($article);
     }
 
 
@@ -78,5 +84,10 @@ class SaveToDatabase implements ShouldQueue
         ]);
 
         $article->save();
+    }
+
+    public function failed():void
+    {
+        $this->delete();
     }
 }

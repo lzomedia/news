@@ -7,6 +7,7 @@ use App\Enums\FeedStatus;
 use App\Factories\ExtractorFactory;
 use App\Jobs\ProcessFeeds;
 use App\Models\Feed;
+use Illuminate\Support\Facades\DB;
 
 class SyncManager implements SyncContract
 {
@@ -21,8 +22,11 @@ class SyncManager implements SyncContract
     public function syncAll(): bool
     {
 
-        Feed::where('status', Feed::COMPLETED)->get()->each(function (Feed $feed) {
-            ExtractorFactory::extract($feed);
+        Feed::orderBy('id')->chunk(3, function ($feeds){
+
+            foreach ($feeds as $feed){
+                ExtractorFactory::extract($feed);
+            }
         });
 
         return true;

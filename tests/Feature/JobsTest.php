@@ -7,6 +7,7 @@ use App\DTO\Article;
 use App\Jobs\ProcessFeeds;
 use App\Jobs\SaveToDatabase;
 use App\Models\Feed;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Queue;
 use Tests\TestCase;
 
@@ -38,6 +39,7 @@ class JobsTest extends TestCase
             'source' => 'http://example.com/',
             'content' => 'Test Content',
             'keywords' => ['Test', 'Article'],
+            'date' => Carbon::parse('2020-01-01')->toDateTimeString(),
         ]);
 
         $job = new SaveToDatabase($article);
@@ -46,6 +48,7 @@ class JobsTest extends TestCase
             'title' => 'Test Article',
             'source' => 'http://example.com/',
             'content' => 'Test Content',
+            'published_at' => Carbon::parse('2020-01-01')->toDateTimeString(),
         ]);
     }
 }

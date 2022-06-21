@@ -50,7 +50,7 @@ class ProcessFeeds implements ShouldQueue
 
         $url = $this->feed->url;
 
-        $process->run(function ($type, $buffer)  use ($url)
+        $process->run(function ($type, $buffer)
         {
 
             if(strlen($buffer) > 10) {
@@ -77,9 +77,11 @@ class ProcessFeeds implements ShouldQueue
 
     public function saveToDatabase(Article $articleDTO): void
     {
+        $feed = (new \App\Models\Feed)->get()->first();
+
         $save =  (new \App\Models\Article)->firstOrCreate([
             'title' =>$articleDTO->getTitle(),
-            'feed_id' => $articleDTO->getFeedId() ?? (new \App\Models\Feed)->first()->id,
+            'feed_id' => $articleDTO->getFeedId() ?? $feed->id,
             'category_id' => $this->createOrAttachCategory($articleDTO->getCategory())->id ?? (new \App\Models\Category)->first()->id,
             'image' => ($articleDTO->getImage()),
             'author' => ($articleDTO->getAuthors()),

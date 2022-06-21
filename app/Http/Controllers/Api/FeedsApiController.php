@@ -13,23 +13,18 @@ class FeedsApiController extends Controller
 {
 
     private FeedDatabaseContract $feedDatabaseContract;
-    private SyncContract $syncContract;
 
 
-    public function __construct(
-        FeedDatabaseContract $feedDatabaseContract,
-        SyncContract $syncContract
-    )
+
+    public function __construct(FeedDatabaseContract $feedDatabaseContract)
     {
         $this->feedDatabaseContract = $feedDatabaseContract;
-        $this->syncContract = $syncContract;
-
     }
 
     public function index(): JsonResponse
     {
         return response()->json(
-            $this->feedDatabaseContract->getAllArticles()
+            $this->feedDatabaseContract->getAllFeeds()
         );
     }
 

@@ -26,9 +26,11 @@ class DtoTest extends TestCase
             'date' => '2020-01-01 00:00:00',
             'content' => 'content',
             'images' => 'images',
+            'timetoread' => '1',
         ];
 
         $dto = new Article($data);
+
 
         $this->assertEquals('title', $dto->getTitle());
         $this->assertEquals('author', $dto->getAuthors());

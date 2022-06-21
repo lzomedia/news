@@ -16,6 +16,7 @@ use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\View\View;
 
 class ArticleController extends Controller
 {
@@ -29,16 +30,15 @@ class ArticleController extends Controller
     }
 
 
-    public function index(): JsonResponse
+    public function index(): View
     {
-        return view('articles.index');
+        return view('articles.index', [
+            'articles' => $this->articleDatabaseContract->getAllArticles(),
+        ]);
     }
-
-
 
     public function indexApi(): JsonResponse
     {
-
         return response()->json(
             $this->articleDatabaseContract->getAllArticles()
         );

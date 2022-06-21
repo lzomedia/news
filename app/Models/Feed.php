@@ -47,6 +47,8 @@ class Feed extends Model
         'sync',
     ];
 
+    private int $id;
+
 
     public function user(): BelongsTo
     {

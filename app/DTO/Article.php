@@ -20,7 +20,7 @@ class Article extends DataTransferObject
     public ?array $authors;
 
     #[MapFrom('date')]
-    public ?string $date;
+    public string $date;
 
     #[MapFrom('content')]
     public ?string $content;
@@ -38,7 +38,7 @@ class Article extends DataTransferObject
     public ?array $vader;
 
     #[MapFrom('timetoread')]
-    public string $timetoread;
+    public ?string $timetoread;
 
 
     public ?string $category;
@@ -53,7 +53,7 @@ class Article extends DataTransferObject
         return $this->authors[0] ?? 'Stefan';
     }
 
-    public function getDate(): ?string
+    public function getDate(): string
     {
         return Carbon::parse($this->date)->toDateTimeString()  ??
             Carbon::now()->toDateTimeString();
@@ -86,10 +86,7 @@ class Article extends DataTransferObject
 
     public function discoverFeeds(): void
     {
-
-        $links = Crawler::links($this->getContent());
-
-        dispatch(new DiscoverFeeds($links));
+        //todo implement this dispatch(new DiscoverFeeds($this));
     }
 
     public function getFeedId(): ?string

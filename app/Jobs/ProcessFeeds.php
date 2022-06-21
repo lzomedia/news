@@ -4,18 +4,17 @@ namespace App\Jobs;
 
 use App\Contracts\ArticleDatabaseContract;
 use App\DTO\Article as ArticleDTO;
-use App\Models\Category;
+
 use App\Models\Feed;
-use App\Models\Article as ArticleModel;
+
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldBeUnique;
+
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Log;
-use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\Process;
 
 
@@ -46,18 +45,22 @@ class ProcessFeeds implements ShouldQueue
 
     final public function handle(): void
     {
-
-        try {
+        try{
             $process = new Process([
                 self::PYTHON,
                 base_path(self::PYTHON_FILE_EXTRACT_REALTIME),
-                $this->feed->get('url')
+                $this->feed->url
             ]);
 
             $process->run(function ($type, $buffer)
             {
+                Log::error("Output: $buffer");
+
                 if(strlen($buffer) > 10) {
 
+                    Log::error("Output: $buffer");
+
+                    Log::error("Output: $buffer");
 
                     $data = json_decode(
                         $buffer,
@@ -67,19 +70,21 @@ class ProcessFeeds implements ShouldQueue
                     );
 
                     if (json_last_error() === 0) {
+
                         $dto = new ArticleDTO($data);
+
                         $this->articleDatabaseContract->createArticle($dto);
+
                     }
 
                 }
 
             });
-
         }catch (\Exception $exception){
             Log::error($exception->getTraceAsString());
             $this->delete();
-
         }
+
         $this->feed->status = Feed::COMPLETED;
         $this->feed->save();
     }

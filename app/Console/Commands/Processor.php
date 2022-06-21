@@ -6,6 +6,7 @@ use App\Contracts\ArticleDatabaseContract;
 use App\DTO\Article;
 use App\Factories\ExtractorFactory;
 use App\Jobs\ProcessFeeds;
+
 use App\Models\Feed;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
@@ -18,7 +19,6 @@ class Processor extends Command
     protected $description = 'This command will run and extract the data from the feeds';
 
     private ArticleDatabaseContract $articleDatabaseContract;
-
     public function __construct(ArticleDatabaseContract $articleDatabaseContract)
     {
         parent::__construct();
@@ -39,8 +39,15 @@ class Processor extends Command
         $process->run(function ($type, $buffer)  use ($url)
         {
 
+            Log::error("Output: {$buffer}");
+
             if(strlen($buffer) > 10) {
 
+                Log::error("Output: {$buffer}");
+
+                Log::error("Url: {$url}");
+
+                Log::error("Output: {$buffer}");
 
                 $data = json_decode(
                     $buffer,

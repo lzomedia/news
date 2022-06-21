@@ -95,3 +95,7 @@ su -c "python3 -m textblob.download_corpora"
 ## Contributing
 Feel free to contribute and make a pull request.
 
+
+## Badges
+[![Actions Status](https://github.com/lzomedia/news/workflows/Cheks/badge.svg)](https://github.com/lzomedia/actions/actions)
+

@@ -1,12 +1,10 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Unit;
 
 use App\Contracts\SyncContract;
-use App\DTO\Article;
 use App\Jobs\ProcessFeeds;
 use App\Models\Feed;
-use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Queue;
 use Tests\TestCase;
 

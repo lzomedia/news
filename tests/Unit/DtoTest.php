@@ -1,15 +1,10 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Unit;
 
 use App\DTO\Article;
-use App\Factories\ExtractorFactory;
-use App\Jobs\ProcessFeeds;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Spatie\DataTransferObject\Attributes\MapFrom;
 use Spatie\DataTransferObject\Exceptions\UnknownProperties;
 use Tests\TestCase;
-use Illuminate\Support\Facades\Queue;
 
 class DtoTest extends TestCase
 {

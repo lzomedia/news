@@ -11,7 +11,7 @@ use Illuminate\Database\Query\Builder as QueryBuilder;
  * @mixin EloquentBuilder
  * @mixin QueryBuilder
  */
-class ArticleTags extends Model
+class ArticleTags extends BaseModel
 {
     protected $table = 'article_tag';
 

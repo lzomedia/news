@@ -1,20 +1,12 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Unit;
 
 use App\Contracts\SyncContract;
-use App\DTO\Article;
-use App\Factories\ExtractorFactory;
-use App\Jobs\ProcessFeeds;
-use App\Models\Feed;
 use App\Repositories\FeedRepository;
 use Carbon\Carbon;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Mockery;
-use Spatie\DataTransferObject\Attributes\MapFrom;
-use Spatie\DataTransferObject\Exceptions\UnknownProperties;
 use Tests\TestCase;
-use Illuminate\Support\Facades\Queue;
 
 class FeedsTest extends TestCase
 {

@@ -68,7 +68,10 @@
                         </h4>
                     </div>
                     <div class="card-body">
-                        <table class="table">
+
+
+                        @if(count($feeds) > 0):
+                            <table class="table">
                             <thead>
                             <tr>
                                 <th scope="col">#</th>
@@ -98,6 +101,12 @@
                             @endforeach
                             </tbody>
                         </table>
+                        @else
+                            <div class="alert alert-danger" role="alert">
+                                No feeds found.
+                                Please use the form above to upload some feeds.
+                            </div>
+                        @endif
                     </div>
              </div>
 

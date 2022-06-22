@@ -6,9 +6,11 @@ use App\Contracts\FeedDatabaseContract;
 use App\Contracts\SyncContract;
 use App\Jobs\ProcessFeeds;
 use App\Models\Feed;
+use App\Models\User;
 use App\Parsers\OpmlParser;
 use App\Requests\SaveFileRequest;
 use Carbon\Carbon;
+use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
@@ -21,12 +23,12 @@ class FeedRepository implements FeedDatabaseContract
         return (new \App\Models\Feed)->find($feedId);
     }
 
-    public function getAllFeeds(): Collection
+    public function getAllFeeds(User| Authenticatable $user): Collection
     {
-       return Feed::all();
+       return Feed::where('user_id', $user->id)->get();
     }
 
-    public function deleteFeed(Feed | Model $feed): bool
+    public function deleteFeed(Feed | Model $feed): bool | null
     {
         return $feed->delete();
     }

@@ -21,7 +21,7 @@ use Illuminate\Database\Query\Builder as QueryBuilder;
  * @property Carbon $sync
  * @property string $status
  * @method static orderBy(string $string)
-
+* @method static where(string $string, $value)
  */
 class Feed extends BaseModel
 {

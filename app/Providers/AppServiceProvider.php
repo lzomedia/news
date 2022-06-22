@@ -2,27 +2,26 @@
 
 namespace App\Providers;
 
+use App\Contracts\ArticleDatabaseContract;
+use App\Contracts\FeedDatabaseContract;
+use App\Contracts\SyncContract;
+use App\Managers\SyncManager;
+use App\Repositories\ArticleRepository;
+use App\Repositories\FeedRepository;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
-    /**
-     * Register any application services.
-     *
-     * @return void
-     */
-    public function register()
+
+    public function register(): void
     {
-        //
+        $this->app->bind(FeedDatabaseContract::class, FeedRepository::class);
+        $this->app->bind(SyncContract::class, SyncManager::class);
+        $this->app->bind(ArticleDatabaseContract::class, ArticleRepository::class);
+
     }
 
-    /**
-     * Bootstrap any application services.
-     *
-     * @return void
-     */
-    public function boot()
+    public function boot(): void
     {
-        //
     }
 }

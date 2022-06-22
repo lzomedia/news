@@ -8,6 +8,7 @@ use App\Contracts\FeedDatabaseContract;
 use App\Contracts\SyncContract;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class FeedsApiController extends Controller
 {
@@ -23,8 +24,14 @@ class FeedsApiController extends Controller
 
     public function index(): JsonResponse
     {
+        $user = Auth::user();
+
+        if($user === NULL){
+            throw new \RuntimeException('User is not authenticated');
+        }
+
         return response()->json(
-            $this->feedDatabaseContract->getAllFeeds()
+            $this->feedDatabaseContract->getAllFeeds($user)
         );
     }
 

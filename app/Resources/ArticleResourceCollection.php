@@ -3,9 +3,9 @@
 namespace App\Resources;
 
 
+use App\Models\Category;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 use Illuminate\Support\Collection;
-use App\Models\Category;
 
 
 class ArticleResourceCollection extends ResourceCollection
@@ -17,7 +17,7 @@ class ArticleResourceCollection extends ResourceCollection
             return new ArticleResource($article);
         });
 
-        $categories = Category::orderBy('count', 'desc')->limit(10)->get();
+        $categories = (new Category)->orderBy('count', 'desc')->limit(10)->get();
 
         return collect([
             'articles' => $articles,

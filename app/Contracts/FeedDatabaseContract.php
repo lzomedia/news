@@ -11,9 +11,9 @@ use App\Models\Article;
 
 interface FeedDatabaseContract
 {
-    public function getFeedById(int $feedId): Feed | Model;
+    public function getFeedById(int $feedId): Feed | Model | null;
     public function deleteFeed(Feed | Model $feed): bool;
-    public function importFeeds(Collection $feeds): void;
+
     public function createFeed(array $feed): Feed | Model;
     public function getAllFeeds(): Collection;
 }

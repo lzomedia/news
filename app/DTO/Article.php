@@ -5,6 +5,7 @@ namespace App\DTO;
 use App\Jobs\DiscoverFeeds;
 use App\Models\Category;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Model;
 use Spatie\DataTransferObject\Attributes\MapFrom;
 use Spatie\DataTransferObject\DataTransferObject;
 
@@ -73,7 +74,7 @@ class Article extends DataTransferObject
         return $this->source;
     }
 
-    public function getCategory(): Category
+    public function getCategory(): Category | Model
     {
         return (new \App\Models\Category())->firstOrCreate([
             'name' => $this->getKeywords()[0] ?? "News"

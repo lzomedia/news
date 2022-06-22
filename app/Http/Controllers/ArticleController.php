@@ -33,7 +33,9 @@ class ArticleController extends Controller
 
     public function view(Request $request): View
     {
-        $article = $this->articleDatabaseContract->getArticleById($request->id);
+        $id = $request->id;
+
+        $article = $this->articleDatabaseContract->getArticleById($id);
 
         return view('article-view', [
             'article' =>$article,

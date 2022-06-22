@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Storage;
 
 class FeedRepository implements FeedDatabaseContract
 {
-    public function getFeedById(int $feedId): Feed | Model
+    public function getFeedById(int $feedId): Feed | Model | null
     {
         return (new \App\Models\Feed)->find($feedId);
     }
@@ -29,13 +29,6 @@ class FeedRepository implements FeedDatabaseContract
     public function deleteFeed(Feed | Model $feed): bool
     {
         return $feed->delete();
-    }
-
-    public function importFeeds(Collection $feeds): void
-    {
-        $feeds->each(function ($feed) {
-            $this->createFeed($feed);
-        });
     }
 
     public function createFeed(array $feed): Model | Feed

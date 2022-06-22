@@ -1,21 +1,18 @@
 <?php namespace App\Models;
 
 
-use App\Models\User;
+
 use Carbon\Carbon;
-use DateTime;
+
 use Illuminate\Database\Eloquent\Builder;
 
-use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
-
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 use Illuminate\Database\Query\Builder as QueryBuilder;
 
 /**
- * @mixin EloquentBuilder
+ * @mixin Builder
  * @mixin QueryBuilder
  * @property int $id
  * @property int $user_id
@@ -23,6 +20,8 @@ use Illuminate\Database\Query\Builder as QueryBuilder;
  * @property string $url
  * @property Carbon $sync
  * @property string $status
+ * @method static orderBy(string $string)
+
  */
 class Feed extends BaseModel
 {
@@ -57,4 +56,6 @@ class Feed extends BaseModel
     {
         return $this->hasMany(Article::class);
     }
+
+
 }

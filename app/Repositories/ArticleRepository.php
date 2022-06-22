@@ -11,10 +11,11 @@ use App\Resources\ArticleResourceCollection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Log;
+use JsonException;
 
 class ArticleRepository implements ArticleDatabaseContract
 {
-    public function getArticleById(int $articleId): Model
+    public function getArticleById(mixed $articleId): Model
     {
        return Article::with('category')
            ->with('tags')
@@ -32,9 +33,6 @@ class ArticleRepository implements ArticleDatabaseContract
         );
     }
 
-    /**
-     * @throws \JsonException
-     */
     public function createArticle(\App\DTO\Article $articleDTO): Model
     {
         try{
@@ -63,8 +61,14 @@ class ArticleRepository implements ArticleDatabaseContract
             ]);
 
             return $articleModel;
-        }catch (QueryException $exception){
+        }
+        catch (QueryException $exception)
+        {
             Log::error($exception->getTraceAsString());
+        }
+        catch (JsonException $e)
+        {
+            Log::error($e->getTraceAsString());
         }
     }
 

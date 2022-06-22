@@ -19,7 +19,7 @@ use Illuminate\Support\Carbon;
  * @property string $author
  * @property int $category_id
  * @property int $feed_id
-
+* @method firstOrCreate(array $array)
  */
 class Article extends Model
 {

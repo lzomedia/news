@@ -1,15 +1,10 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Unit;
 
 use App\DTO\Article;
-use App\Factories\ExtractorFactory;
-use App\Jobs\ProcessFeeds;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Spatie\DataTransferObject\Attributes\MapFrom;
 use Spatie\DataTransferObject\Exceptions\UnknownProperties;
 use Tests\TestCase;
-use Illuminate\Support\Facades\Queue;
 
 class DtoTest extends TestCase
 {
@@ -23,17 +18,19 @@ class DtoTest extends TestCase
             'title' => 'title',
             'authors' => ['author'],
             'source' => 'https://test.com',
-            'date' => '2020-01-01',
+            'date' => '2020-01-01 00:00:00',
             'content' => 'content',
             'images' => 'images',
+            'timetoread' => '1',
         ];
 
         $dto = new Article($data);
 
+
         $this->assertEquals('title', $dto->getTitle());
         $this->assertEquals('author', $dto->getAuthors());
         $this->assertEquals('https://test.com', $dto->getSource());
-        $this->assertEquals('2020-01-01', $dto->getDate());
+        $this->assertEquals('2020-01-01 00:00:00', $dto->getDate());
         $this->assertEquals('content', $dto->getContent());
         $this->assertEquals('images', $dto->getImage());
 

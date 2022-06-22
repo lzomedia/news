@@ -198,8 +198,6 @@ return [
 
 
         //Custom providers
-        App\Providers\ArticleContractServiceProvider::class,
-        App\Providers\FeedContractServiceProvider::class,
     ],
 
     /*

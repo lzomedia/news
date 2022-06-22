@@ -3,7 +3,9 @@
 namespace App\DTO;
 
 use App\Jobs\DiscoverFeeds;
+use App\Models\Category;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Model;
 use Spatie\DataTransferObject\Attributes\MapFrom;
 use Spatie\DataTransferObject\DataTransferObject;
 
@@ -34,7 +36,13 @@ class Article extends DataTransferObject
     #[MapFrom('keywords')]
     public ?array $keywords;
 
-    public ?string $category;
+    #[MapFrom('vader')]
+    public ?array $vader;
+
+    #[MapFrom('timetoread')]
+    public ?string $timetoread;
+
+    public ?Category $category;
 
     public function getTitle(): ?string
     {
@@ -48,8 +56,7 @@ class Article extends DataTransferObject
 
     public function getDate(): ?string
     {
-        return Carbon::parse($this->date)->toDateTimeString()  ??
-            Carbon::now()->toDateTimeString();
+        return Carbon::parse($this->date)->toDateTimeString();
     }
 
     public function getContent(): ?string
@@ -67,9 +74,11 @@ class Article extends DataTransferObject
         return $this->source;
     }
 
-    public function getCategory(): string
+    public function getCategory(): Category | Model
     {
-        return $this->getKeywords()[0] ?? 'News';
+        return (new \App\Models\Category())->firstOrCreate([
+            'name' => $this->getKeywords()[0] ?? "News"
+        ]);
     }
 
     public function getKeywords(): ?array
@@ -79,14 +88,21 @@ class Article extends DataTransferObject
 
     public function discoverFeeds(): void
     {
-
-        $links = Crawler::links($this->getContent());
-
-        dispatch(new DiscoverFeeds($links));
+        //todo implement this dispatch(new DiscoverFeeds($this));
     }
 
     public function getFeedId(): ?string
     {
         return $this->feed_id ?? "1";
+    }
+
+    public function getVader(): ?array
+    {
+        return $this->vader;
+    }
+
+    public function getTimetoread(): ?string
+    {
+        return $this->timetoread;
     }
 }

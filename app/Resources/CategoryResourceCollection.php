@@ -8,13 +8,12 @@ use Illuminate\Http\Resources\Json\ResourceCollection;
 
 class CategoryResourceCollection extends ResourceCollection
 {
-    public function toArray($request): array
+    public function toArray($request)
     {
         return [
-            'data' => $this->collection,
-            'links' => [
-                'self' => 'link-value',
-            ],
+            'categories' => $this->collection->map(function (CategoryResource $category) {
+                return new CategoryResource($category);
+            })
         ];
     }
 }

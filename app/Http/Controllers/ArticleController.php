@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 use App\Contracts\ArticleDatabaseContract;
 use App\Contracts\FeedDatabaseContract;
 
+use App\DTO\Article;
 use App\Http\Controllers\Api\ArticlesApiController;
 use App\Parsers\OpmlParser;
 use App\Requests\SaveFileRequest;
@@ -16,6 +17,7 @@ use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\View\View;
 
 class ArticleController extends Controller
 {
@@ -29,16 +31,19 @@ class ArticleController extends Controller
     }
 
 
-    public function index(): JsonResponse
+    public function view(Request $request): View
     {
-        return view('articles.index');
+        $id = $request->id;
+
+        $article = $this->articleDatabaseContract->getArticleById($id);
+
+        return view('article-view', [
+            'article' =>$article,
+        ]);
     }
-
-
 
     public function indexApi(): JsonResponse
     {
-
         return response()->json(
             $this->articleDatabaseContract->getAllArticles()
         );

@@ -1,7 +1,7 @@
 # News App
 
 
-This is a self-hosted laravel app that allows you to read news from different feed sources.
+This is a self-hosted Laravel App that allows you to read news from different feed sources.
 This is using autodiscovery to find the feeds.So when you add a new feed, it will automatically try to find new the feeds from the content itself.
 
 
@@ -61,23 +61,49 @@ This is using autodiscovery to find the feeds.So when you add a new feed, it wil
     Email: stefan@lzomedia.com
     Password: password
     ```
-
+9. Configure Redis Database
+    ```bash
+    REDIS_HOST=127.0.0.1
+    REDIS_PASSWORD=null
+    REDIS_PORT=6379
+    ```
 
 ## Python Script
 This project uses Python 3 for extracting the content from the feeds.
 In order to use this script, you need to install the following packages:
 ```bash
 su -c "pip3 install newspaper3k"
+su -c "pip3 install pandas"
+su -c "pip3 install simplejson"
+su -c "pip3 install dotenv"
 su -c "pip3 install spacy"
+su -c "pip3 install supervisor"
 su -c "pip3 install nltk"
 su -c "pip3 install lxml"
+su -c "pip3 install textblob"
+su -c "pip3 install spacytextblob"
+su -c "pip3 install vaderSentiment"
 su -c "python3 -m spacy download en_core_web_md"
 su -c "python3 -m nltk.downloader -d /usr/local/share/nltk_data punkt"
 su -c "python3 -m nltk.downloader -d /usr/local/share/nltk_data stopwords"
+su -c "python3 -m nltk.downloader -d /usr/local/share/nltk_data vader_lexicon"
+su -c "python3 -m textblob.download_corpora"
 ```
 
+## Video Generation
 
+This project uses AI to generate a video from the news.
+
+In order to use this script, you need to install the following packages:
+
+```bash
+su -c "pip3 install moviepy"
+```
 
 ## Contributing
 Feel free to contribute and make a pull request.
+
+
+## Badges
+[![Actions Status](https://github.com/lzomedia/news/workflows/Cheks/badge.svg)](https://github.com/lzomedia/actions/actions)
 

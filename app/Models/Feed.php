@@ -1,38 +1,38 @@
 <?php namespace App\Models;
 
 
-use App\Models\User;
+
 use Carbon\Carbon;
-use DateTime;
+
 use Illuminate\Database\Eloquent\Builder;
 
-use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
-
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 use Illuminate\Database\Query\Builder as QueryBuilder;
 
 /**
- * @mixin EloquentBuilder
+ * @mixin Builder
  * @mixin QueryBuilder
  * @property int $id
+ * @property int $user_id
  * @property string $title
  * @property string $url
  * @property Carbon $sync
  * @property string $status
+ * @method static orderBy(string $string)
+* @method static where(string $string, $value)
  */
-class Feed extends Model
+class Feed extends BaseModel
 {
 
-    const INITIAL =  'initial';
+    public const INITIAL =  'initial';
 
-    const SYNCYING =  'synchronizing';
+    public const SYNCYING =  'synchronizing';
 
-    const COMPLETED = 'completed';
+    public const COMPLETED = 'completed';
 
-    const FAILED = 'failed';
+    public const FAILED = 'failed';
 
 
     protected $table = 'feeds';
@@ -47,7 +47,6 @@ class Feed extends Model
         'sync',
     ];
 
-
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
@@ -57,4 +56,6 @@ class Feed extends Model
     {
         return $this->hasMany(Article::class);
     }
+
+
 }

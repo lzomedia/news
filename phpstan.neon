@@ -1,0 +1,20 @@
+includes:
+    - ./vendor/nunomaduro/larastan/extension.neon
+
+parameters:
+    checkGenericClassInNonGenericObjectType: false
+    inferPrivatePropertyTypeFromConstructor: true
+    paths:
+        - app
+
+    # The level 9 is the highest level
+    # This is work in progress
+    level: 9
+
+
+
+
+    excludePaths:
+        - ./app/Parsers/
+
+    checkMissingIterableValueType: false

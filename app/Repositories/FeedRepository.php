@@ -4,41 +4,38 @@ namespace App\Repositories;
 
 use App\Contracts\FeedDatabaseContract;
 use App\Contracts\SyncContract;
+use App\Contracts\UserContract;
 use App\Jobs\ProcessFeeds;
 use App\Models\Feed;
+use App\Models\User;
 use App\Parsers\OpmlParser;
 use App\Requests\SaveFileRequest;
 use Carbon\Carbon;
+use Illuminate\Contracts\Auth\Authenticatable;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class FeedRepository implements FeedDatabaseContract
 {
-    public function getFeedById(int $feedId): Feed
+    public function getFeedById(int $feedId): Feed | Model | null
     {
         return (new \App\Models\Feed)->find($feedId);
     }
 
-    public function getAllFeeds(): Collection
+    public function getAllFeeds( UserContract $userContract): Collection
     {
-       return Feed::all();
+       return Feed::where('user_id', $userContract->getUserId())->get();
     }
 
-    public function deleteFeed(Feed $feed): ?bool
+    public function deleteFeed(Feed | Model $feed): bool | null
     {
         return $feed->delete();
     }
 
-    public function importFeeds(Collection $feeds): void
+    public function createFeed(array $feed): Model | Feed
     {
-        $feeds->each(function ($feed) {
-            $this->createFeed($feed);
-        });
-    }
-
-    public function createFeed(array $feed): ?Feed
-    {
-        return (new \App\Models\Feed)->create($feed);
+        return (new \App\Models\Feed)->firstOrCreate($feed);
     }
 }

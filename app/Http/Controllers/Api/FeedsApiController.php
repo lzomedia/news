@@ -6,30 +6,34 @@ namespace App\Http\Controllers\Api;
 use App\Contracts\ArticleDatabaseContract;
 use App\Contracts\FeedDatabaseContract;
 use App\Contracts\SyncContract;
+use App\Contracts\UserContract;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class FeedsApiController extends Controller
 {
 
     private FeedDatabaseContract $feedDatabaseContract;
-    private SyncContract $syncContract;
+    private UserContract $userContract;
+
 
 
     public function __construct(
         FeedDatabaseContract $feedDatabaseContract,
-        SyncContract $syncContract
+        UserContract $userContract
     )
     {
         $this->feedDatabaseContract = $feedDatabaseContract;
-        $this->syncContract = $syncContract;
-
+        $this->userContract = $userContract;
     }
 
     public function index(): JsonResponse
     {
         return response()->json(
-            $this->feedDatabaseContract->getAllArticles()
+            $this->feedDatabaseContract->getAllFeeds(
+                $this->userContract
+            )
         );
     }
 

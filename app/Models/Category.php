@@ -16,7 +16,7 @@ use Illuminate\Database\Query\Builder as QueryBuilder;
  * @property string $name
  * @property int $count
  */
-class Category extends Model
+class Category extends BaseModel
 {
 
     protected $table = 'categories';

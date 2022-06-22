@@ -1,40 +1,14 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container">
+    <div class="container py-5">
 
-        <div class="row">
-            <div class="col-md-12">
-
-                @if($errors->any())
-                    {!! implode('', $errors->all('<div class="alert alert-danger" role="alert">:message</div>')) !!}
-                @endif
-
-                @if (session('status'))
-                    <div class="alert alert-success" role="alert">
-                        {{ session('status') }}
-                    </div>
-                @endif
-
-            </div>
-
-        </div>
+       @include('partials.dashboard.errors')
 
         <div class="row justify-content-center">
 
 
-            <div class="col-md-2">
-                <div class="card" bis_skin_checked="1">
-                    <div class="card-header">{{ __('Sidebar') }}</div>
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item">
-                            <a href="{{ route('feeds.sync-all') }}">
-                                Sync All Now
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+          @include('partials.dashboard.sidebar')
 
 
             <div class="col-md-10">
@@ -68,7 +42,10 @@
                         </h4>
                     </div>
                     <div class="card-body">
-                        <table class="table">
+
+
+                        @if(count($feeds) > 0):
+                            <table class="table">
                             <thead>
                             <tr>
                                 <th scope="col">#</th>
@@ -90,14 +67,26 @@
 
                                     <td>{{ $feed->status }}</td>
                                     <td>
+
                                         <a href="{{ route('feeds.sync-single', $feed->id ) }}">
                                             Sync
                                         </a>
+
+                                        <a href="{{ route('video.generate', $feed->id ) }}">
+                                            Video
+                                        </a>
+
                                     </td>
                                 </tr>
                             @endforeach
                             </tbody>
                         </table>
+                        @else
+                            <div class="alert alert-danger" role="alert">
+                                No feeds found.
+                                Please use the form above to upload some feeds.
+                            </div>
+                        @endif
                     </div>
              </div>
 

@@ -37,14 +37,14 @@
 <body>
 
 <!-- Responsive navbar-->
-@include('partials.navbar')
+@include('partials.frontend.navbar')
 
 
 <main>
     @yield('content')
 </main>
 
-@include('partials.footer')
+@include('partials.frontend.footer')
 
 </body>
 </html>

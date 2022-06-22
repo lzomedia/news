@@ -19,5 +19,5 @@ interface FeedDatabaseContract
 
     public function createFeed(array $feed): Feed | Model;
 
-    public function getAllFeeds(User | Authenticatable $user): Collection;
+    public function getAllFeeds(UserContract $userContract): Collection;
 }

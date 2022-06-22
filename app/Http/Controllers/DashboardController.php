@@ -33,15 +33,11 @@ class DashboardController extends Controller
     {
 
         $feeds = $this->feedDatabaseContract->getAllFeeds(
-            $this->userContract->getUser()
+            $this->userContract
         );
 
         return view('dashboard', compact ('feeds'));
     }
 
 
-    public function articles(Request $request)
-    {
-        return view('dashboard.articles');
-    }
 }

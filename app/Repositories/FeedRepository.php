@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Contracts\FeedDatabaseContract;
 use App\Contracts\SyncContract;
+use App\Contracts\UserContract;
 use App\Jobs\ProcessFeeds;
 use App\Models\Feed;
 use App\Models\User;
@@ -23,9 +24,9 @@ class FeedRepository implements FeedDatabaseContract
         return (new \App\Models\Feed)->find($feedId);
     }
 
-    public function getAllFeeds(User| Authenticatable $user): Collection
+    public function getAllFeeds( UserContract $userContract): Collection
     {
-       return Feed::where('user_id', $user->id)->get();
+       return Feed::where('user_id', $userContract->getUserId())->get();
     }
 
     public function deleteFeed(Feed | Model $feed): bool | null

@@ -1,7 +1,7 @@
 # News App
 
 
-This is a self-hosted laravel app that allows you to read news from different feed sources.
+This is a self-hosted Laravel App that allows you to read news from different feed sources.
 This is using autodiscovery to find the feeds.So when you add a new feed, it will automatically try to find new the feeds from the content itself.
 
 
@@ -90,7 +90,15 @@ su -c "python3 -m nltk.downloader -d /usr/local/share/nltk_data vader_lexicon"
 su -c "python3 -m textblob.download_corpora"
 ```
 
+## Video Generation
 
+This project uses AI to generate a video from the news.
+
+In order to use this script, you need to install the following packages:
+
+```bash
+su -c "pip3 install moviepy"
+```
 
 ## Contributing
 Feel free to contribute and make a pull request.

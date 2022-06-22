@@ -22,65 +22,42 @@
 
         <div class="row justify-content-center">
 
-
+            @include('partials.dashboard.sidebar')
 
             <div class="col-md-10">
 
                 <div class="card">
                     <div class="card-header">
                         <h4 class="card-title">
-                            Feeds
+                            Articles
                         </h4>
                     </div>
                     <div class="card-body">
-
-
-                        @if(count($feeds) > 0):
-                            <table class="table">
+                        <table class="table">
                             <thead>
                             <tr>
-                                <th scope="col">#</th>
                                 <th scope="col">Title</th>
-
-                                <th scope="col">Status</th>
                                 <th scope="col">Handle</th>
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach($feeds as $feed)
+                            @foreach($articles as $article)
                                 <tr>
-                                    <th scope="row">{{ $feed->id }}</th>
+                                    <th scope="row">1</th>
+                                    <td>{{ $article->title }}</td>
                                     <td>
-                                        <a target="_blank" href="{{ $feed->url }}">
-                                            {{ $feed->title }}
-                                        </a>
-                                    </td>
-
-                                    <td>{{ $feed->status }}</td>
-                                    <td>
-                                        <a href="{{ route('feeds.sync-single', $feed->id ) }}">
-                                            Sync
-                                        </a>
-                                        /
-                                        <a href="{{ route('video.generate', $feed->id ) }}">
-                                            Make Video
+                                        <a href="{{ route('video.generate', $article->id) }}" class="btn btn-primary">
+                                            Generate Video
                                         </a>
                                     </td>
                                 </tr>
                             @endforeach
                             </tbody>
                         </table>
-                        @else
-                            <div class="alert alert-danger" role="alert">
-                                No feeds found.
-                                Please use the form above to upload some feeds.
-                            </div>
-                        @endif
                     </div>
-             </div>
+                </div>
 
 
-
+            </div>
         </div>
-    </div>
 @endsection

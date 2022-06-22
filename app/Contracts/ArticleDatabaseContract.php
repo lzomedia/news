@@ -11,6 +11,7 @@ interface ArticleDatabaseContract
 {
     public function getArticleById(mixed $articleId): Model;
 
+    //todo implement here a  way to select just the user articles
     public function getAllArticles(): ArticleResourceCollection;
 
     public function createArticle(ArticleDTO $articleDTO): Model;

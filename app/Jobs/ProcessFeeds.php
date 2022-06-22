@@ -36,6 +36,7 @@ class ProcessFeeds implements ShouldQueue
 
     public ArticleDatabaseContract $articleDatabaseContract;
 
+    //todo implement contract for feed
     public function __construct(Feed | Model $feed, ArticleDatabaseContract $articleDatabaseContract)
     {
         $this->feed = $feed;

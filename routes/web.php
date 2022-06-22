@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\Dashboard\DashBoardArticle;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FeedsController;
 use App\Http\Controllers\VideoGenerator;
@@ -39,25 +40,33 @@ RateLimiter::for('articles', static function (Request $request) {
 
 
 
-
-Route::get('/dashboard', [DashboardController::class, 'dashboard'])
-    ->name('dashboard');
-
-Route::get('/articles', [DashboardController::class, 'articles'])
-    ->name('dashboard.articles');
-
-
-Route::post('/feeds/import', [FeedsController::class, 'import'])
-    ->name('feeds.import');
-Route::get('/feeds/syncAll', [FeedsController::class, 'syncAll'])
-    ->name('feeds.sync-all');
-
-Route::get('/feeds/single/sync/{feed}', [FeedsController::class, 'syncSingle'])
-    ->name('feeds.sync-single');
-
+//@todo clean the frontend routes
 Route::get('/articles/{id}/{slug}', [ArticleController::class, 'view'])
     ->name('article.view');
 
 
-Route::get('/video/generator/{article}', [VideoGenerator::class, 'view'])
-    ->name('video.generate');
+//todo clean up the dashboard routes
+Route::get('/dashboard', [DashboardController::class, 'dashboard'])
+    ->name('dashboard');
+
+
+
+Route::group(['prefix' => 'dashboard'], static function () {
+
+    Route::post('feeds/import', [FeedsController::class, 'import'])
+        ->name('feeds.import');
+
+    Route::get('feeds/syncAll', [FeedsController::class, 'syncAll'])
+        ->name('feeds.sync-all');
+
+    Route::get('feeds/single/sync/{feed}', [FeedsController::class, 'syncSingle'])
+        ->name('feeds.sync-single');
+
+    Route::get('articles', [DashBoardArticle::class, 'articles'])
+        ->name('dashboard.articles');
+
+    Route::get('video/generator/{article}', [VideoGenerator::class, 'view'])
+        ->name('video.generate');
+
+});
+

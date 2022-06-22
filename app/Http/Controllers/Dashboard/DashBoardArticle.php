@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
-class ArticleController extends Controller
+class DashBoardArticle extends Controller
 {
     private ArticleDatabaseContract $articleDatabaseContract;
 
@@ -30,9 +30,10 @@ class ArticleController extends Controller
         $this->articleDatabaseContract = $articleDatabaseContract;
     }
 
-    public function index(): View
+    public function articles(): View
     {
         $articles = $this->articleDatabaseContract->getAllArticles();
+
         return view('dashboard.articles', compact('articles'));
     }
 

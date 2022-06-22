@@ -17,4 +17,9 @@ class UserRepository implements UserContract
     {
         return Auth::id();
     }
+
+    public function getUser(): \Illuminate\Contracts\Auth\Authenticatable
+    {
+        return Auth::user();
+    }
 }

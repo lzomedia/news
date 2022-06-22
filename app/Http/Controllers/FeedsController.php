@@ -7,6 +7,7 @@ use App\Contracts\ArticleDatabaseContract;
 use App\Contracts\FeedDatabaseContract;
 
 use App\Contracts\SyncContract;
+use App\Contracts\UserContract;
 use App\Enums\FeedStatus;
 use App\Factories\ExtractorFactory;
 use App\Models\Feed;
@@ -33,9 +34,12 @@ class FeedsController extends Controller
 
     private SyncContract $syncContract;
 
+    private UserContract $userContract;
+
     public function __construct(
         FeedDatabaseContract $feedDatabaseContract,
-        SyncContract $syncContract
+        SyncContract $syncContract,
+        UserContract $userContract
     )
     {
 
@@ -44,17 +48,17 @@ class FeedsController extends Controller
 
         $this->syncContract = $syncContract;
 
+        $this->userContract = $userContract;
+
 
     }
 
     public function syncSingle(Feed $feed): RedirectResponse
     {
 
-        $user = Auth::user();
-
         Session::flash('status', 'Feeds sync started successfully');
 
-        $this->syncContract->syncSingle($feed, $user);
+        $this->syncContract->syncSingle($feed, $this->userContract->getUser());
 
         return redirect('dashboard');
     }
@@ -100,12 +104,12 @@ class FeedsController extends Controller
                         'title' => $data['title'] ?? 'Title' . $index,
                         'url' => $data['xmlurl'] ?? $data['xmlUrl'],
                         'status' => Feed::INITIAL,
-                        'user_id' => $user->id,
+                        'user_id' => $this->userContract->getUserId(),
                         'created_at' => Carbon::now(),
                         'updated_at' => Carbon::now()
                     ]);
 
-                    $this->syncContract->syncSingle($feed, $user);
+                    $this->syncContract->syncSingle($feed, $this->userContract->getUser());
                 }
                 catch (\Exception $e)
                 {

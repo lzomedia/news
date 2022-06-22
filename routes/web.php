@@ -3,6 +3,7 @@
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FeedsController;
+use App\Http\Controllers\VideoGenerator;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\RateLimiter;
@@ -41,6 +42,11 @@ RateLimiter::for('articles', static function (Request $request) {
 
 Route::get('/dashboard', [DashboardController::class, 'dashboard'])
     ->name('dashboard');
+
+Route::get('/articles', [DashboardController::class, 'articles'])
+    ->name('dashboard.articles');
+
+
 Route::post('/feeds/import', [FeedsController::class, 'import'])
     ->name('feeds.import');
 Route::get('/feeds/syncAll', [FeedsController::class, 'syncAll'])
@@ -51,3 +57,7 @@ Route::get('/feeds/single/sync/{feed}', [FeedsController::class, 'syncSingle'])
 
 Route::get('/articles/{id}/{slug}', [ArticleController::class, 'view'])
     ->name('article.view');
+
+
+Route::get('/video/generator/{article}', [VideoGenerator::class, 'view'])
+    ->name('video.generate');

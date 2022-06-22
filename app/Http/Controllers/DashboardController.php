@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Contracts\FeedDatabaseContract;
+use App\Contracts\UserContract;
 use App\Traits\UserErrorTrait;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Http\Request;
@@ -16,20 +17,31 @@ class DashboardController extends Controller
 
     private FeedDatabaseContract $feedDatabaseContract;
 
+    private UserContract $userContract;
 
-
-    public function __construct(FeedDatabaseContract $feedDatabaseContract)
+    public function __construct(
+        FeedDatabaseContract $feedDatabaseContract,
+        UserContract $userContract
+    )
     {
         $this->feedDatabaseContract = $feedDatabaseContract;
+        $this->userContract = $userContract;
     }
 
 
     public function dashboard(): \Illuminate\View\View
     {
-        $user = Auth::user();
 
-        $feeds = $this->feedDatabaseContract->getAllFeeds($user);
+        $feeds = $this->feedDatabaseContract->getAllFeeds(
+            $this->userContract->getUser()
+        );
 
         return view('dashboard', compact ('feeds'));
+    }
+
+
+    public function articles(Request $request)
+    {
+        return view('dashboard.articles');
     }
 }

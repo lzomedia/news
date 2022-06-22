@@ -66,9 +66,7 @@ class FeedsController extends Controller
     public function syncAll(): RedirectResponse
     {
 
-        $user = Auth::user();
-
-        $this->syncContract->syncAll($user);
+        $this->syncContract->syncAll($this->userContract->getUser());
 
         Session::flash('status', 'Feeds sync started successfully');
 

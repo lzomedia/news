@@ -90,9 +90,11 @@ class Article extends DataTransferObject
 
     public function getCategory(): Category | Model
     {
-        return (new Category())->firstOrCreate([
+        return (new Category())->firstOrCreate(
+            [
             'name' => $this->getKeywords()[0] ?? "News"
-        ]);
+            ]
+        );
     }
 
     public function getKeywords(): ?array
@@ -100,13 +102,15 @@ class Article extends DataTransferObject
         return $this->keywords;
     }
 
-    public function discoverFeeds(): array
+    public function discoverFeeds(): void
     {
         $crawler = new Crawler($this->getOriginalContent());
 
-        $results =  $crawler->filter('a')->each(function (\Symfony\Component\DomCrawler\Crawler $node) {
-            return parse_url($node->attr('href'))['host'];
-        });
+        $results =  $crawler->filter('a')->each(
+            function (Crawler $node) {
+                return parse_url($node->attr('href'))['host'];
+            }
+        );
 
         $domains =  array_unique($results);
 

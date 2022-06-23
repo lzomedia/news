@@ -21,16 +21,20 @@ class VideoManager implements VideoContract
             $input = new InputStream();
             $input->write(strip_tags($article->content));
 
-            $process = new Process([
+            $process = new Process(
+                [
                 self::PYTHON ,
                 self::PYTHON_FILE_EXTRACT_REALTIME,
                 'Some text',
-            ]);
+                ]
+            );
             $process->setInput($input);
 
-            $process->run(function ($type, $buffer) {
-                Log::error("Output: $buffer");
-            });
+            $process->run(
+                function ($type, $buffer) {
+                    Log::error("Output: $buffer");
+                }
+            );
         } catch (\Exception $e) {
             Log::error($e->getMessage());
         }

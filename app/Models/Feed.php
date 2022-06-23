@@ -12,18 +12,18 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Query\Builder as QueryBuilder;
 
 /**
- * @mixin Builder
- * @mixin QueryBuilder
+ * @mixin    Builder
+ * @mixin    QueryBuilder
  * @property int $id
  * @property int $user_id
  * @property string $title
  * @property string $url
  * @property Carbon $sync
  * @property string $status
- * @method static orderBy(string $string)
-* @method static where(string $string, $value)
- * @method static find($id)
- * @method static create(array $array)
+ * @method   static orderBy(string $string)
+ * @method   static where(string $string, $value)
+ * @method   static find($id)
+ * @method   static create(array $array)
  */
 class Feed extends BaseModel
 {

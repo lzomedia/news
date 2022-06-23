@@ -74,26 +74,30 @@ class FeedsController extends Controller
 
         $collection = (collect($parser->getContents()));
 
-        $collection->each(function ($data, $index) {
-            if (array_key_exists('xmlurl', $data)  || array_key_exists('xmlUrl', $data)) {
-                try {
-                    $feed = $this->feedDatabaseContract->createFeed([
-                        'title' => $data['title'] ?? 'Title' . $index,
-                        'url' => $data['xmlurl'] ?? $data['xmlUrl'],
-                        'status' => Feed::INITIAL,
-                        'user_id' => $this->userContract->getUserId()
-                    ]);
+        $collection->each(
+            function ($data, $index) {
+                if (array_key_exists('xmlurl', $data)  || array_key_exists('xmlUrl', $data)) {
+                    try {
+                        $feed = $this->feedDatabaseContract->createFeed(
+                            [
+                            'title' => $data['title'] ?? 'Title' . $index,
+                            'url' => $data['xmlurl'] ?? $data['xmlUrl'],
+                            'status' => Feed::INITIAL,
+                            'user_id' => $this->userContract->getUserId()
+                            ]
+                        );
 
-                    $user_id = $this->userContract->getUserId();
+                        $user_id = $this->userContract->getUserId();
 
-                    $feed_id = $feed->id;
+                        $feed_id = $feed->id;
 
-                    $this->syncContract->syncSingle($feed_id, $user_id);
-                } catch (\Exception $e) {
-                    Session::flash('status', 'Error while importing feeds');
+                        $this->syncContract->syncSingle($feed_id, $user_id);
+                    } catch (\Exception $e) {
+                        Session::flash('status', 'Error while importing feeds');
+                    }
                 }
             }
-        });
+        );
 
 
         Session::flash('status', 'Feeds imported successfully');

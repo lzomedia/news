@@ -26,9 +26,11 @@ class ArticleController extends Controller
 
         $article = $this->articleDatabaseContract->getArticleById($id);
 
-        return view('article-view', [
+        return view(
+            'article-view', [
             'article' =>$article,
-        ]);
+            ]
+        );
     }
 
     public function indexApi(): JsonResponse

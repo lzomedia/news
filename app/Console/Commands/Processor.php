@@ -28,36 +28,40 @@ class Processor extends Command
     {
         $url = $this->argument('url');
 
-        $process = new Process([
+        $process = new Process(
+            [
             'python3',
             base_path('python/extractor-realtime.py'),
-           $url
-        ]);
+            $url
+            ]
+        );
 
-        $process->run(function ($type, $buffer) use ($url) {
-            Log::error("Output: {$buffer}");
-
-            if (strlen($buffer) > 10) {
+        $process->run(
+            function ($type, $buffer) use ($url) {
                 Log::error("Output: {$buffer}");
 
-                Log::error("Url: {$url}");
+                if (strlen($buffer) > 10) {
+                    Log::error("Output: {$buffer}");
 
-                Log::error("Output: {$buffer}");
+                    Log::error("Url: {$url}");
 
-                $data = json_decode(
-                    $buffer,
-                    true,
-                    512,
-                    JSON_THROW_ON_ERROR
-                );
+                    Log::error("Output: {$buffer}");
 
-                if (json_last_error() === 0) {
-                    $dto = new Article($data);
+                    $data = json_decode(
+                        $buffer,
+                        true,
+                        512,
+                        JSON_THROW_ON_ERROR
+                    );
 
-                    $this->articleDatabaseContract->createArticle($dto);
+                    if (json_last_error() === 0) {
+                        $dto = new Article($data);
+
+                        $this->articleDatabaseContract->createArticle($dto);
+                    }
                 }
             }
-        });
+        );
 
         $this->info('Processing of feeds finished & jobs where dispatched.');
     }

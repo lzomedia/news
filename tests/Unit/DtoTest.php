@@ -8,7 +8,6 @@ use Tests\TestCase;
 
 class DtoTest extends TestCase
 {
-
     /**
      * @throws UnknownProperties
      */
@@ -33,6 +32,5 @@ class DtoTest extends TestCase
         $this->assertEquals('2020-01-01 00:00:00', $dto->getDate());
         $this->assertEquals('content', $dto->getContent());
         $this->assertEquals('images', $dto->getImage());
-
     }
 }

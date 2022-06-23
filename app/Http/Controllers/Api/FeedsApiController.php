@@ -2,28 +2,22 @@
 
 namespace App\Http\Controllers\Api;
 
-
-use App\Contracts\ArticleDatabaseContract;
-use App\Contracts\FeedDatabaseContract;
-use App\Contracts\SyncContract;
+use App\Contracts\FeedContract;
 use App\Contracts\UserContract;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller;
-use Illuminate\Support\Facades\Auth;
 
 class FeedsApiController extends Controller
 {
-
-    private FeedDatabaseContract $feedDatabaseContract;
+    private FeedContract $feedDatabaseContract;
     private UserContract $userContract;
 
 
 
     public function __construct(
-        FeedDatabaseContract $feedDatabaseContract,
+        FeedContract $feedDatabaseContract,
         UserContract $userContract
-    )
-    {
+    ) {
         $this->feedDatabaseContract = $feedDatabaseContract;
         $this->userContract = $userContract;
     }
@@ -36,5 +30,4 @@ class FeedsApiController extends Controller
             )
         );
     }
-
 }

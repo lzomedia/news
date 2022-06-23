@@ -8,10 +8,10 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\DataTransferObject\Attributes\MapFrom;
 use Spatie\DataTransferObject\DataTransferObject;
+use Symfony\Component\DomCrawler\Crawler;
 
 class Article extends DataTransferObject
 {
-
     #[MapFrom('id')]
     public ?string $id;
 
@@ -41,6 +41,20 @@ class Article extends DataTransferObject
 
     #[MapFrom('timetoread')]
     public ?string $timetoread;
+
+
+    #[MapFrom('original_content')]
+    public ?string $original_content;
+
+    /**
+     * @return string|null
+     */
+    public function getOriginalContent(): ?string
+    {
+        return $this->original_content;
+    }
+
+
 
     public ?Category $category;
 
@@ -76,7 +90,7 @@ class Article extends DataTransferObject
 
     public function getCategory(): Category | Model
     {
-        return (new \App\Models\Category())->firstOrCreate([
+        return (new Category())->firstOrCreate([
             'name' => $this->getKeywords()[0] ?? "News"
         ]);
     }
@@ -86,9 +100,20 @@ class Article extends DataTransferObject
         return $this->keywords;
     }
 
-    public function discoverFeeds(): void
+    public function discoverFeeds(): array
     {
-        //todo implement this dispatch(new DiscoverFeeds($this));
+        $crawler = new Crawler($this->getOriginalContent());
+
+        $results =  $crawler->filter('a')->each(function (\Symfony\Component\DomCrawler\Crawler $node) {
+            return parse_url($node->attr('href'))['host'];
+        });
+
+        $domains =  array_unique($results);
+
+        foreach ($domains as $domain) {
+            dispatch(new DiscoverFeeds($domain));
+        }
+
     }
 
     public function getFeedId(): ?string

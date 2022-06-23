@@ -2,51 +2,49 @@
 
 namespace App\Managers;
 
-use App\Contracts\ArticleDatabaseContract;
+use App\Contracts\ArticleContract;
+use App\Contracts\FeedContract;
 use App\Contracts\SyncContract;
-use App\Enums\FeedStatus;
+use App\Contracts\UserContract;
 use App\Factories\ExtractorFactory;
-use App\Jobs\ProcessFeeds;
 use App\Models\Feed;
-use App\Models\User;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Contracts\Auth\Authenticatable;
 
 class SyncManager implements SyncContract
 {
+    private FeedContract $feedContract;
 
-    public ArticleDatabaseContract $articleDatabaseContract;
+    private ArticleContract $articleContract;
 
-    public function __construct(ArticleDatabaseContract $articleDatabaseContract)
+    public function __construct(FeedContract $feedContract, ArticleContract $articleContract)
     {
-        $this->articleDatabaseContract = $articleDatabaseContract;
+        $this->feedContract = $feedContract;
+
+        $this->articleContract = $articleContract;
     }
 
-    public function syncSingle(Feed | Model $feed, User| Authenticatable $user): bool
+    public function syncSingle(int $feed_id, int $article_id): bool
     {
-        $feed->sync = now();
-        $feed->status = Feed::SYNCYING;
-        ExtractorFactory::extract($feed, $this->articleDatabaseContract);
-        return $feed->save();
+        if ($this->feedContract->getFeedById($feed_id) === null) {
+            return false;
+        }
+
+        $this->feedContract->getFeedById($feed_id)->sync = now();
+
+        $this->feedContract->getFeedById($feed_id)->status = Feed::SYNCYING;
+
+        ExtractorFactory::extract($feed_id, $this->articleContract);
+
+        return $this->feedContract->getFeedById($feed_id)->save();
     }
 
-    public function syncAll(User|Authenticatable $user): bool
+    public function syncAll(UserContract $userContract): bool
     {
-
-        $articleContract = $this->articleDatabaseContract;
-
-        //todo check if user has feeds
-
-
-        Feed::where('user_id', $user->id)->orderBy('id')->chunk(3, function ($feeds){
-
-            foreach ($feeds as $feed)
-            {
-                ExtractorFactory::extract($feed, $this->articleDatabaseContract);
-            }
-
-        });
+        Feed::where('user_id', $userContract->getUserId())
+            ->orderBy('id')->chunk(3, function ($feeds) {
+                foreach ($feeds as $feed) {
+                    ExtractorFactory::extract($feed->id, $this->articleContract);
+                }
+            });
 
         return true;
     }

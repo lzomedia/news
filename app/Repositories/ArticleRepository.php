@@ -2,22 +2,20 @@
 
 namespace App\Repositories;
 
-use App\Contracts\ArticleDatabaseContract;
+use App\Contracts\ArticleContract;
 use App\DTO\Article as ArticleDTO;
 use App\Models\Article;
-use App\Models\Article as ArticleModel;
-use App\Models\Category;
 use App\Resources\ArticleResourceCollection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Log;
 use JsonException;
 
-class ArticleRepository implements ArticleDatabaseContract
+class ArticleRepository implements ArticleContract
 {
     public function getArticleById(mixed $articleId): Model
     {
-       return Article::with('category')
+        return Article::with('category')
            ->with('tags')
            ->with('info')
            ->find($articleId);
@@ -29,14 +27,14 @@ class ArticleRepository implements ArticleDatabaseContract
             Article::with('category')
                 ->with('feed')
                 ->orderBy('id', 'desc')
-                ->paginate(10)
+                ->paginate(25)
         );
     }
 
     public function createArticle(\App\DTO\Article $articleDTO): Model
     {
-        try{
-            $articleModel =  (new \App\Models\Article)->firstOrCreate([
+        try {
+            $articleModel =  (new \App\Models\Article())->updateOrCreate([
                 'feed_id' => $articleDTO->getFeedId(),
                 'category_id' => $articleDTO->getCategory()->id,
                 'title' => $articleDTO->getTitle(),
@@ -50,26 +48,35 @@ class ArticleRepository implements ArticleDatabaseContract
 
             foreach ($articleDTO->getKeywords() as $tag) {
                 $articleModel->tags()->attach(
-                    (new \App\Models\Tag)->firstOrCreate(['name' => $tag])
+                    (new \App\Models\Tag())->firstOrCreate(['name' => $tag])
                 );
             }
 
-            (new \App\Models\ArticleInfo)->firstOrCreate([
+            (new \App\Models\ArticleInfo())->firstOrCreate([
                 'article_id' => $articleModel->id,
                 'time_to_read' => $articleDTO->getTimetoread(),
                 'vader' => json_encode($articleDTO->getVader(), JSON_THROW_ON_ERROR),
             ]);
 
             return $articleModel;
-        }
-        catch (QueryException $exception)
-        {
+
+        } catch (QueryException $exception) {
             Log::error($exception->getTraceAsString());
-        }
-        catch (JsonException $e)
-        {
+        } catch (JsonException $e) {
             Log::error($e->getTraceAsString());
         }
+
+    }
+
+    public function checkIfArticleExists(ArticleDTO $articleDTO): bool
+    {
+        $article = Article::where('feed_id', $articleDTO->getFeedId())
+            ->where('title', $articleDTO->getTitle())
+            ->first();
+        if (is_null($article)) {
+            return false;
+        }
+        return true;
     }
 
 }

@@ -1,9 +1,9 @@
 <?php
 
 namespace App\Resources;
+
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Carbon;
-use Illuminate\Support\Str;
 
 /**
 
@@ -14,8 +14,7 @@ use Illuminate\Support\Str;
  */
 class CategoryResource extends JsonResource
 {
-
-    public function toArray(  $request): array
+    public function toArray($request): array
     {
         return [
             'id' => $this->id,
@@ -24,6 +23,4 @@ class CategoryResource extends JsonResource
             'updated_at' => $this->updated_at,
         ];
     }
-
-
 }

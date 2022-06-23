@@ -52,7 +52,6 @@ Route::get('/dashboard', [DashboardController::class, 'dashboard'])
 
 
 Route::group(['prefix' => 'dashboard'], static function () {
-
     Route::post('feeds/import', [FeedsController::class, 'import'])
         ->name('feeds.import');
 
@@ -65,8 +64,8 @@ Route::group(['prefix' => 'dashboard'], static function () {
     Route::get('articles', [DashBoardArticle::class, 'articles'])
         ->name('dashboard.articles');
 
-    Route::get('video/generator/{article}', [VideoGenerator::class, 'view'])
+    Route::get('video/generator/{article}', [VideoGenerator::class, 'generate'])
         ->name('video.generate');
 
+    Route::get('video/upload/{article}', [VideoGenerator::class, 'upload'])->name('video.upload');
 });
-

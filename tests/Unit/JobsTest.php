@@ -10,7 +10,6 @@ use Tests\TestCase;
 
 class JobsTest extends TestCase
 {
-
     public function testSyncSingle(): void
     {
         Queue::fake();
@@ -26,6 +25,5 @@ class JobsTest extends TestCase
         Queue::assertPushed(ProcessFeeds::class, static function ($job) {
             return strlen($job->message) < 140;
         });
-
     }
 }

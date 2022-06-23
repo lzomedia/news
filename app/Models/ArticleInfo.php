@@ -2,9 +2,6 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-
 /**
  * @property int $article_id
  * @property string $time_to_read
@@ -23,5 +20,4 @@ class ArticleInfo extends BaseModel
     protected $casts = [
         'vader' => 'array'
     ];
-
 }

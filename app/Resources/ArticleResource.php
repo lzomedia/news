@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Resources;
+
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
@@ -21,7 +22,6 @@ use Illuminate\Support\Str;
  */
 class ArticleResource extends JsonResource
 {
-
     public function toArray($request): array
     {
         return [
@@ -40,6 +40,4 @@ class ArticleResource extends JsonResource
             'updated_at' => $this->updated_at,
         ];
     }
-
-
 }

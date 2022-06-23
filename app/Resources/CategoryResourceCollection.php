@@ -1,18 +1,16 @@
 <?php
-namespace App\Http\Resources;
 
+namespace App\Resources;
 
-use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Resources\Json\ResourceCollection;
-
 
 class CategoryResourceCollection extends ResourceCollection
 {
-    public function toArray($request)
+    public function toArray($request): array
     {
         return [
-            'categories' => $this->collection->map(function (CategoryResource $category) {
-                return new CategoryResource($category);
+            'data' => $this->collection->map(function ($item) {
+                return new CategoryResource($item);
             })
         ];
     }

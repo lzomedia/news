@@ -4,35 +4,56 @@ namespace App\Jobs;
 
 use App\Models\Feed;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Log;
+use Symfony\Component\Process\Process;
 
 class DiscoverFeeds implements ShouldQueue
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+    use Dispatchable;
 
-    private Collection $links;
+    use InteractsWithQueue;
 
-    public function __construct(Collection $links)
+    use Queueable;
+
+    use SerializesModels;
+
+    private string $link;
+
+    public function __construct(string $link)
     {
-        $this->links = $links;
+        $this->link = $link;
     }
 
     public function handle(): void
     {
-        $this->links->each(function ($link) {
 
-            $feed = Feed::where('url', $link)->first();
+        Log::info('Processing of feed discovery for started.' . $this->link);
 
-            if (is_null($feed))
-            {
-               Feed::create([
-                    'url' => $link,
-                ]);
+        $process = new Process([
+            'python3',
+            base_path('python/feed-finder.py'),
+            $this->link,
+        ]);
+
+        $process->run(function ($type, $buffer) {
+
+            if (strlen($buffer) > 10) {
+
+                Log::error("Output: $buffer");
+
+                $feed = Feed::where('url', $buffer)->first();
+
+                if ($feed === null) {
+                    $feed = Feed::create([
+                        'url' => $this->link,
+                    ]);
+                }
+
             }
         });
     }

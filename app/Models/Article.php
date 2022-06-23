@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Query\Builder as QueryBuilder;
-use Illuminate\Support\Carbon;
 
 /**
  * @mixin EloquentBuilder
@@ -19,7 +18,8 @@ use Illuminate\Support\Carbon;
  * @property string $author
  * @property int $category_id
  * @property int $feed_id
-* @method firstOrCreate(array $array)
+*  @method firstOrCreate(array $array)'
+ * @method static where(string $string, $value)
  */
 class Article extends Model
 {
@@ -64,4 +64,3 @@ class Article extends Model
         return $this->feed_id;
     }
 }
-

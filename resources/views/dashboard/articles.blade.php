@@ -44,10 +44,13 @@
                             @foreach($articles as $article)
                                 <tr>
                                     <th scope="row">1</th>
-                                    <td>{{ $article->title }}</td>
+                                    <td>{{ Str::words($article->title, 8) }}</td>
                                     <td>
                                         <a href="{{ route('video.generate', $article->id) }}" class="btn btn-primary">
                                             Generate Video
+                                        </a>
+                                        <a href="{{ route('video.generate', $article->id) }}" class="btn btn-success">
+                                            Rewrite
                                         </a>
                                     </td>
                                 </tr>

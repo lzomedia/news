@@ -2,7 +2,7 @@
 
 namespace App\Jobs;
 
-use App\Contracts\ArticleDatabaseContract;
+use App\Contracts\ArticleContract;
 use App\DTO\Article as ArticleDTO;
 
 use App\Models\Feed;
@@ -10,55 +10,50 @@ use App\Models\Feed;
 use Illuminate\Bus\Queueable;
 
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Log;
 use Symfony\Component\Process\Process;
 
-
 class ProcessFeeds implements ShouldQueue
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-
-    public Feed | Model $feed;
+    use Dispatchable;
+    use InteractsWithQueue;
+    use Queueable;
+    use SerializesModels;
 
     private const PYTHON = 'python3';
 
-    public int $timeout = 0;
-
-    public string $memory = '512M';
-
-    public string $message = 'This will send a message to the queue';
-
     private const PYTHON_FILE_EXTRACT_REALTIME = './python/extractor-realtime.py';
 
-    public ArticleDatabaseContract $articleDatabaseContract;
+    public ArticleContract $articleContract;
 
-    //todo implement contract for feed
-    public function __construct(Feed | Model $feed, ArticleDatabaseContract $articleDatabaseContract)
+    private int $feed_id;
+
+    public function __construct(int $feed_id, ArticleContract $articleContract)
     {
-        $this->feed = $feed;
-        $this->articleDatabaseContract = $articleDatabaseContract;
+        $this->feed_id = $feed_id;
+
+        $this->articleContract = $articleContract;
     }
 
 
     final public function handle(): void
     {
-        try{
+        $feed = Feed::find($this->feed_id);
+
+        try {
             $process = new Process([
                 self::PYTHON,
                 base_path(self::PYTHON_FILE_EXTRACT_REALTIME),
-                $this->feed->url
+                $feed->url,
             ]);
 
-            $process->run(function ($type, $buffer)
-            {
+            $process->run(function ($type, $buffer) {
                 Log::error("Output: $buffer");
 
-                if(strlen($buffer) > 10) {
-
+                if (strlen($buffer) > 10) {
                     Log::error("Output: $buffer");
 
                     Log::error("Output: $buffer");
@@ -73,21 +68,22 @@ class ProcessFeeds implements ShouldQueue
                     if (json_last_error() === 0) {
 
                         $dto = new ArticleDTO($data);
+                        $dto->discoverFeeds();
 
-                        $this->articleDatabaseContract->createArticle($dto);
+                        if (!$this->articleContract->checkIfArticleExists($dto)) {
+                            $this->articleContract->createArticle($dto);
+                        }
 
                     }
-
                 }
-
             });
-        }catch (\Exception $exception){
+        } catch (\Exception $exception) {
             Log::error($exception->getTraceAsString());
             $this->delete();
         }
 
-        $this->feed->status = Feed::COMPLETED;
-        $this->feed->save();
+        $feed->status = Feed::COMPLETED;
+        $feed->save();
     }
 
     public function failed(): void
@@ -95,4 +91,3 @@ class ProcessFeeds implements ShouldQueue
         $this->delete();
     }
 }
-

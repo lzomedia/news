@@ -50,6 +50,7 @@ def extractArticle(url):
         "title": article.title,
         "date": article.publish_date,
         "content": content,
+        "original_content": article.article_html,
         "excerpt": article.summary,
         "images": article.top_image,
         "keywords": article.keywords,

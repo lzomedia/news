@@ -2,12 +2,9 @@
 
 namespace App\Console\Commands;
 
-use App\Contracts\ArticleDatabaseContract;
+use App\Contracts\ArticleContract;
 use App\DTO\Article;
-use App\Factories\ExtractorFactory;
-use App\Jobs\ProcessFeeds;
 
-use App\Models\Feed;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
 use Symfony\Component\Process\Process;
@@ -18,8 +15,9 @@ class Processor extends Command
 
     protected $description = 'This command will run and extract the data from the feeds';
 
-    private ArticleDatabaseContract $articleDatabaseContract;
-    public function __construct(ArticleDatabaseContract $articleDatabaseContract)
+    private ArticleContract $articleDatabaseContract;
+
+    public function __construct(ArticleContract $articleDatabaseContract)
     {
         parent::__construct();
 
@@ -36,13 +34,10 @@ class Processor extends Command
            $url
         ]);
 
-        $process->run(function ($type, $buffer)  use ($url)
-        {
-
+        $process->run(function ($type, $buffer) use ($url) {
             Log::error("Output: {$buffer}");
 
-            if(strlen($buffer) > 10) {
-
+            if (strlen($buffer) > 10) {
                 Log::error("Output: {$buffer}");
 
                 Log::error("Url: {$url}");
@@ -57,18 +52,13 @@ class Processor extends Command
                 );
 
                 if (json_last_error() === 0) {
-
                     $dto = new Article($data);
 
                     $this->articleDatabaseContract->createArticle($dto);
-
                 }
-
             }
-
         });
 
         $this->info('Processing of feeds finished & jobs where dispatched.');
     }
-
 }

@@ -1,9 +1,10 @@
 <?php
 
 namespace App\Resources;
+
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Carbon;
-use Illuminate\Support\Str;
+
 /**
 
  * @property int $id
@@ -17,7 +18,6 @@ use Illuminate\Support\Str;
  */
 class FeedResource extends JsonResource
 {
-
     public function toArray($request): array
     {
         return [
@@ -30,5 +30,4 @@ class FeedResource extends JsonResource
             'updated_at' => $this->updated_at,
         ];
     }
-
 }

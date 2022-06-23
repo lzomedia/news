@@ -4,7 +4,6 @@ namespace App\Parsers;
 
 class OpmlParser implements \Iterator
 {
-
     protected $parser = null;
 
 
@@ -188,7 +187,4 @@ class OpmlParser implements \Iterator
     {
         return $this->opml_contents;
     }
-
-
 }
-

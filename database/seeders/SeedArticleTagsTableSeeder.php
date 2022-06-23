@@ -2,18 +2,12 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
 use Illuminate\Database\Seeder;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
 use App\Models\Article;
 use App\Models\ArticleTags;
-use App\Models\Category;
-use App\Models\Feed;
 use App\Models\Tag;
 
-class   SeedArticleTagsTableSeeder extends Seeder
+class SeedArticleTagsTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.

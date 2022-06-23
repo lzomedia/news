@@ -1,6 +1,6 @@
-<?php namespace App\Models;
+<?php
 
-
+namespace App\Models;
 
 use Carbon\Carbon;
 
@@ -22,10 +22,11 @@ use Illuminate\Database\Query\Builder as QueryBuilder;
  * @property string $status
  * @method static orderBy(string $string)
 * @method static where(string $string, $value)
+ * @method static find($id)
+ * @method static create(array $array)
  */
 class Feed extends BaseModel
 {
-
     public const INITIAL =  'initial';
 
     public const SYNCYING =  'synchronizing';
@@ -56,6 +57,4 @@ class Feed extends BaseModel
     {
         return $this->hasMany(Article::class);
     }
-
-
 }

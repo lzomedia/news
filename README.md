@@ -1,6 +1,5 @@
 # News App
 
-
 This is a self-hosted Laravel App that allows you to read news from different feed sources.
 This is using autodiscovery to find the feeds.So when you add a new feed, it will automatically try to find new the feeds from the content itself.
 
@@ -16,6 +15,7 @@ This is using autodiscovery to find the feeds.So when you add a new feed, it wil
 7. The frontend is built using VueJS.
 
 ## Installation Normally
+
 1. Clone this project
     ```bash
     git clone https://github.com/lzomedia/news.git
@@ -71,26 +71,26 @@ This is using autodiscovery to find the feeds.So when you add a new feed, it wil
 ## Python Script
 This project uses Python 3 for extracting the content from the feeds.
 In order to use this script, you need to install the following packages:
+
 ```bash
-su -c "pip3 install newspaper3k"
-su -c "pip3 install pandas"
-su -c "pip3 install simplejson"
-su -c "pip3 install dotenv"
-su -c "pip3 install spacy"
-su -c "pip3 install supervisor"
-su -c "pip3 install nltk"
-su -c "pip3 install lxml"
-su -c "pip3 install textblob"
-su -c "pip3 install spacytextblob"
-su -c "pip3 install vaderSentiment"
-su -c "python3 -m spacy download en_core_web_md"
-su -c "python3 -m nltk.downloader -d /usr/local/share/nltk_data punkt"
-su -c "python3 -m nltk.downloader -d /usr/local/share/nltk_data stopwords"
-su -c "python3 -m nltk.downloader -d /usr/local/share/nltk_data vader_lexicon"
-su -c "python3 -m textblob.download_corpora"
+pip3 install newspaper3k
+pip3 install pandas
+pip3 install simplejson
+pip3 install minet
+pip3 install spacy
+pip3 install nltk
+pip3 install lxml
+pip3 install textblob
+pip3 install spacytextblob
+pip3 install vaderSentiment
+python3 -m spacy download en_core_web_md
+python3 -m nltk.downloader -d /usr/local/share/nltk_data punkt
+python3 -m nltk.downloader -d /usr/local/share/nltk_data stopwords
+python3 -m nltk.downloader -d /usr/local/share/nltk_data vader_lexicon
+python3 -m textblob.download_corpora -d /usr/local/share/nltk_data
 ```
 
-## Video Generation
+## Video Generation (This is still in construction)
 
 This project uses AI to generate a video from an article.
 
@@ -115,5 +115,5 @@ Feel free to contribute and make a pull request.
 
 
 ## Badges
-[![Actions Status](https://github.com/lzomedia/news/workflows/Cheks/badge.svg)](https://github.com/lzomedia/actions/actions)
+![Testing](https://github.com/lzomedia/news/actions/workflows/PHPUNIT/badge.svg)
 

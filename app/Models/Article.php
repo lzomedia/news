@@ -9,8 +9,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Query\Builder as QueryBuilder;
 
 /**
- * @mixin EloquentBuilder
- * @mixin QueryBuilder
+ * @mixin    EloquentBuilder
+ * @mixin    QueryBuilder
  * @property int $id
  * @property string $title
  * @property string $content
@@ -18,8 +18,8 @@ use Illuminate\Database\Query\Builder as QueryBuilder;
  * @property string $author
  * @property int $category_id
  * @property int $feed_id
-*  @method firstOrCreate(array $array)'
- * @method static where(string $string, $value)
+ * @method   firstOrCreate(array $array)'
+ * @method   static where(string $string, $value)
  */
 class Article extends Model
 {

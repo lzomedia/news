@@ -1,0 +1,99 @@
+version: "3.7"
+services:
+  app:
+    build:
+      context: ./
+      network: host
+      dockerfile: ./.docker/Dockerfile
+      args:
+        UID: ${DOCKER_UID}
+        USER: ${DOCKER_HOST_USER}
+    image: ${DOCKER_IMAGE_NAME}
+    container_name: ${DOCKER_IMAGE_NAME}-app
+    restart: unless-stopped
+    command: php-fpm -F
+    working_dir: /app
+    depends_on:
+      - db
+      - redis
+    volumes:
+      - ~/.composer-docker/cache:/root/.composer/cache:delegated
+      - ./:/app:delegated
+    networks:
+      - default
+  queue:
+    image: ${DOCKER_IMAGE_NAME}
+    container_name: ${DOCKER_IMAGE_NAME}-queue
+    depends_on:
+      - app
+    restart: unless-stopped
+    working_dir: /app
+    command: php artisan queue:work
+    volumes:
+      - ./:/app:delegated
+    networks:
+      - default
+  cron:
+    image: ${DOCKER_IMAGE_NAME}
+    container_name: ${DOCKER_IMAGE_NAME}-cron
+    depends_on:
+      - app
+    restart: unless-stopped
+    working_dir: /app
+    command: crond -f
+    volumes:
+      - ./:/app:delegated
+    networks:
+      - default
+  server:
+    image: nginx:alpine
+    container_name: ${DOCKER_IMAGE_NAME}-server
+    depends_on:
+      - app
+    restart: unless-stopped
+    ports:
+      - ${DOCKER_SERVER_EXPOSED_PORT}:80
+    environment:
+      APP_HOST: ${DOCKER_IMAGE_NAME}-app
+    volumes:
+      - ./:/app:delegated
+      - ./.docker/config/appserver.conf.template:/etc/nginx/templates/default.conf.template
+    networks:
+      - default
+  db:
+      image: mysql:latest
+      container_name: ${DOCKER_IMAGE_NAME}-db
+      volumes:
+          - "./.mysql-data/db:/var/lib/mysql"
+      restart: always
+      ports:
+          - 3306:3306
+      environment:
+          MYSQL_DATABASE: ${DB_DATABASE}
+          MYSQL_USER: ${DB_USERNAME}
+          MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+          MYSQL_PASSWORD: ${DB_PASSWORD}
+      networks:
+          - default
+  redis:
+    image: "redis:alpine"
+    container_name: ${DOCKER_IMAGE_NAME}-redis
+    restart: unless-stopped
+    ports:
+      - ${DOCKER_REDIS_EXPOSED_PORT}:${REDIS_PORT}
+    command: redis-server
+    volumes:
+      - redis-data:/var/lib/redis
+    networks:
+      - default
+volumes:
+  db-data:
+    external:
+      name: ${DOCKER_DB_VOLUME}
+  redis-data:
+    external:
+      name: ${DOCKER_DB_VOLUME}
+networks:
+  default:
+    external:
+      name: ${DOCKER_NETWORK_NAME}

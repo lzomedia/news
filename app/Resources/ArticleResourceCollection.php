@@ -10,15 +10,19 @@ class ArticleResourceCollection extends ResourceCollection
 {
     public function toArray($request): Collection
     {
-        $articles =  $this->collection->map(function (ArticleResource $article) {
-            return new ArticleResource($article);
-        });
+        $articles =  $this->collection->map(
+            function (ArticleResource $article) {
+                return new ArticleResource($article);
+            }
+        );
 
         $categories = (new Category())->orderBy('count', 'desc')->limit(10)->get();
 
-        return collect([
+        return collect(
+            [
             'articles' => $articles,
             'categories' => $categories,
-        ]);
+            ]
+        );
     }
 }

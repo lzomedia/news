@@ -6,27 +6,30 @@ use Carbon\Carbon;
 
 use Illuminate\Database\Eloquent\Builder;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 use Illuminate\Database\Query\Builder as QueryBuilder;
 
 /**
- * @mixin Builder
- * @mixin QueryBuilder
+ * @mixin    Builder
+ * @mixin    QueryBuilder
  * @property int $id
  * @property int $user_id
  * @property string $title
  * @property string $url
  * @property Carbon $sync
  * @property string $status
- * @method static orderBy(string $string)
-* @method static where(string $string, $value)
- * @method static find($id)
- * @method static create(array $array)
+ * @method   static orderBy(string $string)
+ * @method   static where(string $string, $value)
+ * @method   static find($id)
+ * @method   static create(array $array)
  */
 class Feed extends BaseModel
 {
+    use HasFactory;
+
     public const INITIAL =  'initial';
 
     public const SYNCYING =  'synchronizing';

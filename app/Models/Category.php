@@ -7,8 +7,8 @@ use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 use Illuminate\Database\Query\Builder as QueryBuilder;
 
 /**
- * @mixin EloquentBuilder
- * @mixin QueryBuilder
+ * @mixin    EloquentBuilder
+ * @mixin    QueryBuilder
  * @property int $id
  * @property string $name
  * @property int $count

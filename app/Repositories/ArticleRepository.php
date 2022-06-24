@@ -16,9 +16,9 @@ class ArticleRepository implements ArticleContract
     public function getArticleById(mixed $articleId): Model
     {
         return Article::with('category')
-           ->with('tags')
-           ->with('info')
-           ->find($articleId);
+            ->with('tags')
+            ->with('info')
+            ->find($articleId);
     }
 
     public function getAllArticles(): ArticleResourceCollection
@@ -34,7 +34,8 @@ class ArticleRepository implements ArticleContract
     public function createArticle(\App\DTO\Article $articleDTO): Model
     {
         try {
-            $articleModel =  (new \App\Models\Article())->updateOrCreate([
+            $articleModel =  (new \App\Models\Article())->updateOrCreate(
+                [
                 'feed_id' => $articleDTO->getFeedId(),
                 'category_id' => $articleDTO->getCategory()->id,
                 'title' => $articleDTO->getTitle(),
@@ -42,7 +43,8 @@ class ArticleRepository implements ArticleContract
                 'content' => $articleDTO->getContent(),
                 'author' => $articleDTO->getAuthors(),
                 'source' => $articleDTO->getSource(),
-            ]);
+                ]
+            );
 
             $articleModel->category()->increment('count');
 
@@ -52,11 +54,13 @@ class ArticleRepository implements ArticleContract
                 );
             }
 
-            (new \App\Models\ArticleInfo())->firstOrCreate([
+            (new \App\Models\ArticleInfo())->firstOrCreate(
+                [
                 'article_id' => $articleModel->id,
-                'time_to_read' => $articleDTO->getTimetoread(),
+                'time_to_read' => $articleDTO->getTimeToRead(),
                 'vader' => json_encode($articleDTO->getVader(), JSON_THROW_ON_ERROR),
-            ]);
+                ]
+            );
 
             return $articleModel;
 

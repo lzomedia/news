@@ -24,7 +24,7 @@ class DiscoverFeeds implements ShouldQueue
 
     private string $link;
 
-    public function __construct(string $link)
+    public function __construct(array|string|bool|null $link)
     {
         $this->link = $link;
     }
@@ -34,27 +34,37 @@ class DiscoverFeeds implements ShouldQueue
 
         Log::info('Processing of feed discovery for started.' . $this->link);
 
-        $process = new Process([
+        $process = new Process(
+            [
             'python3',
             base_path('python/feed-finder.py'),
             $this->link,
-        ]);
+            ]
+        );
 
-        $process->run(function ($type, $buffer) {
+        $process->run(
+            function ($type, $buffer) {
 
-            if (strlen($buffer) > 10) {
+                dd($buffer);
 
-                Log::error("Output: $buffer");
+                if (strlen($buffer) > 10) {
 
-                $feed = Feed::where('url', $buffer)->first();
+                    Log::info("Output: $buffer");
 
-                if ($feed === null) {
-                    $feed = Feed::create([
-                        'url' => $this->link,
-                    ]);
+                    Log::error("Output: $buffer");
+
+                    $feed = Feed::where('url', $buffer)->first();
+
+                    if ($feed === null) {
+                        $feed = Feed::create(
+                            [
+                            'url' => $this->link,
+                            ]
+                        );
+                    }
+
                 }
-
             }
-        });
+        );
     }
 }

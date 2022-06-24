@@ -25,6 +25,8 @@ class ProcessFeeds implements ShouldQueue
 
     private const PYTHON = 'python3';
 
+    public string $message = "Some message";
+
     private const PYTHON_FILE_EXTRACT_REALTIME = './python/extractor-realtime.py';
 
     public ArticleContract $articleContract;
@@ -44,39 +46,45 @@ class ProcessFeeds implements ShouldQueue
         $feed = Feed::find($this->feed_id);
 
         try {
-            $process = new Process([
+            $process = new Process(
+                [
                 self::PYTHON,
                 base_path(self::PYTHON_FILE_EXTRACT_REALTIME),
                 $feed->url,
-            ]);
+                ]
+            );
+            //increased the time of a process to 3 minutes
+            $process->setTimeout(180);
 
-            $process->run(function ($type, $buffer) {
-                Log::error("Output: $buffer");
-
-                if (strlen($buffer) > 10) {
+            $process->run(
+                function ($type, $buffer) {
                     Log::error("Output: $buffer");
 
-                    Log::error("Output: $buffer");
+                    if (strlen($buffer) > 10) {
+                        Log::error("Output: $buffer");
 
-                    $data = json_decode(
-                        $buffer,
-                        true,
-                        512,
-                        JSON_THROW_ON_ERROR
-                    );
+                        Log::error("Output: $buffer");
 
-                    if (json_last_error() === 0) {
+                        $data = json_decode(
+                            $buffer,
+                            true,
+                            512,
+                            JSON_THROW_ON_ERROR
+                        );
 
-                        $dto = new ArticleDTO($data);
-                        $dto->discoverFeeds();
+                        if (json_last_error() === 0) {
 
-                        if (!$this->articleContract->checkIfArticleExists($dto)) {
-                            $this->articleContract->createArticle($dto);
+                            $dto = new ArticleDTO($data);
+                            $dto->discoverFeeds();
+
+                            if (!$this->articleContract->checkIfArticleExists($dto)) {
+                                $this->articleContract->createArticle($dto);
+                            }
+
                         }
-
                     }
                 }
-            });
+            );
         } catch (\Exception $exception) {
             Log::error($exception->getTraceAsString());
             $this->delete();

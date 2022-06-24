@@ -5,7 +5,7 @@ namespace App\Models;
 /**
  * @property int $article_id
  * @property string $time_to_read
- * @method firstOrCreate(array $array)
+ * @method   firstOrCreate(array $array)
  */
 class ArticleInfo extends BaseModel
 {

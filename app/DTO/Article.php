@@ -55,7 +55,6 @@ class Article extends DataTransferObject
     }
 
 
-
     public ?Category $category;
 
     public function getTitle(): ?string
@@ -88,11 +87,13 @@ class Article extends DataTransferObject
         return $this->source;
     }
 
-    public function getCategory(): Category | Model
+    public function getCategory(): Category|Model
     {
-        return (new Category())->firstOrCreate([
-            'name' => $this->getKeywords()[0] ?? "News"
-        ]);
+        return (new Category())->firstOrCreate(
+            [
+                'name' => $this->getKeywords()[0] ?? "News"
+            ]
+        );
     }
 
     public function getKeywords(): ?array
@@ -100,15 +101,17 @@ class Article extends DataTransferObject
         return $this->keywords;
     }
 
-    public function discoverFeeds(): array
+    public function discoverFeeds(): void
     {
         $crawler = new Crawler($this->getOriginalContent());
 
-        $results =  $crawler->filter('a')->each(function (\Symfony\Component\DomCrawler\Crawler $node) {
-            return parse_url($node->attr('href'))['host'];
-        });
+        $results = $crawler->filter('a')->each(
+            function (Crawler $node) {
+                return parse_url($node->attr('href'))['host'];
+            }
+        );
 
-        $domains =  array_unique($results);
+        $domains = array_unique($results);
 
         foreach ($domains as $domain) {
             dispatch(new DiscoverFeeds($domain));
@@ -126,7 +129,7 @@ class Article extends DataTransferObject
         return $this->vader;
     }
 
-    public function getTimetoread(): ?string
+    public function getTimeToRead(): ?string
     {
         return $this->timetoread;
     }

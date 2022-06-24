@@ -33,18 +33,21 @@ class SyncManager implements SyncContract
         $this->feedContract->getFeedById($feed_id)->status = Feed::SYNCYING;
 
         ExtractorFactory::extract($feed_id, $this->articleContract);
-
-        return $this->feedContract->getFeedById($feed_id)->save();
+        return ($this->feedContract->getFeedById($feed_id))->save();
     }
 
     public function syncAll(UserContract $userContract): bool
     {
         Feed::where('user_id', $userContract->getUserId())
-            ->orderBy('id')->chunk(3, function ($feeds) {
-                foreach ($feeds as $feed) {
-                    ExtractorFactory::extract($feed->id, $this->articleContract);
+            ->orderBy('id')->chunk(
+                3, function ($feeds) {
+                    foreach ($feeds as $feed) {
+                        $this->feedContract->getFeedById($feed->id)->status = Feed::SYNCYING;
+                        ExtractorFactory::extract($feed->id, $this->articleContract);
+                        ($this->feedContract->getFeedById($feed->id))->save();
+                    }
                 }
-            });
+            );
 
         return true;
     }

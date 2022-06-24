@@ -4,31 +4,30 @@ namespace App\Managers;
 
 use App\Contracts\VideoContract;
 use App\Models\Article;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Log;
 use Symfony\Component\Process\InputStream;
 use Symfony\Component\Process\Process;
 
 class VideoManager implements VideoContract
 {
-    private const PYTHON = 'python3 ';
+    private const PYTHON = 'python3';
 
     private const PYTHON_FILE_EXTRACT_REALTIME = './python/video-generator.py';
 
-
-    public function generateVideo(Article $article): void
+    public function generateVideo(Article | Model $article): void
     {
         try {
-            $input = new InputStream();
-            $input->write(strip_tags($article->content));
 
             $process = new Process(
                 [
-                self::PYTHON ,
-                self::PYTHON_FILE_EXTRACT_REALTIME,
-                'Some text',
+                    "tts",
+                    "--text",
+                    strip_tags($article->content),
                 ]
             );
-            $process->setInput($input);
+            $process->setTimeout(3600);
+
 
             $process->run(
                 function ($type, $buffer) {

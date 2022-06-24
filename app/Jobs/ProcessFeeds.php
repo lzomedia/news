@@ -51,6 +51,8 @@ class ProcessFeeds implements ShouldQueue
                 $feed->url,
                 ]
             );
+            //increased the time of a process to 3 minutes
+            $process->setTimeout(180);
 
             $process->run(
                 function ($type, $buffer) {

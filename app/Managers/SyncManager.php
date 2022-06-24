@@ -33,7 +33,6 @@ class SyncManager implements SyncContract
         $this->feedContract->getFeedById($feed_id)->status = Feed::SYNCYING;
 
         ExtractorFactory::extract($feed_id, $this->articleContract);
-        //todo improve this
         return ($this->feedContract->getFeedById($feed_id))->save();
     }
 
@@ -43,7 +42,9 @@ class SyncManager implements SyncContract
             ->orderBy('id')->chunk(
                 3, function ($feeds) {
                     foreach ($feeds as $feed) {
+                        $this->feedContract->getFeedById($feed->id)->status = Feed::SYNCYING;
                         ExtractorFactory::extract($feed->id, $this->articleContract);
+                        ($this->feedContract->getFeedById($feed->id))->save();
                     }
                 }
             );

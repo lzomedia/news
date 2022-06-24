@@ -92,13 +92,23 @@ su -c "python3 -m textblob.download_corpora"
 
 ## Video Generation
 
-This project uses AI to generate a video from the news.
+This project uses AI to generate a video from an article.
 
 In order to use this script, you need to install the following packages:
 
 ```bash
-su -c "pip3 install moviepy"
+git clone https://github.com/coqui-ai/TTS
+cd TTS
 ```
+If you are on Ubuntu (Debian), you can also run following commands for installation.
+
+```bash
+make system-deps 
+make install
+```
+
+
+
 
 ## Contributing
 Feel free to contribute and make a pull request.

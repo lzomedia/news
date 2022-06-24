@@ -55,7 +55,6 @@ class Article extends DataTransferObject
     }
 
 
-
     public ?Category $category;
 
     public function getTitle(): ?string
@@ -88,11 +87,11 @@ class Article extends DataTransferObject
         return $this->source;
     }
 
-    public function getCategory(): Category | Model
+    public function getCategory(): Category|Model
     {
         return (new Category())->firstOrCreate(
             [
-            'name' => $this->getKeywords()[0] ?? "News"
+                'name' => $this->getKeywords()[0] ?? "News"
             ]
         );
     }
@@ -106,13 +105,13 @@ class Article extends DataTransferObject
     {
         $crawler = new Crawler($this->getOriginalContent());
 
-        $results =  $crawler->filter('a')->each(
+        $results = $crawler->filter('a')->each(
             function (Crawler $node) {
                 return parse_url($node->attr('href'))['host'];
             }
         );
 
-        $domains =  array_unique($results);
+        $domains = array_unique($results);
 
         foreach ($domains as $domain) {
             dispatch(new DiscoverFeeds($domain));
@@ -130,7 +129,7 @@ class Article extends DataTransferObject
         return $this->vader;
     }
 
-    public function getTimetoread(): ?string
+    public function getTimeToRead(): ?string
     {
         return $this->timetoread;
     }

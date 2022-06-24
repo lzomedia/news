@@ -57,7 +57,7 @@ class ArticleRepository implements ArticleContract
             (new \App\Models\ArticleInfo())->firstOrCreate(
                 [
                 'article_id' => $articleModel->id,
-                'time_to_read' => $articleDTO->getTimetoread(),
+                'time_to_read' => $articleDTO->getTimeToRead(),
                 'vader' => json_encode($articleDTO->getVader(), JSON_THROW_ON_ERROR),
                 ]
             );

@@ -1,18 +1,10 @@
 on: push
-name: CI
+name: PHPUNIT
 jobs:
   phpunit:
     runs-on: ubuntu-latest
     container:
       image: kirschbaumdevelopment/laravel-test-runner:8.1
-
-    services:
-      mysql:
-        image: mysql:5.7
-
-        ports:
-          - 33306:3306
-        options: --health-cmd="mysqladmin ping" --health-interval=15s --health-timeout=15s --health-retries=3
 
     steps:
       - uses: actions/checkout@v1
@@ -23,16 +15,20 @@ jobs:
         run: |
           composer install --no-scripts
 
-      - name: Install Custom PHP Extensions
-        run: |
-          apt-get update
-          apt-get install -y php8.1-bz2 php8.1-soap
-          apt-get install -y espeak ffmpeg libespeak1 libespeak-dev
 
       - name: Prepare Laravel Application
         run: |
           cp .env.testing .env
           php artisan key:generate
+      - name: Create temporary sqlite database
+        run: |
+          mkdir -p database
+          touch database/database.sqlite
+      - name: Run laravel database migrations
+        env:
+          DB_CONNECTION: sqlite
+          DB_DATABASE: database/database.sqlite
+        run: php artisan migrate --force
 
       - name: Run Testsuite
         run: vendor/bin/phpunit tests/

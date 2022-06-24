@@ -4,6 +4,8 @@ namespace Tests\Unit;
 
 use App\Contracts\SyncContract;
 use App\Contracts\UserContract;
+use App\Models\Feed;
+use App\Models\User;
 use App\Repositories\FeedRepository;
 use Carbon\Carbon;
 use Mockery;
@@ -13,8 +15,10 @@ class FeedsTest extends TestCase
 {
     public function test_create_feed(): void
     {
+        $user = User::factory()->create();
+
         $data = collect([
-            'user_id' => 1,
+            'user_id' => $user->id,
             'title' => 'title',
             'url' => 'https://test.com',
             'sync' => Carbon::parse('2020-01-01')
@@ -34,9 +38,8 @@ class FeedsTest extends TestCase
             'url' => 'https://test.com',
             'sync' => Carbon::parse('2020-01-01')
         ]) ;
+        $feed = Feed::factory()->create();
         $manager = new FeedRepository();
-        $feed = $manager->createFeed($data->toArray());
-
         $manager->deleteFeed($feed);
         $this->assertDatabaseMissing('feeds', $feed->toArray());
     }

@@ -12,7 +12,7 @@ jobs:
 
         ports:
           - 33306:3306
-        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+        options: --health-cmd="mysqladmin ping" --health-interval=15s --health-timeout=15s --health-retries=3
 
     steps:
       - uses: actions/checkout@v1
@@ -22,6 +22,12 @@ jobs:
       - name: Install composer dependencies
         run: |
           composer install --no-scripts
+
+      - name: Install Custom PHP Extensions
+        run: |
+          apt-get update
+          apt-get install -y php8.1-bz2 php8.1-soap
+          apt-get install -y espeak ffmpeg libespeak1 libespeak-dev
 
       - name: Prepare Laravel Application
         run: |

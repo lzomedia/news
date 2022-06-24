@@ -25,6 +25,8 @@ class ProcessFeeds implements ShouldQueue
 
     private const PYTHON = 'python3';
 
+    public string $message = "Some message";
+
     private const PYTHON_FILE_EXTRACT_REALTIME = './python/extractor-realtime.py';
 
     public ArticleContract $articleContract;

@@ -26,6 +26,10 @@
 
             <div class="col-md-10">
 
+
+                {{$dataTable->table()}}
+
+
                 <div class="card">
                     <div class="card-header">
                         <h4 class="card-title">
@@ -64,3 +68,6 @@
             </div>
         </div>
 @endsection
+@push('scripts')
+    {{$dataTable->scripts()}}
+@endpush

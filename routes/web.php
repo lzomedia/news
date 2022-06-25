@@ -4,6 +4,7 @@ use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\Dashboard\DashBoardArticle;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FeedsController;
+use App\Http\Controllers\Dashboard\DashboardFeeds;
 use App\Http\Controllers\VideoGenerator;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Support\Facades\Auth;
@@ -52,13 +53,17 @@ Route::get('/dashboard', [DashboardController::class, 'dashboard'])
 
 
 Route::group(['prefix' => 'dashboard'], static function () {
-    Route::post('feeds/import', [FeedsController::class, 'import'])
+
+    Route::get('feeds', [DashboardFeeds::class, 'index'])
+        ->name('dashboard.feeds');
+
+    Route::post('feeds/import', [DashboardFeeds::class, 'import'])
         ->name('feeds.import');
 
-    Route::get('feeds/syncAll', [FeedsController::class, 'syncAll'])
+    Route::get('feeds/syncAll', [DashboardFeeds::class, 'syncAll'])
         ->name('feeds.sync-all');
 
-    Route::get('feeds/single/sync/{feed}', [FeedsController::class, 'syncSingle'])
+    Route::get('feeds/single/sync/{feed}', [DashboardFeeds::class, 'syncSingle'])
         ->name('feeds.sync-single');
 
     Route::get('articles', [DashBoardArticle::class, 'articles'])

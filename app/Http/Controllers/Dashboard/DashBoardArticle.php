@@ -11,20 +11,14 @@ use Illuminate\View\View;
 
 class DashBoardArticle extends Controller
 {
-    private ArticleContract $articleDatabaseContract;
 
-    public function __construct(ArticleContract $articleDatabaseContract)
+    public function __construct()
     {
-
-        $this->articleDatabaseContract = $articleDatabaseContract;
-
         $this->middleware('auth');
     }
 
     public function articles(ArticlesTable $dataTable)
     {
-        $contract = $this->articleDatabaseContract;
-
         return $dataTable->render('dashboard.articles');
     }
 }

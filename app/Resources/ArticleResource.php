@@ -27,7 +27,6 @@ class ArticleResource extends JsonResource
         return [
             'id' => $this->id,
             'title' => $this->title,
-            'content' => $this->content,
             'excerpt' => Str::words(strip_tags($this->content), 15),
             'link' => $this->link,
             'image' => $this->image,

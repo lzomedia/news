@@ -7,14 +7,16 @@
                     Home
                 </a>
             </li>
-            <li class="list-group-item">
-                <a href="{{ route('feeds.sync-all') }}">
-                    Sync
-                </a>
-            </li>
+
             <li class="list-group-item">
                 <a href="{{ route('dashboard.articles') }}">
                     Articles
+                </a>
+            </li>
+
+            <li class="list-group-item">
+                <a href="{{ route('dashboard.feeds') }}">
+                    Feeds
                 </a>
             </li>
         </ul>

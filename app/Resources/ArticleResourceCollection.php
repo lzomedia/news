@@ -16,6 +16,7 @@ class ArticleResourceCollection extends ResourceCollection
             }
         );
 
+
         $categories = (new Category())->orderBy('count', 'desc')->limit(10)->get();
 
         return collect(

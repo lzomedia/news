@@ -51,13 +51,13 @@ Route::get('/articles/{id}/{slug}', [ArticleController::class, 'view'])
     ->name('article.view');
 
 
-//todo clean up the dashboard routes
-Route::get('/dashboard', [DashboardController::class, 'dashboard'])
-    ->name('dashboard');
+
 
 
 
 Route::group(['prefix' => 'dashboard'], static function () {
+
+    Route::get('/', [DashboardController::class, 'dashboard'])->name('dashboard');
 
     Route::group(['prefix' => 'feeds'], static function () {
         Route::get('/', [DashboardFeeds::class, 'index'])->name('dashboard.feeds');

@@ -103,10 +103,9 @@ export default {
             axios
                 .get('api/v1/articles?page=' + this.page + '&category=' + this.filterCategories)
                 .then(response => {
-                    this.page++;
-                    this.articles = this.articles.concat(response.data.articles);
-                    this.categories = response.data.categories;
 
+                    this.articles =this.articles.concat(response.data.data);
+                    this.page++;
                 })
                 .catch(error => {
                     console.log(error)
@@ -117,6 +116,20 @@ export default {
                 })
 
 
+        },
+        getCategories() {
+            axios
+                .get('api/v1/categories')
+                .then(response => {
+                    this.categories = this.categories.concat(response.data);
+                })
+                .catch(error => {
+                    console.log(error)
+                    this.errored = true
+                })
+                .finally(() => {
+
+                })
         },
         showArticle(article) {
             console.log(article)
@@ -133,6 +146,7 @@ export default {
     mounted() {
         console.log("Welcome to the Home Page");
         this.handleLoadMore(this.$refs.infiniteLoading);
+        this.getCategories();
     }
 }
 </script>

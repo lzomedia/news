@@ -10,6 +10,6 @@ class CategoryRepository implements CategoryContract
 {
     public function getAllCategories(): Collection
     {
-        return Category::all();
+        return Category::orderBy('count', 'desc')->get();
     }
 }

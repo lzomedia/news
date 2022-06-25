@@ -5,11 +5,12 @@ namespace App\Repositories;
 use App\Contracts\ArticleContract;
 use App\DTO\Article as ArticleDTO;
 use App\Models\Article;
-use App\Resources\ArticleResourceCollection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Collection;
 use JsonException;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 class ArticleRepository implements ArticleContract
 {
@@ -21,14 +22,13 @@ class ArticleRepository implements ArticleContract
             ->find($articleId);
     }
 
-    public function getAllArticles(): ArticleResourceCollection
+    public function getAllArticles(): LengthAwarePaginator
     {
-        return new ArticleResourceCollection(
-            Article::with('category')
-                ->with('feed')
-                ->orderBy('id', 'desc')
-                ->paginate(25)
-        );
+        return Article::with('category')
+            ->with('tags')
+            ->with('info')
+            ->orderBy('created_at', 'desc')
+            ->paginate(25);
     }
 
     public function createArticle(\App\DTO\Article $articleDTO): Model

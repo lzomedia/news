@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Contracts\ArticleContract;
+use App\Resources\ArticleResource;
 use Illuminate\Http\JsonResponse;
 
 class ArticleApiController extends ApiController
@@ -18,8 +19,6 @@ class ArticleApiController extends ApiController
 
     public function index(): JsonResponse
     {
-        return response()->json(
-            $this->articleDatabaseContract->getAllArticles()
-        );
+        return response()->json(new ArticleResource($this->articleDatabaseContract->getAllArticles()));
     }
 }

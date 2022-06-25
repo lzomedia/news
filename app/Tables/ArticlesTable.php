@@ -5,39 +5,43 @@ namespace App\Tables;
 
 use App\Models\Article;
 
-use Yajra\DataTables\DataTables;
+use Yajra\DataTables\DataTableAbstract;
+use Yajra\DataTables\Services\DataTable;
+
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Exceptions\Exception;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\QueryDataTable;
+use Yajra\DataTables\Html\Builder as HtmlBuilder;
 use Illuminate\Contracts\Database\Query\Builder;
 use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 
-class ArticlesTable extends DataTables
+class ArticlesTable extends DataTable
 {
 
-    /**
-     * @throws Exception
-     */
-    public function dataTable($query): EloquentDataTable
+    public function dataTable($query)
     {
-        return datatables()->eloquent($query);
-    }
-
-    /**
-     * @throws Exception
-     */
-    public function query(Article|Builder $builder): QueryDataTable
-    {
-        return $builder->newQuery();
+        return datatables()
+            ->eloquent($query)
+            ->addColumn('action', 'users.action');
     }
 
 
+    public function query(Article $model)
+    {
+        return $model->newQuery();
+    }
+
+    /**
+     * Optional method if you want to use html builder.
+     *
+     * @return \Yajra\DataTables\Html\Builder
+     */
     public function html()
     {
         return $this->builder()
-            ->setTableId('users-table')
+            ->setTableId('articles-table')
             ->columns($this->getColumns())
             ->minifiedAjax()
             ->dom('Bfrtip')
@@ -47,17 +51,15 @@ class ArticlesTable extends DataTables
             );
     }
 
+
     protected function getColumns(): array
     {
         return [
-            Column::computed('action')
-                ->width(60)
-                ->addClass('text-center'),
             Column::make('id'),
             Column::make('title'),
-            Column::make('created_at'),
-            Column::make('updated_at'),
+            Column::computed('action')
         ];
     }
+
 
 }

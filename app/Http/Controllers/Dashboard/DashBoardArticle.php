@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Dashboard;
 use App\Contracts\ArticleContract;
 
 use App\Tables\ArticlesTable;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller;
 use Illuminate\View\View;
 
@@ -20,7 +21,7 @@ class DashBoardArticle extends Controller
         $this->middleware('auth');
     }
 
-    public function articles(ArticlesTable $dataTable): View
+    public function articles(ArticlesTable $dataTable)
     {
         $contract = $this->articleDatabaseContract;
 

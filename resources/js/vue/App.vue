@@ -101,7 +101,7 @@ export default {
 
             console.log('handleLoadMore');
             axios
-                .get('/v1/articles?page=' + this.page + '&category=' + this.filterCategories)
+                .get('api/v1/articles?page=' + this.page + '&category=' + this.filterCategories)
                 .then(response => {
                     this.page++;
                     this.articles = this.articles.concat(response.data.articles);

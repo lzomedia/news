@@ -22,6 +22,7 @@ class FeedsApiController extends Controller
         $this->userContract = $userContract;
     }
 
+    //todo make this to accept a null user id and return all feeds
     public function index(): JsonResponse
     {
         return response()->json(

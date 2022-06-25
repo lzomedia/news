@@ -16,6 +16,8 @@ class CategoryResource extends JsonResource
 {
     public function toArray($request): array
     {
-        return $this->resource->toArray();
+        return [
+            'data' => $this->resource->toArray()
+        ];
     }
 }

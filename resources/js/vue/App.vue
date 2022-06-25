@@ -4,9 +4,8 @@
     <!-- Page content-->
     <div class="container">
         <div class="row">
-            <!-- Blog entries-->
+            <!-- Articles Entries-->
             <div class="col-lg-8">
-
 
                 <div v-for="(article, index) in Articles">
                     <div v-if="index ===0">
@@ -37,6 +36,7 @@
                         </div>
                     </div>
                 </div>
+
                 <infinite-loading @distance="1" @infinite="handleLoadMore"></infinite-loading>
             </div>
             <!-- Side widgets-->
@@ -58,11 +58,13 @@
                         <div class="row">
                             <div class="col-sm-12">
                                 <ul class="list-unstyled mb-0">
-                                    <li  v-for="category in categories">
-                                        <a class="text-left" v-on:click="setCategory(category.id)">{{ category.name }}</a>
+                                    <li>
+                                        <a class="text-left">
+                                            @todo implement category
+                                        </a>
                                         <span class="float-end">
-                                   ({{ category.count }})
-                                </span>
+                                           (0)
+                                        </span>
                                     </li>
                                 </ul>
                             </div>
@@ -100,23 +102,9 @@ export default {
                     $.each(res.data, (key, value) => {
                         this.Articles.push(value);
                     });
-                      $state.loaded();
+                    $state.loaded();
             });
             this.page = this.page + 1;
-        },
-        getCategories() {
-            axios
-                .get('api/v1/categories')
-                .then(response => {
-                    this.Categories.push(response.data);
-                })
-                .catch(error => {
-                    console.log(error)
-                    this.errored = true
-                })
-                .finally(() => {
-
-                })
         },
         showArticle(article) {
             console.log(article)
@@ -126,9 +114,6 @@ export default {
             console.log('Image failed to load');
         }
     },
-    mounted() {
-        this.getCategories();
-    }
 }
 </script>
 <style>

@@ -8,7 +8,7 @@
             <div class="col-lg-8">
 
 
-                <div v-for="(article, index) in articles">
+                <div v-for="(article, index) in Articles">
                     <div v-if="index ===0">
                         <div class="card mb-4">
                             <a href="#!"><img class="card-img-top" :src="article.image" /></a>
@@ -37,7 +37,7 @@
                         </div>
                     </div>
                 </div>
-
+                <infinite-loading @distance="1" @infinite="handleLoadMore"></infinite-loading>
             </div>
             <!-- Side widgets-->
             <div class="col-lg-4 sticky-top">
@@ -86,42 +86,29 @@ export default {
         return {
             message: this.message,
             errored: false,
-            articles: [],
-            categories: [],
-            filterCategories: [],
+            Articles: [],
+            Categories: [],
             page: 1,
-            query: {
-                limit: 10,
-                page: 1
-            },
         }
     },
     methods: {
-        handleLoadMore() {
-
-            console.log('handleLoadMore');
-            axios
-                .get('api/v1/articles?page=' + this.page + '&category=' + this.filterCategories)
-                .then(response => {
-
-                    this.articles =this.articles.concat(response.data.data);
-                    this.page++;
-                })
-                .catch(error => {
-                    console.log(error)
-                    this.errored = true
-                })
-                .finally(() => {
-
-                })
-
-
+        handleLoadMore($state) {
+           fetch('/api/v1/articles?page=' + this.page)
+                .then(res => {
+                    return res.json();
+                }).then(res => {
+                    $.each(res.data, (key, value) => {
+                        this.Articles.push(value);
+                    });
+                      $state.loaded();
+            });
+            this.page = this.page + 1;
         },
         getCategories() {
             axios
                 .get('api/v1/categories')
                 .then(response => {
-                    this.categories = this.categories.concat(response.data);
+                    this.Categories.push(response.data);
                 })
                 .catch(error => {
                     console.log(error)
@@ -134,18 +121,12 @@ export default {
         showArticle(article) {
             console.log(article)
         },
-        setCategory(category) {
-            this.filterCategories.push(category);
-            console.log(category)
-        },
         imageLoadError () {
             console.log('imageLoadError')
             console.log('Image failed to load');
         }
     },
     mounted() {
-        console.log("Welcome to the Home Page");
-        this.handleLoadMore(this.$refs.infiniteLoading);
         this.getCategories();
     }
 }

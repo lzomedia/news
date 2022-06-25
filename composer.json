@@ -14,7 +14,8 @@
         "laravel/ui": "^3.4",
         "predis/predis": "^1.1",
         "spatie/data-transfer-object": "^3.8",
-        "symfony/dom-crawler": "^6.1"
+        "symfony/dom-crawler": "^6.1",
+        "yajra/laravel-datatables": "^9.0"
     },
     "require-dev": {
 

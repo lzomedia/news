@@ -4,6 +4,7 @@ namespace App\DTO;
 
 use App\Jobs\DiscoverFeeds;
 use App\Models\Category;
+use App\Models\Feed;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\DataTransferObject\Attributes\MapFrom;
@@ -114,7 +115,15 @@ class Article extends DataTransferObject
         $domains = array_unique($results);
 
         foreach ($domains as $domain) {
-            dispatch(new DiscoverFeeds($domain));
+
+            $exists = Feed::where('url', 'LIKE', $domain)->exists();
+
+            if (!$exists) {
+
+                dispatch(new DiscoverFeeds($domain));
+
+            }
+
         }
 
     }

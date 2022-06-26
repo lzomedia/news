@@ -3,6 +3,7 @@
 namespace App\Jobs;
 
 use App\Models\Feed;
+use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -32,39 +33,44 @@ class DiscoverFeeds implements ShouldQueue
     public function handle(): void
     {
 
-        Log::info('Processing of feed discovery for started.' . $this->link);
-
-        $process = new Process(
-            [
+        $process = new Process([
             'python3',
             base_path('python/feed-finder.py'),
-            $this->link,
-            ]
-        );
+            $this->link
+        ]);
 
         $process->run(
             function ($type, $buffer) {
-
-                dd($buffer);
-
                 if (strlen($buffer) > 10) {
-
-                    Log::info("Output: $buffer");
-
-                    Log::error("Output: $buffer");
-
-                    $feed = Feed::where('url', $buffer)->first();
-
-                    if ($feed === null) {
-                        $feed = Feed::create(
-                            [
-                            'url' => $this->link,
-                            ]
-                        );
+                    $data = json_decode($buffer, true);
+                    if(is_array($data)) {
+                        $this->save($data);
                     }
 
                 }
             }
         );
+    }
+
+    private function save(array $data): void
+    {
+        foreach ($data as $feed) {
+            $title = parse_url($feed, PHP_URL_HOST);
+            $exists = Feed::where('url', $feed)->exists();
+            if (!$exists) {
+                Feed::create([
+                    'title' => $title,
+                    'url' => $feed,
+                    'status' => Feed::INITIAL,
+                    'sync' => Carbon::now()
+                ]);
+            }
+        }
+    }
+
+
+    public function failed(): void
+    {
+        $this->delete();
     }
 }

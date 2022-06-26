@@ -15,7 +15,7 @@
 
 @if(Request::is('/'))
 <script src="{{ asset('js/home.js') }}"></script>
-@elseif(Request::is('/articles'))
+@elseif(Request::has('/articles'))
 <script src="{{ asset('js/article.js') }}"></script>
 @endif
 

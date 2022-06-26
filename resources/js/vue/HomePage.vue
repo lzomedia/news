@@ -93,9 +93,9 @@
     </div>
 </template>
 <script>
-console.log('App.vue');
+console.log('HomePage');
 export default {
-    name: 'App',
+    name: 'HomePage',
     data() {
         return {
             message: this.message,

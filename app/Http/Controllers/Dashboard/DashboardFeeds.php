@@ -15,6 +15,7 @@ use App\Tables\FeedsTable;
 use App\Traits\UserErrorTrait;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
@@ -29,6 +30,8 @@ class DashboardFeeds extends Controller
     private SyncContract $syncContract;
 
     private UserContract $userContract;
+
+    private string $redirectTo = 'dashboard';
 
     public function __construct(
         FeedContract $feedDatabaseContract,
@@ -54,7 +57,7 @@ class DashboardFeeds extends Controller
 
         $this->syncContract->syncSingle($feed->id, $this->userContract->getUserId());
 
-        return redirect('dashboard');
+        return redirect($this->redirectTo);
     }
 
     public function syncAll(): RedirectResponse
@@ -67,7 +70,7 @@ class DashboardFeeds extends Controller
             Session::flash('status', 'Feeds sync failed');
         }
 
-        return redirect('dashboard');
+        return redirect($this->redirectTo);
     }
 
     public function import(SaveFileRequest $request): RedirectResponse
@@ -113,6 +116,13 @@ class DashboardFeeds extends Controller
 
         Session::flash('status', 'Feeds imported successfully');
 
-        return redirect('dashboard');
+        return redirect($this->redirectTo);
+    }
+
+
+
+    public function find(Request $request): View
+    {
+        return view('dashboard.feeds-find');
     }
 }

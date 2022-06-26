@@ -33,6 +33,7 @@ class SyncManager implements SyncContract
         $this->feedContract->getFeedById($feed_id)->status = Feed::SYNCYING;
 
         ExtractorFactory::extract($feed_id, $this->articleContract);
+
         return ($this->feedContract->getFeedById($feed_id))->save();
     }
 

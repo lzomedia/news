@@ -25,8 +25,11 @@ class ArticlesTable extends DataTable
         return datatables()
             ->eloquent($query)
             ->addColumn('action', function(Article $article) {
-                return  '<a href="'.route('video.generate', $article->id).'" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i> Generate</a>';
-            });
+                return  '<a href="'.route('video.generate', $article->id).'" class="btn btn-xs btn-primary"> Generate</a>
+                         <a href="'.route('text-rewriter.process', $article->id).'" class="btn btn-xs btn-primary"> Rewrite</a>';
+            })
+            ;
+
     }
 
 

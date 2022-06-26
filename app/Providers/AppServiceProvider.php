@@ -6,9 +6,11 @@ use App\Contracts\ArticleContract;
 use App\Contracts\CategoryContract;
 use App\Contracts\FeedContract;
 use App\Contracts\SyncContract;
+use App\Contracts\TextRewriterContract;
 use App\Contracts\UserContract;
 use App\Contracts\VideoContract;
 use App\Managers\SyncManager;
+use App\Managers\TextRewriterManager;
 use App\Managers\VideoManager;
 use App\Repositories\ArticleRepository;
 use App\Repositories\CategoryRepository;
@@ -30,6 +32,7 @@ class AppServiceProvider extends ServiceProvider
         //Managers
         $this->app->bind(SyncContract::class, SyncManager::class);
         $this->app->bind(VideoContract::class, VideoManager::class);
+        $this->app->bind(TextRewriterContract::class, TextRewriterManager::class);
     }
 
 }

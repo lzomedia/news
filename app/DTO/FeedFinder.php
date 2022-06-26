@@ -26,13 +26,19 @@ class FeedFinder extends DataTransferObject
 
         foreach ($this->feeds as $feed)
         {
+            $prefix = 'feed/';
+            $url = $feed['feedId'];
+            if (str_starts_with($url, $prefix)) {
+                $url= substr($url, strlen($prefix));
+            }
+
             $data = [
                 'title' => $feed['title'],
                 'image' => @$feed['coverUrl'],
                 'subscribers' => $feed['subscribers'],
                 'description' => @$feed['description'],
                 'topics' => $feed['topics'],
-                'url' => str_replace('feed/', '' , $feed['feedId']),
+                'url' => $url,
             ];
 
             $data["exists"] = $this->feedExists($data["url"]);

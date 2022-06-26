@@ -3,13 +3,16 @@ require('./bootstrap');
 require('alpinejs');
 
 import {createApp} from 'vue';
-import App from './vue/App.vue';
+
+import HomePage from './vue/HomePage.vue';
+
 import moment from 'moment';
 
 import InfiniteLoading from "v3-infinite-loading";
+
 import "v3-infinite-loading/lib/style.css"; //required if you're not going to override default slots
 
-const app = createApp(App);
+const app = createApp(HomePage);
 
 
 app.config.globalProperties.$filters = {
@@ -28,7 +31,7 @@ console.log(app.config.globalProperties.$filters);
 
 app.component("infinite-loading", InfiniteLoading);
 
-var formatter = {
+let formatter = {
     date: function (value, format) {
         if (value) {
             return moment(String(value)).format(format || 'MM/DD/YY')

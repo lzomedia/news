@@ -12,6 +12,7 @@ use Illuminate\Database\Query\Builder as QueryBuilder;
  * @property int $id
  * @property string $name
  * @property int $count
+ * @method static create(array $array)
  */
 class Category extends BaseModel
 {

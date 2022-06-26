@@ -5,6 +5,7 @@ namespace App\Repositories;
 use App\Models\User;
 use App\Contracts\UserContract;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Contracts\Auth\Authenticatable;
 
 class UserRepository implements UserContract
 {
@@ -13,12 +14,12 @@ class UserRepository implements UserContract
         return User::all()->toArray();
     }
 
-    public function getUserId(): int
+    public function getUserId(): int|string|null
     {
         return Auth::id();
     }
 
-    public function getUser(): \Illuminate\Contracts\Auth\Authenticatable
+    public function getUser():? Authenticatable
     {
         return Auth::user();
     }

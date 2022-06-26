@@ -3,11 +3,11 @@
 use App\Http\Controllers\Api\ArticleApiController;
 use App\Http\Controllers\Api\CategoryApiController;
 use App\Http\Controllers\Api\FeedsApiController;
-use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\Dashboard\DashBoardArticle;
+use App\Http\Controllers\Dashboard\DashboardFeeds;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FeedsController;
-use App\Http\Controllers\Dashboard\DashboardFeeds;
+use App\Http\Controllers\Frontend\ArticleController;
 use App\Http\Controllers\VideoGenerator;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Support\Facades\Auth;
@@ -46,9 +46,7 @@ RateLimiter::for('articles', static function (Request $request) {
 
 
 
-//@todo clean the frontend routes
-Route::get('/articles/{id}/{slug}', [ArticleController::class, 'view'])
-    ->name('article.view');
+Route::get('/articles/{id}/{slug}', [ArticleController::class, 'view'])->name('article.view');
 
 
 

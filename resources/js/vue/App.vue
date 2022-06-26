@@ -18,6 +18,11 @@
                                 <h2 class="card-title">
                                     <a :href="article.url">{{ article.title }}</a>
                                 </h2>
+                                <small>
+                                    <a class="badge bg-secondary text-decoration-none link-light" :href="article.category.url">
+                                        {{ article.category.name }}
+                                    </a>
+                                </small>
 
                             </div>
                         </div>
@@ -32,12 +37,19 @@
                                 <h3 class="card-title">
                                     <a :href="article.url">{{ article.title }}</a>
                                 </h3>
+                                <p v-html="article.excerpt"></p>
+                                <small>
+                                    <a class="badge bg-secondary text-decoration-none link-light" :href="article.category.url">
+                                        {{ article.category.name }}
+                                    </a>
+                                </small>
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <infinite-loading @distance="1" @infinite="handleLoadMore"></infinite-loading>
+
             </div>
             <!-- Side widgets-->
             <div class="col-lg-4 sticky-top">
@@ -58,12 +70,12 @@
                         <div class="row">
                             <div class="col-sm-12">
                                 <ul class="list-unstyled mb-0">
-                                    <li>
+                                    <li v-for="category in Categories">
                                         <a class="text-left">
-                                            @todo implement category
+                                            {{ category . name }}
                                         </a>
                                         <span class="float-end">
-                                           (0)
+                                           ({{ category . count }})
                                         </span>
                                     </li>
                                 </ul>
@@ -99,7 +111,9 @@ export default {
                 .then(res => {
                     return res.json();
                 }).then(res => {
-                    $.each(res.data, (key, value) => {
+                    this.Categories = res.categories;
+
+                    $.each(res.result.data, (key, value) => {
                         this.Articles.push(value);
                     });
                     $state.loaded();
@@ -114,10 +128,14 @@ export default {
             console.log('Image failed to load');
         }
     },
+    mounted()
+    {
+        console.log("Welcome to the app!");
+    }
 }
 </script>
 <style>
-.hearth::hover{
+.hearth:hover {
     color: red;
 }
 </style>

@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Collection;
 use JsonException;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Builder;
 
 class ArticleRepository implements ArticleContract
 {
@@ -22,13 +23,13 @@ class ArticleRepository implements ArticleContract
             ->find($articleId);
     }
 
-    public function getAllArticles(): LengthAwarePaginator
+    public function getAllArticles(): Builder
     {
         return Article::with('category')
             ->with('tags')
+            ->with('feed')
             ->with('info')
-            ->orderBy('created_at', 'desc')
-            ->paginate(25);
+            ->orderBy('created_at', 'desc');
     }
 
     public function createArticle(\App\DTO\Article $articleDTO): Model

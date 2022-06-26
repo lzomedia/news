@@ -9,7 +9,7 @@ interface UserContract
 {
     public function getAllUsers(): array;
 
-    public function getUserId(): int;
+    public function getUserId(): int|string|null;
 
-    public function getUser(): User | Authenticatable;
+    public function getUser(): ? Authenticatable;
 }

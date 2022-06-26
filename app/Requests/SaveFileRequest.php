@@ -21,7 +21,7 @@ class SaveFileRequest extends FormRequest
         return true;
     }
 
-    public function messages()
+    public function messages():array
     {
         return [
                 'file' => 'Please select a file to upload.',

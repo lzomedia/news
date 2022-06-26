@@ -4,11 +4,10 @@
     <!-- Page content-->
     <div class="container">
         <div class="row">
-            <!-- Blog entries-->
+            <!-- Articles Entries-->
             <div class="col-lg-8">
 
-
-                <div v-for="(article, index) in articles">
+                <div v-for="(article, index) in Articles">
                     <div v-if="index ===0">
                         <div class="card mb-4">
                             <a href="#!"><img class="card-img-top" :src="article.image" /></a>
@@ -19,6 +18,11 @@
                                 <h2 class="card-title">
                                     <a :href="article.url">{{ article.title }}</a>
                                 </h2>
+                                <small>
+                                    <a class="badge bg-secondary text-decoration-none link-light" :href="article.category.url">
+                                        {{ article.category.name }}
+                                    </a>
+                                </small>
 
                             </div>
                         </div>
@@ -33,10 +37,18 @@
                                 <h3 class="card-title">
                                     <a :href="article.url">{{ article.title }}</a>
                                 </h3>
+                                <p v-html="article.excerpt"></p>
+                                <small>
+                                    <a class="badge bg-secondary text-decoration-none link-light" :href="article.category.url">
+                                        {{ article.category.name }}
+                                    </a>
+                                </small>
                             </div>
                         </div>
                     </div>
                 </div>
+
+                <infinite-loading @distance="1" @infinite="handleLoadMore"></infinite-loading>
 
             </div>
             <!-- Side widgets-->
@@ -58,11 +70,13 @@
                         <div class="row">
                             <div class="col-sm-12">
                                 <ul class="list-unstyled mb-0">
-                                    <li  v-for="category in categories">
-                                        <a class="text-left" v-on:click="setCategory(category.id)">{{ category.name }}</a>
+                                    <li v-for="category in Categories">
+                                        <a class="text-left">
+                                            {{ category . name }}
+                                        </a>
                                         <span class="float-end">
-                                   ({{ category.count }})
-                                </span>
+                                           ({{ category . count }})
+                                        </span>
                                     </li>
                                 </ul>
                             </div>
@@ -86,58 +100,42 @@ export default {
         return {
             message: this.message,
             errored: false,
-            articles: [],
-            categories: [],
-            filterCategories: [],
+            Articles: [],
+            Categories: [],
             page: 1,
-            query: {
-                limit: 10,
-                page: 1
-            },
         }
     },
     methods: {
-        handleLoadMore() {
+        handleLoadMore($state) {
+           fetch('/api/v1/articles?page=' + this.page)
+                .then(res => {
+                    return res.json();
+                }).then(res => {
+                    this.Categories = res.categories;
 
-            console.log('handleLoadMore');
-            axios
-                .get('/v1/articles?page=' + this.page + '&category=' + this.filterCategories)
-                .then(response => {
-                    this.page++;
-                    this.articles = this.articles.concat(response.data.articles);
-                    this.categories = response.data.categories;
-
-                })
-                .catch(error => {
-                    console.log(error)
-                    this.errored = true
-                })
-                .finally(() => {
-
-                })
-
-
+                    $.each(res.result.data, (key, value) => {
+                        this.Articles.push(value);
+                    });
+                    $state.loaded();
+            });
+            this.page = this.page + 1;
         },
         showArticle(article) {
             console.log(article)
-        },
-        setCategory(category) {
-            this.filterCategories.push(category);
-            console.log(category)
         },
         imageLoadError () {
             console.log('imageLoadError')
             console.log('Image failed to load');
         }
     },
-    mounted() {
-        console.log("Welcome to the Home Page");
-        this.handleLoadMore(this.$refs.infiniteLoading);
+    mounted()
+    {
+        console.log("Welcome to the app!");
     }
 }
 </script>
 <style>
-.hearth::hover{
+.hearth:hover {
     color: red;
 }
 </style>

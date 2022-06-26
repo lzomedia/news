@@ -1,3 +1,19 @@
 // Fonts
-@import '../css/app.css';
+@import "bootstrap/scss/bootstrap";
+@import "~datatables.net-bs5/css/dataTables.bootstrap5.css";
+
+
+div.dataTables_info {
+ display: none;
+}
+
+
+
+div.dataTables_paginate{
+   float: left;
+    a.paginate_button{
+        color:#333;
+        padding:0.5rem;
+    }
+}
 

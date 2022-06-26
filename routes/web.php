@@ -1,9 +1,13 @@
 <?php
 
-use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\Api\ArticleApiController;
+use App\Http\Controllers\Api\CategoryApiController;
+use App\Http\Controllers\Api\FeedsApiController;
 use App\Http\Controllers\Dashboard\DashBoardArticle;
+use App\Http\Controllers\Dashboard\DashboardFeeds;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FeedsController;
+use App\Http\Controllers\Frontend\ArticleController;
 use App\Http\Controllers\VideoGenerator;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Support\Facades\Auth;
@@ -30,8 +34,10 @@ Auth::routes();
 
 
 
-Route::group(['prefix' => 'v1'], static function () {
-    Route::get('/articles', [ArticleController::class, 'indexApi']);
+Route::group(['prefix' => '/api/v1'], static function () {
+    Route::get('/articles', [ArticleApiController::class, 'index']);
+    Route::get('/categories', [CategoryApiController::class, 'index']);
+    Route::get('/feeds', [FeedsApiController::class, 'index']);
 });
 
 RateLimiter::for('articles', static function (Request $request) {
@@ -40,32 +46,31 @@ RateLimiter::for('articles', static function (Request $request) {
 
 
 
-//@todo clean the frontend routes
-Route::get('/articles/{id}/{slug}', [ArticleController::class, 'view'])
-    ->name('article.view');
+Route::get('/articles/{id}/{slug}', [ArticleController::class, 'view'])->name('article.view');
 
 
-//todo clean up the dashboard routes
-Route::get('/dashboard', [DashboardController::class, 'dashboard'])
-    ->name('dashboard');
+
 
 
 
 Route::group(['prefix' => 'dashboard'], static function () {
-    Route::post('feeds/import', [FeedsController::class, 'import'])
-        ->name('feeds.import');
 
-    Route::get('feeds/syncAll', [FeedsController::class, 'syncAll'])
-        ->name('feeds.sync-all');
+    Route::get('/', [DashboardController::class, 'dashboard'])->name('dashboard');
 
-    Route::get('feeds/single/sync/{feed}', [FeedsController::class, 'syncSingle'])
-        ->name('feeds.sync-single');
+    Route::group(['prefix' => 'feeds'], static function () {
+        Route::get('/', [DashboardFeeds::class, 'index'])->name('dashboard.feeds');
+        Route::post('/import', [DashboardFeeds::class, 'import'])->name('feeds.import');
+        Route::get('/syncAll', [DashboardFeeds::class, 'syncAll'])->name('feeds.sync-all');
+        Route::get('/single/sync/{feed}', [DashboardFeeds::class, 'syncSingle'])->name('feeds.sync-single');
+    });
 
-    Route::get('articles', [DashBoardArticle::class, 'articles'])
-        ->name('dashboard.articles');
+    Route::group(['prefix' => 'articles'], static function () {
+        Route::get('articles', [DashBoardArticle::class, 'articles'])->name('dashboard.articles');
+    });
 
-    Route::get('video/generator/{article}', [VideoGenerator::class, 'generate'])
-        ->name('video.generate');
+    Route::group(['prefix' => 'videos'], static function () {
+        Route::get('/generator/{article}', [VideoGenerator::class, 'generate'])->name('video.generate');
+        Route::get('/upload/{article}', [VideoGenerator::class, 'upload'])->name('video.upload');
+    });
 
-    Route::get('video/upload/{article}', [VideoGenerator::class, 'upload'])->name('video.upload');
 });

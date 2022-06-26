@@ -16,5 +16,6 @@ parameters:
 
     excludePaths:
         - ./app/Parsers/
+        - ./app/Tables/
 
     checkMissingIterableValueType: false

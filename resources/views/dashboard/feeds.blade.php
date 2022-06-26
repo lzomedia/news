@@ -34,11 +34,10 @@
                         </h4>
                     </div>
                     <div class="card-body">
-                        <span>
-                               <a href="{{ route('feeds.sync-all') }}">
-                                Sync All Feeds
-                            </a>
-                        </span>
+                        <a  style="float: right" class="text-right" href="{{ route('feeds.sync-all') }}">
+                            Sync All Feeds
+                        </a>
+                        <br>
                         {{$dataTable->table()}}
                     </div>
                 </div>

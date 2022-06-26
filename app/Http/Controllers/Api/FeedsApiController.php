@@ -50,12 +50,17 @@ class FeedsApiController extends Controller
             json_decode($data, true, 512, JSON_THROW_ON_ERROR)
         );
 
-        return response()->json($finder->getFeeds());
+        $data = [
+            'feeds' => $finder->getFeeds(),
+            'topics' => $finder->getTopics(),
+        ];
+
+        return response()->json($data);
     }
 
-    public function save(Request $request): JsonResponse
+    public function save(Request $request)
     {
-        $data = $request->all();
+        $data = $request->toArray();
         dd($data);
     }
 }

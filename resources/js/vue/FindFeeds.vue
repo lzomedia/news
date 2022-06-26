@@ -6,6 +6,7 @@
             <div class="col-lg-12">
                 <p>
                     Welcome to feeds finder.
+                    <small>Please press search</small>
                 </p>
 
                 <form @submit.prevent="search">
@@ -28,6 +29,7 @@
                         <th scope="col">Title</th>
                         <th scope="col">Subscribers</th>
                         <th scope="col">Score</th>
+                        <th scope="col">Exists</th>
                         <th scope="col">Actions</th>
                     </tr>
                     </thead>
@@ -37,6 +39,7 @@
                         <td>{{ feed.title }}</td>
                         <td>{{ feed.subscribers }}</td>
                         <td>{{ feed. relevanceScore }}</td>
+                        <td>{{ feed.exists }}</td>
                         <td>
                             <a href="#" @click.prevent="saveFeed(feed)">
                                 Save Feed
@@ -51,6 +54,8 @@
     </div>
 </template>
 <script>
+
+
 console.log('findFeeds.vue');
 export default {
     name: 'findFeeds',
@@ -69,12 +74,8 @@ export default {
                 .then(res => {
                     return res.json();
                 }).then(res => {
-                    this.Topics = res.relatedTopics;
-                    console.log(res);
-                    $.each(res.feedInfos, (key, value) => {
-                        console.log(value.title);
-                        this.Feeds.push(value);
-                    });
+                    this.Topics = res.topics;
+                    this.Feeds = res.feeds;
 
                     $state.loaded();
             });
@@ -83,9 +84,10 @@ export default {
             const requestOptions = {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: feed
+                body: JSON.stringify(feed)
             };
-            fetch("api/v1/feeds/save", requestOptions)
+            console.log(JSON.stringify(feed));
+            fetch("/api/v1/feeds/save", requestOptions)
                 .then(response => response.json())
                 .then(data => (this.postId = data.id));
         }

@@ -31,7 +31,7 @@ class DashboardFeeds extends Controller
 
     private UserContract $userContract;
 
-    private string $redirectTo = 'dashboard';
+    private string $redirectTo = 'dashboard/feeds';
 
     public function __construct(
         FeedContract $feedDatabaseContract,

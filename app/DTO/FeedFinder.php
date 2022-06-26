@@ -16,6 +16,9 @@ class FeedFinder extends DataTransferObject
     #[MapFrom('feedInfos')]
     public ?array $feeds;
 
+    #[MapFrom('relatedTopics')]
+    public ?array $topics;
+
     public function getFeeds(): array
     {
 
@@ -44,7 +47,22 @@ class FeedFinder extends DataTransferObject
 
     private function feedExists(string $url): bool
     {
-        return Feed::where('url', $url)->exists();
+        return Feed::where('url','LIKE', $url)->exists();
+    }
+
+    public function getTopics(): array
+    {
+        $content = collect([]);
+
+        foreach ($this->topics as $topic)
+        {
+            $content->push([
+                'topic' => $topic['topic'],
+                'subscribers' => $topic['size'],
+            ]);
+        }
+
+        return $content->toArray();
     }
 
 }

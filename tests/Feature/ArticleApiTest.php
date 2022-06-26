@@ -11,5 +11,12 @@ class ArticleApiTest extends TestCase
         $response = $this->get('api/v1/articles');
 
         $response->assertStatus(200);
+        $response->assertJsonStructure([
+            'success',
+            'message',
+            'categories',
+            'result' => []
+
+        ]);
     }
 }

@@ -3,12 +3,9 @@
 namespace App\Console\Commands;
 
 use App\Contracts\ArticleContract;
-use App\DTO\Article;
-
-use App\Managers\VideoManager;
+use App\Services\VideoManager;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
-use Symfony\Component\Process\Process;
 
 class VideoGenerator extends Command
 {

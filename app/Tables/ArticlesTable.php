@@ -25,13 +25,10 @@ class ArticlesTable extends DataTable
         return datatables()
             ->eloquent($query)
             ->addColumn('action', function(Article $article) {
-                return  '<a href="'.route('video.generate', $article->id).'" class="btn btn-xs btn-primary"> Generate</a>
-                         <a href="'.route('text-rewriter.process', $article->id).'" class="btn btn-xs btn-primary"> Rewrite</a>';
-            })
-            ;
+                return  '<a href="'.route('video.generate', $article->id).'" class="btn btn-xs btn-primary"> Generate</a>';
+            });
 
     }
-
 
     public function query(Article $model)
     {
@@ -41,7 +38,7 @@ class ArticlesTable extends DataTable
     /**
      * Optional method if you want to use html builder.
      *
-     * @return \Yajra\DataTables\Html\Builder
+     * @return HtmlBuilder
      */
     public function html()
     {

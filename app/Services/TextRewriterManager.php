@@ -1,13 +1,11 @@
 <?php
 
-namespace App\Managers;
+namespace App\Services;
 
 use App\Contracts\TextRewriterContract;
-use App\Contracts\VideoContract;
 use App\Models\Article;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Log;
-use Symfony\Component\Process\InputStream;
 use Symfony\Component\Process\Process;
 
 class TextRewriterManager implements TextRewriterContract

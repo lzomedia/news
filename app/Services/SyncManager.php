@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Managers;
+namespace App\Services;
 
 use App\Contracts\ArticleContract;
 use App\Contracts\FeedContract;

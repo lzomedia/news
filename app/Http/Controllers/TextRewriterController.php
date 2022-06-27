@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Contracts\TextRewriterContract;
-use App\Contracts\VideoContract;
 use App\Jobs\RewriteArticle;
 use App\Models\Article;
 use Illuminate\Http\RedirectResponse;
@@ -20,10 +19,10 @@ class TextRewriterController extends Controller
 
     public function process(Article $article): RedirectResponse
     {
-      $this->dispatch(new RewriteArticle($this->textContract, $article));
+        $this->dispatch(new RewriteArticle($this->textContract, $article));
 
-      Session::flash('success', 'Article has been queued for processing');
+        Session::flash('success', 'Article has been queued for processing');
 
-      return redirect('dashboard/articles');
+        return redirect('dashboard/articles');
     }
 }

@@ -76,7 +76,7 @@ class FeedsTest extends TestCase
         $this->markTestSkipped('This test has not been implemented yet.');
     }
 
-    public function test_if_can_import_single():void
+    public function test_if_can_import_single(): void
     {
 //        $data = collect([
 //            'user_id' => 1,

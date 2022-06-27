@@ -4,6 +4,7 @@ namespace App\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Log;
 
 /**
 
@@ -16,6 +17,8 @@ class CategoryResource extends JsonResource
 {
     public function toArray($request): array
     {
+        Log::info('CategoryResource::toArray' . $request->url());
+
         return [
             'data' => $this->resource->toArray()
         ];

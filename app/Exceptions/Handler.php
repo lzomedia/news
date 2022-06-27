@@ -44,8 +44,8 @@ class Handler extends ExceptionHandler
     public function register()
     {
         $this->reportable(
-            function (Throwable $e) {
-                //
+            function (Throwable $exception) {
+                return $exception instanceof \Illuminate\Auth\AuthenticationException;
             }
         );
     }

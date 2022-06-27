@@ -10,11 +10,10 @@ use Illuminate\Support\Facades\Route;
 
 class RouteServiceProvider extends ServiceProvider
 {
-
     public const HOME = '/dashboard';
 
 
-    public function boot():void
+    public function boot(): void
     {
         $this->configureRateLimiting();
 
@@ -38,14 +37,13 @@ class RouteServiceProvider extends ServiceProvider
     protected function configureRateLimiting(): void
     {
         RateLimiter::for(
-            'api', static function (Request $request) {
-
-
-                $user_id = (string) $request->user()?->id;
+            'api',
+            static function (Request $request) {
+                $userID = (string) $request->user()?->id;
 
                 $ip = (string) $request->ip();
 
-                return Limit::perMinute(60)->by($user_id ?: $ip);
+                return Limit::perMinute(60)->by($userID ?: $ip);
             }
         );
     }

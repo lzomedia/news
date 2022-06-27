@@ -13,7 +13,6 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Http;
 use Spatie\DataTransferObject\Exceptions\UnknownProperties;
-use Symfony\Component\DomCrawler\Crawler;
 
 class FeedsApiController extends Controller
 {
@@ -48,7 +47,6 @@ class FeedsApiController extends Controller
      */
     public function find(Request $request): JsonResponse
     {
-
         $data = Http::get('https://feedly.com/v3/recommendations/topics/'.$request->topic.'?locale=en')
             ->body();
 
@@ -68,13 +66,12 @@ class FeedsApiController extends Controller
     {
         $data = $request->toArray();
         $exist = Feed::where('url', $data['url'])->exists();
-        if(!$exist) {
+        if (!$exist) {
             $feed = new Feed();
             $feed->fill($data);
             $feed->save();
             dispatch(new ProcessFeeds($feed->id, $this->articleContract));
             return response()->json($feed);
-
         }
         return response()->json(['error' => 'Feed already exists']);
     }

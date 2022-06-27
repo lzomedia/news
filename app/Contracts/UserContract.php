@@ -2,7 +2,6 @@
 
 namespace App\Contracts;
 
-use App\Models\User;
 use Illuminate\Contracts\Auth\Authenticatable;
 
 interface UserContract
@@ -11,5 +10,5 @@ interface UserContract
 
     public function getUserId(): int|string|null;
 
-    public function getUser(): ? Authenticatable;
+    public function getUser(): ?Authenticatable;
 }

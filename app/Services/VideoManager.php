@@ -17,7 +17,6 @@ class VideoManager implements VideoContract
     public function generateVideo(Article | Model $article): void
     {
         try {
-
             $process = new Process(
                 [
                     "tts",

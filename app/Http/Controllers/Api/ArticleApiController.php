@@ -9,25 +9,23 @@ use Illuminate\Http\JsonResponse;
 
 class ArticleApiController extends ApiController
 {
+    public ArticleContract $articleContract;
 
-    public ArticleContract $articleDatabaseContract;
 
-
-    public function __construct(ArticleContract $articleDatabaseContract)
+    public function __construct(ArticleContract $articleContract)
     {
-        $this->articleDatabaseContract = $articleDatabaseContract;
+        $this->articleContract = $articleContract;
     }
 
     public function index(): JsonResponse
     {
-
         return response()->json([
             'success' => 'true',
             'message'=>'Request successful',
             'categories' => Category::orderBy('count', 'desc')
                 ->limit(10)->get(),
             'result' => ArticleResource::collection((
-                $this->articleDatabaseContract->getAllArticles()->paginate(5)
+                $this->articleContract->getAllArticles()->paginate(5)
             ))->response()->getData()
         ]);
     }

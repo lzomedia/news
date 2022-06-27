@@ -40,7 +40,5 @@ class AppServiceProvider extends ServiceProvider
             ->give(function () {
                 return new ArticleRepository();
             });
-
     }
-
 }

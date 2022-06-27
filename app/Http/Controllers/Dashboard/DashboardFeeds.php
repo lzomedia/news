@@ -2,20 +2,15 @@
 
 namespace App\Http\Controllers\Dashboard;
 
-use App\Contracts\ArticleContract;
-
 use App\Contracts\FeedContract;
 use App\Contracts\SyncContract;
 use App\Contracts\UserContract;
 use App\Models\Feed;
 use App\Parsers\OpmlParser;
 use App\Requests\SaveFileRequest;
-use App\Tables\ArticlesTable;
 use App\Tables\FeedsTable;
 use App\Traits\UserErrorTrait;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
@@ -64,11 +59,11 @@ class DashboardFeeds extends Controller
     {
         $true = $this->syncContract->syncAll($this->userContract);
 
-        if ($true) {
-            Session::flash('status', 'Feeds sync started successfully');
-        } else {
+        if (!$true) {
             Session::flash('status', 'Feeds sync failed');
         }
+
+        Session::flash('status', 'Feeds sync started successfully');
 
         return redirect($this->redirectTo);
     }
@@ -101,11 +96,11 @@ class DashboardFeeds extends Controller
                             ]
                         );
 
-                        $user_id = $this->userContract->getUserId();
+                        $userID = $this->userContract->getUserId();
 
-                        $feed_id = $feed->id;
+                        $feedID = $feed->id;
 
-                        $this->syncContract->syncSingle($feed_id, $user_id);
+                        $this->syncContract->syncSingle($feedID, $userID);
                     } catch (\Exception $e) {
                         Session::flash('status', 'Error while importing feeds');
                     }
@@ -120,8 +115,7 @@ class DashboardFeeds extends Controller
     }
 
 
-
-    public function find(Request $request): View
+    public function find(): View
     {
         return view('dashboard.feeds-find');
     }

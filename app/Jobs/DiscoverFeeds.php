@@ -9,8 +9,6 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Log;
 use Symfony\Component\Process\Process;
 
 class DiscoverFeeds implements ShouldQueue
@@ -32,7 +30,6 @@ class DiscoverFeeds implements ShouldQueue
 
     public function handle(): void
     {
-
         $process = new Process([
             'python3',
             base_path('python/feed-finder.py'),
@@ -40,13 +37,12 @@ class DiscoverFeeds implements ShouldQueue
         ]);
 
         $process->run(
-            function ($type, $buffer) {
+            function ($buffer) {
                 if (strlen($buffer) > 10) {
                     $data = json_decode($buffer, true);
-                    if(is_array($data)) {
+                    if (is_array($data)) {
                         $this->save($data);
                     }
-
                 }
             }
         );

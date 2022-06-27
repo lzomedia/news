@@ -4,9 +4,9 @@ namespace App\Enums;
 
 enum FeedStatus
 {
-case SYNCED;
+    case SYNCED;
 
-case COMPLETED;
+    case COMPLETED;
 
     public function getStatus(): string
     {
@@ -15,4 +15,4 @@ case COMPLETED;
             self::COMPLETED => 'completed',
         };
     }
-    }
+}

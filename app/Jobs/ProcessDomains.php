@@ -26,7 +26,5 @@ class ProcessDomains implements ShouldQueue
 
     public function handle(): void
     {
-
     }
 }
-

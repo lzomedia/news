@@ -12,7 +12,7 @@ class FeedRepository implements FeedContract
 {
     public function getFeedById(int $feedId): Feed | Model | null
     {
-        return (new \App\Models\Feed())->find($feedId);
+        return Feed::find($feedId);
     }
 
     public function getAllFeeds(UserContract $userContract): Collection
@@ -27,7 +27,7 @@ class FeedRepository implements FeedContract
 
     public function createFeed(array $feed): Model | Feed
     {
-        return (new \App\Models\Feed())->firstOrCreate($feed);
+        return (new Feed())->firstOrCreate($feed);
     }
 
     public function getFeedsForUser(UserContract $userContract): Collection

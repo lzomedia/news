@@ -9,12 +9,12 @@ use Illuminate\View\View;
 
 class ArticleController extends Controller
 {
-    private ArticleContract $articleDatabaseContract;
+    private ArticleContract $articleContract;
 
     public function __construct(
-        ArticleContract $articleDatabaseContract
+        ArticleContract $articleContract
     ) {
-        $this->articleDatabaseContract = $articleDatabaseContract;
+        $this->articleContract = $articleContract;
     }
 
 
@@ -22,10 +22,11 @@ class ArticleController extends Controller
     {
         $id = $request->id;
 
-        $article = $this->articleDatabaseContract->getArticleById($id);
+        $article = $this->articleContract->getArticleById($id);
 
         return view(
-            'article-view', [
+            'article-view',
+            [
             'article' =>$article,
             ]
         );

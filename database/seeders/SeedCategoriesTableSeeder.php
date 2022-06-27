@@ -7,7 +7,6 @@ use App\Models\Category;
 
 class SeedCategoriesTableSeeder extends Seeder
 {
-
     public function run(): void
     {
         Category::create([

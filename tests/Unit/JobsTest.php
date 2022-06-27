@@ -32,6 +32,5 @@ class JobsTest extends TestCase
         Queue::assertPushed(ProcessFeeds::class, static function ($job) {
             return strlen($job->message) < 140;
         });
-
     }
 }

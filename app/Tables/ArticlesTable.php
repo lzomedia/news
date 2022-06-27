@@ -2,32 +2,24 @@
 
 namespace App\Tables;
 
-
 use App\Models\Article;
 
-use Yajra\DataTables\DataTableAbstract;
 use Yajra\DataTables\Services\DataTable;
 
-use Yajra\DataTables\EloquentDataTable;
-use Yajra\DataTables\Exceptions\Exception;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
-use Yajra\DataTables\QueryDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
 use Illuminate\Contracts\Database\Query\Builder;
-use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 
 class ArticlesTable extends DataTable
 {
-
     public function dataTable($query)
     {
         return datatables()
             ->eloquent($query)
-            ->addColumn('action', function(Article $article) {
+            ->addColumn('action', function (Article $article) {
                 return  '<a href="'.route('video.generate', $article->id).'" class="btn btn-xs btn-primary"> Generate</a>';
             });
-
     }
 
     public function query(Article $model)
@@ -62,6 +54,4 @@ class ArticlesTable extends DataTable
             Column::computed('action')
         ];
     }
-
-
 }

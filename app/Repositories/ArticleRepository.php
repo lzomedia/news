@@ -5,12 +5,11 @@ namespace App\Repositories;
 use App\Contracts\ArticleContract;
 use App\DTO\Article as ArticleDTO;
 use App\Models\Article;
+use App\Models\Tag;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Collection;
 use JsonException;
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Builder;
 
 class ArticleRepository implements ArticleContract
@@ -32,10 +31,10 @@ class ArticleRepository implements ArticleContract
             ->orderBy('created_at', 'desc');
     }
 
-    public function createArticle(\App\DTO\Article $articleDTO): Model
+    public function createArticle(ArticleDTO $articleDTO): Model
     {
         try {
-            $articleModel =  (new \App\Models\Article())->updateOrCreate(
+            $articleModel =  (new Article())->updateOrCreate(
                 [
                 'feed_id' => $articleDTO->getFeedId(),
                 'category_id' => $articleDTO->getCategory()->id,
@@ -51,7 +50,7 @@ class ArticleRepository implements ArticleContract
 
             foreach ($articleDTO->getKeywords() as $tag) {
                 $articleModel->tags()->attach(
-                    (new \App\Models\Tag())->firstOrCreate(['name' => $tag])
+                    (new Tag())->firstOrCreate(['name' => $tag])
                 );
             }
 
@@ -64,13 +63,11 @@ class ArticleRepository implements ArticleContract
             );
 
             return $articleModel;
-
         } catch (QueryException $exception) {
             Log::error($exception->getTraceAsString());
         } catch (JsonException $e) {
             Log::error($e->getTraceAsString());
         }
-
     }
 
     public function checkIfArticleExists(ArticleDTO $articleDTO): bool
@@ -83,5 +80,4 @@ class ArticleRepository implements ArticleContract
         }
         return true;
     }
-
 }

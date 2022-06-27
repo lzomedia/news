@@ -2,9 +2,7 @@
 
 namespace App\Http\Controllers\Frontend;
 
-use App\Contracts\ArticleContract;
 use App\Contracts\CategoryContract;
-use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\View\View;
 
@@ -17,10 +15,8 @@ class CategoryController extends Controller
         $this->categoryContract = $categoryContract;
     }
 
-    public function view(Request $request): View
+    public function view(): View
     {
-        $categories = $this->categoryContract->getAllCategories();
-
         return view('category-view', [
             'categories' => $this->categoryContract->getAllCategories()
         ]);

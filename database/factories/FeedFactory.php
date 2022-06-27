@@ -6,15 +6,11 @@ use App\Models\Feed;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
-
 
 class FeedFactory extends Factory
 {
-
     public function definition(): array
     {
-
         $user = User::factory()->create();
 
         return [
@@ -25,5 +21,4 @@ class FeedFactory extends Factory
             'sync' => Carbon::parse('2001-01-01')
         ];
     }
-
 }

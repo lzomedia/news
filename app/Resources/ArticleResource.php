@@ -5,8 +5,8 @@ namespace App\Resources;
 use App\Models\Category;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
-
 
 /**
  * @property int $id
@@ -26,6 +26,8 @@ class ArticleResource extends JsonResource
 {
     public function toArray($request): array
     {
+        Log::info('ArticleResource::toArray' . $request->url());
+
         return [
             'id' => $this->id,
             'title' => $this->title,

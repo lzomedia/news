@@ -22,26 +22,27 @@ class SyncManager implements SyncContract
         $this->articleContract = $articleContract;
     }
 
-    public function syncSingle(int $feed_id, int $article_id): bool
+    public function syncSingle(int $feedID, int $articleID): bool
     {
-        if ($this->feedContract->getFeedById($feed_id) === null) {
+        if ($this->feedContract->getFeedById($feedID) === null) {
             return false;
         }
 
-        $this->feedContract->getFeedById($feed_id)->sync = now();
+        $this->feedContract->getFeedById($feedID)->sync = now();
 
-        $this->feedContract->getFeedById($feed_id)->status = Feed::SYNCYING;
+        $this->feedContract->getFeedById($feedID)->status = Feed::SYNCYING;
 
-        ExtractorFactory::extract($feed_id, $this->articleContract);
+        ExtractorFactory::extract($feedID, $this->articleContract);
 
-        return ($this->feedContract->getFeedById($feed_id))->save();
+        return ($this->feedContract->getFeedById($feedID))->save();
     }
 
     public function syncAll(UserContract $userContract): bool
     {
         Feed::where('user_id', $userContract->getUserId())
             ->orderBy('id')->chunk(
-                3, function ($feeds) {
+                3,
+                function ($feeds) {
                     foreach ($feeds as $feed) {
                         $this->feedContract->getFeedById($feed->id)->status = Feed::SYNCYING;
                         ExtractorFactory::extract($feed->id, $this->articleContract);

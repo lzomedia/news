@@ -2,11 +2,7 @@
 
 namespace App\Console\Commands;
 
-use App\Contracts\ArticleContract;
-use App\DTO\Article;
-
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Log;
 use Symfony\Component\Process\Process;
 
 class DomainArticleFinder extends Command
@@ -30,9 +26,8 @@ class DomainArticleFinder extends Command
         $process->setTimeout(180);
 
         $process->run(
-
-            function ($type, $buffer) use ($url) {
-               $this->info($buffer);
+            function ($buffer) use ($url) {
+                $this->info($buffer);
             }
         );
 

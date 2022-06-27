@@ -120,10 +120,12 @@ export default {
             });
             this.page = this.page + 1;
         },
-        showArticle(article) {
+        showArticle(article)
+        {
             console.log(article)
         },
-        imageLoadError () {
+        imageLoadError ()
+        {
             console.log('imageLoadError')
             console.log('Image failed to load');
         }

@@ -24,7 +24,8 @@ class ArticleApiController extends ApiController
         return response()->json([
             'success' => 'true',
             'message'=>'Request successful',
-            'categories' => Category::orderBy('count', 'desc')->get(),
+            'categories' => Category::orderBy('count', 'desc')
+                ->limit(10)->get(),
             'result' => ArticleResource::collection((
                 $this->articleDatabaseContract->getAllArticles()->paginate(5)
             ))->response()->getData()

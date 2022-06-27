@@ -38,6 +38,7 @@ class FeedFinder extends DataTransferObject
                 'subscribers' => $feed['subscribers'],
                 'description' => @$feed['description'],
                 'topics' => $feed['topics'],
+                'website' => @$feed['website'],
                 'url' => $url,
             ];
 

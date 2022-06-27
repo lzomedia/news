@@ -19,7 +19,10 @@ class CategoryController extends Controller
 
     public function view(Request $request): View
     {
-        $article = $this->categoryContract->getAllCategories();
+        $categories = $this->categoryContract->getAllCategories();
 
+        return view('category-view', [
+            'categories' => $this->categoryContract->getAllCategories()
+        ]);
     }
 }

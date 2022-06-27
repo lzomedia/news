@@ -2,30 +2,20 @@
 
 namespace App\Tables;
 
-
-use App\Models\Article;
-
 use App\Models\Feed;
-use Yajra\DataTables\DataTableAbstract;
 use Yajra\DataTables\Services\DataTable;
 
-use Yajra\DataTables\EloquentDataTable;
-use Yajra\DataTables\Exceptions\Exception;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
-use Yajra\DataTables\QueryDataTable;
-use Yajra\DataTables\Html\Builder as HtmlBuilder;
 use Illuminate\Contracts\Database\Query\Builder;
-use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 
 class FeedsTable extends DataTable
 {
-
     public function dataTable($query)
     {
         return datatables()
             ->eloquent($query)
-            ->addColumn('action', function(Feed $feed) {
+            ->addColumn('action', function (Feed $feed) {
                 return  '<a href="'.route('feeds.sync-single', $feed->id).'" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-clock"></i> Sync</a>';
             });
     }
@@ -63,6 +53,4 @@ class FeedsTable extends DataTable
             Column::computed('action')
         ];
     }
-
-
 }

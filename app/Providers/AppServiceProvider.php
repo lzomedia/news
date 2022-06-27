@@ -9,13 +9,14 @@ use App\Contracts\SyncContract;
 use App\Contracts\TextRewriterContract;
 use App\Contracts\UserContract;
 use App\Contracts\VideoContract;
-use App\Managers\SyncManager;
-use App\Managers\TextRewriterManager;
-use App\Managers\VideoManager;
+use App\Jobs\ProcessFeeds;
 use App\Repositories\ArticleRepository;
 use App\Repositories\CategoryRepository;
 use App\Repositories\FeedRepository;
 use App\Repositories\UserRepository;
+use App\Services\SyncManager;
+use App\Services\TextRewriterManager;
+use App\Services\VideoManager;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -33,6 +34,11 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(SyncContract::class, SyncManager::class);
         $this->app->bind(VideoContract::class, VideoManager::class);
         $this->app->bind(TextRewriterContract::class, TextRewriterManager::class);
-    }
 
+        $this->app->when(ProcessFeeds::class)
+            ->needs(ArticleContract::class)
+            ->give(function () {
+                return new ArticleRepository();
+            });
+    }
 }

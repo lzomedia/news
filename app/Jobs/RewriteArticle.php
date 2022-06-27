@@ -4,17 +4,12 @@ namespace App\Jobs;
 
 use App\Contracts\TextRewriterContract;
 use App\Models\Article;
-use App\Models\Feed;
-use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Log;
-use Symfony\Component\Process\Process;
 
 class RewriteArticle implements ShouldQueue
 {

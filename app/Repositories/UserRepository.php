@@ -19,7 +19,7 @@ class UserRepository implements UserContract
         return Auth::id();
     }
 
-    public function getUser():? Authenticatable
+    public function getUser(): ?Authenticatable
     {
         return Auth::user();
     }

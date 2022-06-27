@@ -31,11 +31,11 @@ class ProcessFeeds implements ShouldQueue
 
     public ArticleContract $articleContract;
 
-    private int $feed_id;
+    private int $feedID;
 
-    public function __construct(int $feed_id, ArticleContract $articleContract)
+    public function __construct(int $feedID, ArticleContract $articleContract)
     {
-        $this->feed_id = $feed_id;
+        $this->feedID = $feedID;
 
         $this->articleContract = $articleContract;
     }
@@ -43,7 +43,7 @@ class ProcessFeeds implements ShouldQueue
 
     final public function handle(): void
     {
-        $feed = Feed::find($this->feed_id);
+        $feed = Feed::find($this->feedID);
 
         try {
             $process = new Process(
@@ -57,7 +57,7 @@ class ProcessFeeds implements ShouldQueue
             $process->setTimeout(180);
 
             $process->run(
-                function ($type, $buffer) {
+                function ($buffer) {
                     Log::error("Output: $buffer");
 
                     if (strlen($buffer) > 10) {
@@ -73,14 +73,12 @@ class ProcessFeeds implements ShouldQueue
                         );
 
                         if (json_last_error() === 0) {
-
                             $dto = new ArticleDTO($data);
                             $dto->discoverFeeds();
 
                             if (!$this->articleContract->checkIfArticleExists($dto)) {
                                 $this->articleContract->createArticle($dto);
                             }
-
                         }
                     }
                 }

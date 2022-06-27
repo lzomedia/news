@@ -4,15 +4,20 @@ namespace App\Enums;
 
 enum FeedStatus
 {
-case SYNCED;
+    case STOPPED;
 
-case COMPLETED;
+    case SYNCING;
+
+    case COMPLETED;
+
 
     public function getStatus(): string
     {
-        return match ($this) {
-            self::SYNCED => 'synchronizing',
+        return match ($this)
+        {
+            self::STOPPED => 'stopped',
+            self::SYNCING => 'synchronizing',
             self::COMPLETED => 'completed',
         };
     }
-    }
+}

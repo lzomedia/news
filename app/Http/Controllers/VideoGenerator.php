@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Contracts\VideoContract;
 use App\Models\Article;
+use Illuminate\Support\Facades\Log;
 
 class VideoGenerator extends Controller
 {
@@ -21,6 +22,6 @@ class VideoGenerator extends Controller
 
     public function upload(Article $article): void
     {
-        //todo upload video to a hosting service
+        Log::info('Uploading video for article: ' . $article->id);
     }
 }

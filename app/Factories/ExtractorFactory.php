@@ -7,12 +7,12 @@ use App\Jobs\ProcessFeeds;
 
 class ExtractorFactory
 {
-    private const DelayInSeconds = 60;
+    private const DELAY = 10;
 
-    public static function extract(int $feed_id, ArticleContract $articleContract): void
+    public static function extract(int $feedID, ArticleContract $articleContract): void
     {
-        $timeToWait = now()->addSeconds(self::DelayInSeconds);
+        $timeToWait = now()->addSeconds(self::DELAY);
 
-        dispatch(new ProcessFeeds($feed_id, $articleContract))->delay($timeToWait);
+        dispatch(new ProcessFeeds($feedID, $articleContract))->delay($timeToWait);
     }
 }

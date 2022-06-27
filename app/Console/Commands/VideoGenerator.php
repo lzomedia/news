@@ -3,12 +3,9 @@
 namespace App\Console\Commands;
 
 use App\Contracts\ArticleContract;
-use App\DTO\Article;
-
-use App\Managers\VideoManager;
+use App\Services\VideoManager;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
-use Symfony\Component\Process\Process;
 
 class VideoGenerator extends Command
 {
@@ -16,31 +13,27 @@ class VideoGenerator extends Command
 
     protected $description = 'This command will run and extract the data from the feeds';
 
-    private ArticleContract $articleDatabaseContract;
+    private ArticleContract $articleContract;
 
-    public function __construct(ArticleContract $articleDatabaseContract)
+    public function __construct(ArticleContract $articleContract)
     {
         parent::__construct();
 
-        $this->articleDatabaseContract = $articleDatabaseContract;
+        $this->articleContract = $articleContract;
     }
 
     public function handle(): void
     {
         $this->info('Started the generation of a video from the article');
 
-        $article = $this->articleDatabaseContract->getArticleById(3);
+        $article = $this->articleContract->getArticleById(3);
 
         try {
-
             $manager = new VideoManager();
 
             $manager->generateVideo($article);
-
         } catch (\Exception $e) {
-
             Log::error($e->getMessage());
-
         }
     }
 }

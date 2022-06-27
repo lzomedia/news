@@ -2,14 +2,9 @@
 
 namespace App\DTO;
 
-use App\Jobs\DiscoverFeeds;
-use App\Models\Category;
 use App\Models\Feed;
-use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Model;
 use Spatie\DataTransferObject\Attributes\MapFrom;
 use Spatie\DataTransferObject\DataTransferObject;
-use Symfony\Component\DomCrawler\Crawler;
 
 class FeedFinder extends DataTransferObject
 {
@@ -21,11 +16,9 @@ class FeedFinder extends DataTransferObject
 
     public function getFeeds(): array
     {
-
         $content = collect([]);
 
-        foreach ($this->feeds as $feed)
-        {
+        foreach ($this->feeds as $feed) {
             $prefix = 'feed/';
             $url = $feed['feedId'];
             if (str_starts_with($url, $prefix)) {
@@ -38,6 +31,7 @@ class FeedFinder extends DataTransferObject
                 'subscribers' => $feed['subscribers'],
                 'description' => @$feed['description'],
                 'topics' => $feed['topics'],
+                'website' => @$feed['website'],
                 'url' => $url,
             ];
 
@@ -53,15 +47,14 @@ class FeedFinder extends DataTransferObject
 
     private function feedExists(string $url): bool
     {
-        return Feed::where('url','LIKE', $url)->exists();
+        return Feed::where('url', 'LIKE', $url)->exists();
     }
 
     public function getTopics(): array
     {
         $content = collect([]);
 
-        foreach ($this->topics as $topic)
-        {
+        foreach ($this->topics as $topic) {
             $content->push([
                 'topic' => $topic['topic'],
                 'subscribers' => $topic['size'],
@@ -70,5 +63,4 @@ class FeedFinder extends DataTransferObject
 
         return $content->toArray();
     }
-
 }

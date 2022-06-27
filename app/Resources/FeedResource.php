@@ -4,6 +4,7 @@ namespace App\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Log;
 
 /**
 
@@ -20,6 +21,7 @@ class FeedResource extends JsonResource
 {
     public function toArray($request): array
     {
+        Log::info('FeedResource::toArray' . $request->url());
         return [
             'id' => $this->id,
             'user_id' => $this->user_id,

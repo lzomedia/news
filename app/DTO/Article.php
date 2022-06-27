@@ -115,17 +115,12 @@ class Article extends DataTransferObject
         $domains = array_unique($results);
 
         foreach ($domains as $domain) {
-
             $exists = Feed::where('url', 'LIKE', $domain)->exists();
 
             if (!$exists) {
-
                 dispatch(new DiscoverFeeds($domain));
-
             }
-
         }
-
     }
 
     public function getFeedId(): ?string

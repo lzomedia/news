@@ -4,8 +4,6 @@ namespace App\Contracts;
 
 use Illuminate\Database\Eloquent\Model;
 use App\DTO\Article as ArticleDTO;
-use Illuminate\Support\Collection;
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Builder;
 
 interface ArticleContract
@@ -17,5 +15,4 @@ interface ArticleContract
     public function createArticle(ArticleDTO $articleDTO): Model;
 
     public function checkIfArticleExists(ArticleDTO $articleDTO): bool;
-
 }

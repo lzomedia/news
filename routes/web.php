@@ -6,8 +6,9 @@ use App\Http\Controllers\Api\FeedsApiController;
 use App\Http\Controllers\Dashboard\DashBoardArticle;
 use App\Http\Controllers\Dashboard\DashboardFeeds;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\FeedsController;
 use App\Http\Controllers\Frontend\ArticleController;
+use App\Http\Controllers\Frontend\CategoryController;
+use App\Http\Controllers\Frontend\DemoController;
 use App\Http\Controllers\TextRewriterController;
 use App\Http\Controllers\VideoGenerator;
 use Illuminate\Cache\RateLimiting\Limit;
@@ -50,6 +51,8 @@ RateLimiter::for('articles', static function (Request $request) {
 
 
 Route::get('/articles/{id}/{slug}', [ArticleController::class, 'view'])->name('article.view');
+Route::get('/categories', [CategoryController::class, 'view'])->name('categories.view');
+Route::get('/demo', [DemoController::class, 'view'])->name('categories.view');
 
 
 
@@ -57,7 +60,6 @@ Route::get('/articles/{id}/{slug}', [ArticleController::class, 'view'])->name('a
 
 
 Route::group(['prefix' => 'dashboard'], static function () {
-
     Route::get('/', [DashboardController::class, 'dashboard'])->name('dashboard');
 
     Route::group(['prefix' => 'feeds'], static function () {
@@ -79,7 +81,5 @@ Route::group(['prefix' => 'dashboard'], static function () {
 
     Route::group(['prefix' => 'text-rewriter'], static function () {
         Route::get('/generator/{article}', [TextRewriterController::class, 'process'])->name('text-rewriter.process');
-
     });
-
 });

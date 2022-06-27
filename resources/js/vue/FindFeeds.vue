@@ -36,7 +36,9 @@
                     <tbody>
                     <tr v-for="feed in Feeds">
                         <th scope="row">1</th>
-                        <td>{{ feed.title }}</td>
+                        <td>
+                            <a :href="feed.website">{{ feed.title }}</a>
+                        </td>
                         <td>{{ feed.subscribers }}</td>
                         <td>{{ feed. relevanceScore }}</td>
                         <td>{{ feed.exists }}</td>

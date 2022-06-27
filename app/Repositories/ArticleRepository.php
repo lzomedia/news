@@ -33,9 +33,8 @@ class ArticleRepository implements ArticleContract
 
     public function createArticle(ArticleDTO $articleDTO): Model
     {
-        try {
-            $articleModel =  (new Article())->updateOrCreate(
-                [
+        $articleModel =  (new Article())->updateOrCreate(
+            [
                 'feed_id' => $articleDTO->getFeedId(),
                 'category_id' => $articleDTO->getCategory()->id,
                 'title' => $articleDTO->getTitle(),
@@ -43,31 +42,26 @@ class ArticleRepository implements ArticleContract
                 'content' => $articleDTO->getContent(),
                 'author' => $articleDTO->getAuthors(),
                 'source' => $articleDTO->getSource(),
-                ]
+            ]
+        );
+
+        $articleModel->category()->increment('count');
+
+        foreach ($articleDTO->getKeywords() as $tag) {
+            $articleModel->tags()->attach(
+                (new Tag())->firstOrCreate(['name' => $tag])
             );
+        }
 
-            $articleModel->category()->increment('count');
-
-            foreach ($articleDTO->getKeywords() as $tag) {
-                $articleModel->tags()->attach(
-                    (new Tag())->firstOrCreate(['name' => $tag])
-                );
-            }
-
-            (new \App\Models\ArticleInfo())->firstOrCreate(
-                [
+        (new \App\Models\ArticleInfo())->firstOrCreate(
+            [
                 'article_id' => $articleModel->id,
                 'time_to_read' => $articleDTO->getTimeToRead(),
                 'vader' => json_encode($articleDTO->getVader(), JSON_THROW_ON_ERROR),
-                ]
-            );
+            ]
+        );
 
-            return $articleModel;
-        } catch (QueryException $exception) {
-            Log::error($exception->getTraceAsString());
-        } catch (JsonException $e) {
-            Log::error($e->getTraceAsString());
-        }
+        return $articleModel;
     }
 
     public function checkIfArticleExists(ArticleDTO $articleDTO): bool

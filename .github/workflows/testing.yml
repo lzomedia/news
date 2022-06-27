@@ -32,3 +32,6 @@ jobs:
 
       - name: Run Testsuite
         run: vendor/bin/phpunit tests/
+
+      - name: Run PHPSTAN
+        run: vendor/bin/phpstan analyse --level 1

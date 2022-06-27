@@ -26,7 +26,7 @@ class DomainArticleFinder extends Command
         $process->setTimeout(180);
 
         $process->run(
-            function ($buffer) use ($url) {
+            function ($buffer) {
                 $this->info($buffer);
             }
         );

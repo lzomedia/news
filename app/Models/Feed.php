@@ -25,6 +25,7 @@ use Illuminate\Database\Query\Builder as QueryBuilder;
  * @method   static where(string $string, $value)
  * @method   static find($id)
  * @method   static create(array $array)
+ * @method   static firstOrCreate(array $array)
  */
 class Feed extends BaseModel
 {

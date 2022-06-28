@@ -13,6 +13,13 @@ use Illuminate\Database\Query\Builder as QueryBuilder;
  * @property string $name
  * @property int $count
  * @method static create(array $array)
+ * @method static where(string $string, $value)
+ * @method static updateOrCreate(array $array)
+ * @method static whereIn(string $string, array $array)
+ * @method static firstOrCreate(array $array)
+ * @method static whereNotIn(string $string, array $array)
+ * @method static first()
+ *
  */
 class Category extends BaseModel
 {

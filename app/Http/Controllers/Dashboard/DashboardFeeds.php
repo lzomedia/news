@@ -41,7 +41,7 @@ class DashboardFeeds extends Controller
         $this->middleware('auth');
     }
 
-    public function index(FeedsTable $feedsTable)
+    public function index(FeedsTable $feedsTable): mixed
     {
         return $feedsTable->render('dashboard.feeds');
     }

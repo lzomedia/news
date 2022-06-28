@@ -3,24 +3,22 @@
 namespace App\Services;
 
 use App\Contracts\VideoContract;
-use App\Models\Article;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Log;
 use Symfony\Component\Process\Process;
 
 class VideoManager implements VideoContract
 {
-    private const PYTHON = 'python3';
+    private const TTS = 'python3';
 
-    private const PYTHON_FILE_EXTRACT_REALTIME = './python/video-generator.py';
+    private const OPTION = '--text';
 
-    public function generateVideo(Article | Model $article): void
+    public function generateVideo(mixed $article): void
     {
         try {
             $process = new Process(
                 [
-                    "tts",
-                    "--text",
+                    self::TTS,
+                    self::OPTION,
                     strip_tags($article->content),
                 ]
             );

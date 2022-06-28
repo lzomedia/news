@@ -10,17 +10,17 @@ use Symfony\Component\Process\Process;
 
 class VideoManager implements VideoContract
 {
-    private const PYTHON = 'python3';
+    private const TTS = 'python3';
 
-    private const PYTHON_FILE_EXTRACT_REALTIME = './python/video-generator.py';
+    private const OPTION = '--text';
 
-    public function generateVideo(Article $article): void
+    public function generateVideo(mixed $article): void
     {
         try {
             $process = new Process(
                 [
-                    "tts",
-                    "--text",
+                    self::TTS,
+                    self::OPTION,
                     strip_tags($article->content),
                 ]
             );

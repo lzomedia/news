@@ -65,12 +65,6 @@ class ArticleRepository implements ArticleContract
 
     public function checkIfArticleExists(ArticleDTO $articleDTO): bool
     {
-        $article = Article::where('feed_id', $articleDTO->getFeedId())
-            ->where('title', $articleDTO->getTitle())
-            ->first();
-        if (is_null($article)) {
-            return false;
-        }
-        return true;
+        return Article::where('source', $articleDTO->getSource())->exists();
     }
 }

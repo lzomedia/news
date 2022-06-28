@@ -32,6 +32,7 @@ class FeedFinder extends DataTransferObject
                 'description' => @$feed['description'],
                 'topics' => $feed['topics'],
                 'website' => @$feed['website'],
+                'score'=> $feed['leoScore'] ?? 0,
                 'url' => $url,
             ];
 
@@ -40,7 +41,7 @@ class FeedFinder extends DataTransferObject
             $content->push($data);
         }
 
-        $content->sortBy('subscribers');
+        $content->sortBy('subscribers', $options = SORT_REGULAR, $descending = true);
 
         return $content->toArray();
     }

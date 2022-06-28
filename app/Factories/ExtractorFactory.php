@@ -7,7 +7,7 @@ use App\Jobs\ProcessFeeds;
 
 class ExtractorFactory
 {
-    private const DELAY = 10;
+    private const DELAY = 30;
 
     public static function extract(int $feedID, ArticleContract $articleContract): void
     {

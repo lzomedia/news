@@ -15,15 +15,6 @@ class Processor extends Command
 
     protected $description = 'This command will run and extract the data from the feeds';
 
-    private ArticleContract $articleContract;
-
-    public function __construct(ArticleContract $articleContract)
-    {
-        parent::__construct();
-
-        $this->articleContract = $articleContract;
-    }
-
     public function handle(): void
     {
         $url = $this->argument('url');
@@ -36,30 +27,12 @@ class Processor extends Command
             ]
         );
 
+
         $process->run(
-            function ($buffer) use ($url) {
-                Log::error("Output: {$buffer}");
-
-                if (strlen($buffer) > 10) {
-                    Log::error("Output: {$buffer}");
-
-                    Log::error("Url: {$url}");
-
-                    Log::error("Output: {$buffer}");
-
-                    $data = json_decode(
-                        $buffer,
-                        true,
-                        512,
-                        JSON_THROW_ON_ERROR
-                    );
-
-                    if (json_last_error() === 0) {
-                        $dto = new Article($data);
-
-                        $this->articleContract->createArticle($dto);
-                    }
-                }
+            function ( $type , $buffer)
+            {
+                Log::info($buffer);
+                Log::info($type);
             }
         );
 

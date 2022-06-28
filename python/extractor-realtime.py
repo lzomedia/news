@@ -75,6 +75,5 @@ class Extractor:
     def extractFeeds(self):
         return Extractor.extractFeedLinks(self.url)
 
-
 extract = Extractor(url, feedparser)
 print(extract.extractFeeds())

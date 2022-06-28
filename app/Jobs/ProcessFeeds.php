@@ -45,25 +45,26 @@ class ProcessFeeds implements ShouldQueue
     final public function handle(): void
     {
         $feedRepo = new FeedRepository();
+
         $feed = $feedRepo->getFeedById($this->feedID);
+
+        Log::info("Processing feed: " . $feed->url);
 
         try {
             $process = new Process(
                 [
-                self::PYTHON,
-                base_path(self::PYTHON_FILE_EXTRACT_REALTIME),
-                $feed->url,
+                    self::PYTHON,
+                    base_path(self::PYTHON_FILE_EXTRACT_REALTIME),
+                    $feed->url,
                 ]
             );
             //increased the time of a process to 3 minutes
             $process->setTimeout(180);
 
             $process->run(
-                function ($buffer) {
-                    Log::error("Output: $buffer");
+                function ($type, $buffer) {
 
                     if (strlen($buffer) > 10) {
-                        Log::error("Output: $buffer");
 
                         Log::error("Output: $buffer");
 
@@ -74,8 +75,11 @@ class ProcessFeeds implements ShouldQueue
                             JSON_THROW_ON_ERROR
                         );
 
-                        if (json_last_error() === 0) {
+                        if (json_last_error() === 0)
+                        {
+
                             $dto = new ArticleDTO($data);
+
                             $dto->discoverFeeds();
 
                             if (!$this->articleContract->checkIfArticleExists($dto)) {
@@ -89,9 +93,6 @@ class ProcessFeeds implements ShouldQueue
             Log::error($exception->getTraceAsString());
             $this->delete();
         }
-
-        $feed->status = Feed::COMPLETED;
-        $feed->save();
     }
 
     public function failed(): void

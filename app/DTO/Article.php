@@ -114,7 +114,7 @@ class Article extends DataTransferObject
             $exists = Feed::where('url', 'LIKE', $domain)->exists();
 
             if (!$exists) {
-                dispatch(new DiscoverFeeds($domain));
+                dispatch(new DiscoverFeeds($domain))->onQueue('low');
             }
         }
     }

@@ -73,42 +73,28 @@ This project uses Python 3 for extracting the content from the feeds.
 In order to use this script, you need to install the following packages:
 
 ```bash
-pip3 install newspaper3k
-pip3 install pandas
-pip3 install simplejson
-pip3 install minet
-pip3 install spacy
-pip3 install nltk
-pip3 install lxml
-pip3 install textblob
-pip3 install spacytextblob
-pip3 install vaderSentiment
-python3 -m spacy download en_core_web_md
-python3 -m nltk.downloader -d /usr/local/share/nltk_data punkt
-python3 -m nltk.downloader -d /usr/local/share/nltk_data stopwords
-python3 -m nltk.downloader -d /usr/local/share/nltk_data vader_lexicon
-python3 -m textblob.download_corpora -d /usr/local/share/nltk_data
+su -c "sudo apt-get update"
+su -c "sudo apt install -y espeak ffmpeg libespeak1"
+su -c "sudo apt-get install -y libsndfile1-dev"
+su -c "pip3 install newspaper3k"
+su -c "pip3 install pandas"
+su -c "pip3 install simplejson"
+su -c "pip3 install minet"
+su -c "pip3 install dotenv"
+su -c "pip3 install spacy"
+su -c "pip3 install supervisor"
+su -c "pip3 install nltk"
+su -c "pip3 install lxml"
+su -c "pip3 install textblob"
+su -c "pip3 install spacytextblob"
+su -c "pip3 install vaderSentiment"
+su -c "pip3 install TTS"
+su -c "python3 -m spacy download en_core_web_md"
+su -c "python3 -m nltk.downloader -d /usr/local/share/nltk_data punkt"
+su -c "python3 -m nltk.downloader -d /usr/local/share/nltk_data stopwords"
+su -c "python3 -m nltk.downloader -d /usr/local/share/nltk_data vader_lexicon"
+su -c "python3 -m textblob.download_corpora"
 ```
-
-## Video Generation (This is still in construction)
-
-This project uses AI to generate a video from an article.
-
-In order to use this script, you need to install the following packages:
-
-```bash
-git clone https://github.com/coqui-ai/TTS
-cd TTS
-```
-If you are on Ubuntu (Debian), you can also run following commands for installation.
-
-```bash
-make system-deps 
-make install
-```
-
-
-
 
 ## Contributing
 Feel free to contribute and make a pull request.

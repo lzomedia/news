@@ -93,8 +93,9 @@ export default {
         }
     },
     methods: {
-        search() {
+        search(topic) {
            this.loading = true;
+           this.topic = topic;
            fetch('/api/v1/feeds/find/' + this.topic)
                 .then(res => {
                     return res.json();
@@ -120,21 +121,20 @@ export default {
                     response => {
                         this.loading = false;
                         this.setTopic(feed.topic);
-                        this.topic=feed.topic;
-                        this.search();
+                        this.search(feed.topic);
                     }
                 )
                 .then(data => (this.postId = data.id));
         },
         setTopic(topic) {
             this.topic = topic;
-            this.search();
+            this.search(topic);
             console.log(topic);
         }
     },
     mounted()
     {
-        this.search();
+        this.search("laravel");
     }
 }
 </script>

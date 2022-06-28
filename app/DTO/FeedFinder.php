@@ -33,6 +33,7 @@ class FeedFinder extends DataTransferObject
                 'topics' => $feed['topics'],
                 'website' => @$feed['website'],
                 'score'=> $feed['leoScore'] ?? 0,
+                'last_update' => $feed['updated'],
                 'url' => $url,
             ];
 

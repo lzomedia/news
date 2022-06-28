@@ -2,9 +2,6 @@
 
 namespace App\Console\Commands;
 
-use App\Contracts\ArticleContract;
-use App\DTO\Article;
-
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
 use Symfony\Component\Process\Process;
@@ -29,8 +26,7 @@ class Processor extends Command
 
 
         $process->run(
-            function ( $type , $buffer)
-            {
+            function ($type, $buffer) {
                 Log::info($buffer);
                 Log::info($type);
             }

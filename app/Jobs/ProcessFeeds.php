@@ -5,7 +5,6 @@ namespace App\Jobs;
 use App\Contracts\ArticleContract;
 use App\DTO\Article as ArticleDTO;
 
-use App\Models\Feed;
 
 use App\Repositories\FeedRepository;
 use Illuminate\Bus\Queueable;
@@ -63,9 +62,7 @@ class ProcessFeeds implements ShouldQueue
 
             $process->run(
                 function ($type, $buffer) {
-
                     if (strlen($buffer) > 10) {
-
                         Log::error("Output: $buffer");
 
                         $data = json_decode(
@@ -75,9 +72,7 @@ class ProcessFeeds implements ShouldQueue
                             JSON_THROW_ON_ERROR
                         );
 
-                        if (json_last_error() === 0)
-                        {
-
+                        if (json_last_error() === 0) {
                             $dto = new ArticleDTO($data);
 
                             $dto->discoverFeeds();

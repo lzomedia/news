@@ -8,9 +8,6 @@ use App\Models\Article;
 use App\Models\ArticleInfo;
 use App\Models\Tag;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\QueryException;
-use Illuminate\Support\Facades\Log;
-use JsonException;
 use Illuminate\Database\Eloquent\Builder;
 
 class ArticleRepository implements ArticleContract

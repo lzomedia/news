@@ -14,7 +14,6 @@ class JobsTest extends TestCase
 {
     public function testSyncSingle(): void
     {
-
         $this->markTestSkipped('Not implemented yet.');
         Queue::fake();
         $feed = new Feed();

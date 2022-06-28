@@ -9,7 +9,6 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Frontend\ArticleController;
 use App\Http\Controllers\Frontend\CategoryController;
 use App\Http\Controllers\Frontend\DemoController;
-use App\Http\Controllers\TextRewriterController;
 use App\Http\Controllers\VideoGenerator;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Support\Facades\Auth;

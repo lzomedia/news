@@ -13,8 +13,7 @@ enum FeedStatus
 
     public function getStatus(): string
     {
-        return match ($this)
-        {
+        return match ($this) {
             self::STOPPED => 'stopped',
             self::SYNCING => 'synchronizing',
             self::COMPLETED => 'completed',

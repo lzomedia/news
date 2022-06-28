@@ -12,7 +12,7 @@ class DashBoardArticle extends Controller
         $this->middleware('auth');
     }
 
-    public function articles(ArticlesTable $dataTable):mixed
+    public function articles(ArticlesTable $dataTable): mixed
     {
         return $dataTable->render('dashboard.articles');
     }

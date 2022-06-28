@@ -8,7 +8,6 @@ use App\Contracts\FeedContract;
 use App\Contracts\SyncContract;
 use App\Contracts\UserContract;
 use App\Contracts\VideoContract;
-use App\Jobs\ProcessFeeds;
 use App\Repositories\ArticleRepository;
 use App\Repositories\CategoryRepository;
 use App\Repositories\FeedRepository;
@@ -31,6 +30,5 @@ class AppServiceProvider extends ServiceProvider
         //Managers
         $this->app->bind(SyncContract::class, SyncManager::class);
         $this->app->bind(VideoContract::class, VideoManager::class);
-
     }
 }

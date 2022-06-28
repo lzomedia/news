@@ -6,7 +6,6 @@ use App\Jobs\DiscoverFeeds;
 use App\Models\Category;
 use App\Models\Feed;
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Model;
 use Spatie\DataTransferObject\Attributes\MapFrom;
 use Spatie\DataTransferObject\DataTransferObject;
 use Symfony\Component\DomCrawler\Crawler;
@@ -92,7 +91,6 @@ class Article extends DataTransferObject
     {
         return Category::firstOrCreate(['name' => $this->getKeywords()[0] ??
             'News']);
-
     }
 
     public function getKeywords(): ?array

@@ -3,8 +3,6 @@
 namespace App\Services;
 
 use App\Contracts\VideoContract;
-use App\Models\Article;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Log;
 use Symfony\Component\Process\Process;
 

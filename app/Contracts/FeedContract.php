@@ -8,11 +8,11 @@ use Illuminate\Support\Collection;
 
 interface FeedContract
 {
-    public function getFeedById(int $feedId): Feed | Model | null;
+    public function getFeedById(int $feedId): Feed;
 
     public function deleteFeed(Feed | Model $feed): bool | null;
 
-    public function createFeed(array $feed): Feed | Model;
+    public function createFeed(array $feed): Feed;
 
     public function getAllFeeds(UserContract $userContract): Collection;
 

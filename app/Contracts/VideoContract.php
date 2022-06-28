@@ -7,5 +7,5 @@ use Illuminate\Database\Eloquent\Model;
 
 interface VideoContract
 {
-    public function generateVideo(Article | Model $article): void;
+    public function generateVideo(Article $article): void;
 }

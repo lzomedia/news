@@ -5,6 +5,7 @@ namespace App\Repositories;
 use App\Contracts\ArticleContract;
 use App\DTO\Article as ArticleDTO;
 use App\Models\Article;
+use App\Models\ArticleInfo;
 use App\Models\Tag;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\QueryException;
@@ -36,7 +37,7 @@ class ArticleRepository implements ArticleContract
         $articleModel =  (new Article())->updateOrCreate(
             [
                 'feed_id' => $articleDTO->getFeedId(),
-                'category_id' => $articleDTO->getCategory()->id,
+                'category_id' => ($articleDTO->getCategory())->id,
                 'title' => $articleDTO->getTitle(),
                 'image' => $articleDTO->getImage(),
                 'content' => $articleDTO->getContent(),
@@ -44,6 +45,7 @@ class ArticleRepository implements ArticleContract
                 'source' => $articleDTO->getSource(),
             ]
         );
+        /** @var Article $articleModel */
 
         $articleModel->category()->increment('count');
 
@@ -53,7 +55,7 @@ class ArticleRepository implements ArticleContract
             );
         }
 
-        (new \App\Models\ArticleInfo())->firstOrCreate(
+        (new ArticleInfo())->firstOrCreate(
             [
                 'article_id' => $articleModel->id,
                 'time_to_read' => $articleDTO->getTimeToRead(),

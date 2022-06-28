@@ -7,6 +7,7 @@ use App\DTO\Article as ArticleDTO;
 
 use App\Models\Feed;
 
+use App\Repositories\FeedRepository;
 use Illuminate\Bus\Queueable;
 
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -43,7 +44,8 @@ class ProcessFeeds implements ShouldQueue
 
     final public function handle(): void
     {
-        $feed = Feed::find($this->feedID);
+        $feedRepo = new FeedRepository();
+        $feed = $feedRepo->getFeedById($this->feedID);
 
         try {
             $process = new Process(

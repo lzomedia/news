@@ -10,7 +10,7 @@ use Illuminate\Support\Collection;
 
 class FeedRepository implements FeedContract
 {
-    public function getFeedById(int $feedId): Feed | Model | null
+    public function getFeedById(int $feedId): Feed
     {
         return Feed::find($feedId);
     }
@@ -25,7 +25,7 @@ class FeedRepository implements FeedContract
         return $feed->delete();
     }
 
-    public function createFeed(array $feed): Model | Feed
+    public function createFeed(array $feed): Feed
     {
         return (new Feed())->firstOrCreate($feed);
     }

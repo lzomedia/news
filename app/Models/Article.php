@@ -18,8 +18,9 @@ use Illuminate\Database\Query\Builder as QueryBuilder;
  * @property string $author
  * @property int $category_id
  * @property int $feed_id
- * @method   firstOrCreate(array $array)'
+ * @method   firstOrCreate(array $array)
  * @method   static where(string $string, $value)
+ * @method updateOrCreate(array $array)
  */
 class Article extends Model
 {

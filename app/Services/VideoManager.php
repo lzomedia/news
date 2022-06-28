@@ -14,7 +14,7 @@ class VideoManager implements VideoContract
 
     private const PYTHON_FILE_EXTRACT_REALTIME = './python/video-generator.py';
 
-    public function generateVideo(Article | Model $article): void
+    public function generateVideo(Article $article): void
     {
         try {
             $process = new Process(

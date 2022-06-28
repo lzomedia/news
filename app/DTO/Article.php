@@ -88,7 +88,7 @@ class Article extends DataTransferObject
         return $this->source;
     }
 
-    public function getCategory(): Category|Model
+    public function getCategory(): Category
     {
         return (new Category())->firstOrCreate(
             [

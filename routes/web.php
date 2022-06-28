@@ -78,8 +78,4 @@ Route::group(['prefix' => 'dashboard'], static function () {
         Route::get('/generator/{article}', [VideoGenerator::class, 'generate'])->name('video.generate');
         Route::get('/upload/{article}', [VideoGenerator::class, 'upload'])->name('video.upload');
     });
-
-    Route::group(['prefix' => 'text-rewriter'], static function () {
-        Route::get('/generator/{article}', [TextRewriterController::class, 'process'])->name('text-rewriter.process');
-    });
 });

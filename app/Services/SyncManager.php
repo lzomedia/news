@@ -7,6 +7,7 @@ use App\Contracts\FeedContract;
 use App\Contracts\SyncContract;
 use App\Contracts\UserContract;
 use App\Factories\ExtractorFactory;
+use App\Jobs\ProcessFeeds;
 use App\Models\Feed;
 
 class SyncManager implements SyncContract
@@ -28,10 +29,11 @@ class SyncManager implements SyncContract
             return false;
         }
 
-        $this->feedContract->getFeedById($feedID)->sync = now();
+        ($this->feedContract->getFeedById($feedID))->sync = now();
 
-        $this->feedContract->getFeedById($feedID)->status = Feed::SYNCYING;
+        ($this->feedContract->getFeedById($feedID))->status = Feed::SYNCYING;
 
+        dispatch(new ProcessFeeds($feedID, $this->articleContract));
         ExtractorFactory::extract($feedID, $this->articleContract);
 
         return ($this->feedContract->getFeedById($feedID))->save();

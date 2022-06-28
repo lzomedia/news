@@ -9,9 +9,7 @@ parameters:
 
     # The level 9 is the highest level
     # This is work in progress
-    level: 2
-
-
+    level: 3
 
 
     excludePaths:

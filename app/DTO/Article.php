@@ -88,13 +88,11 @@ class Article extends DataTransferObject
         return $this->source;
     }
 
-    public function getCategory(): Category
+    public function getCategory(): mixed
     {
-        return (new Category())->firstOrCreate(
-            [
-                'name' => $this->getKeywords()[0] ?? "News"
-            ]
-        );
+        return Category::firstOrCreate(['name' => $this->getKeywords()[0] ??
+            'News']);
+
     }
 
     public function getKeywords(): ?array

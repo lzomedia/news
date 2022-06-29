@@ -13,6 +13,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Log;
 use Symfony\Component\Process\Process;
 
@@ -73,9 +74,13 @@ class ProcessFeeds implements ShouldQueue
                         );
 
                         if (json_last_error() === 0) {
+
                             $dto = new ArticleDTO($data);
 
-                            $dto->discoverFeeds();
+                            if(Config::get('cms.enable_discovery_feeds')){
+                                $dto->discoverFeeds();
+                            }
+
 
                             if (!$this->articleContract->checkIfArticleExists($dto)) {
                                 $this->articleContract->createArticle($dto);

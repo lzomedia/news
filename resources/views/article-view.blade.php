@@ -28,6 +28,16 @@
                     <figure class="mb-4" style="width: 100%">
                         <img style="width: 100%" class="rounded" src="{{ $article->image }}" alt="{{ $article->title }}">
                     </figure>
+
+
+                    <!-- Post Summary-->
+                    <section class="mb-5">
+                        <p class="fs-5 mb-4">
+                            {!!  $article->summary !!}
+                        </p>
+                    </section>
+
+
                     <!-- Post content-->
                     <section class="mb-5">
                         <p class="fs-5 mb-4">
@@ -45,6 +55,12 @@
 
 @endsection
 @push('scripts')
+    <style>
+        article img{
+            width: 100%;
+        }
+    </style>
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/default.min.css">
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js"></script>

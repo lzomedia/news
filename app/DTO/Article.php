@@ -27,6 +27,10 @@ class Article extends DataTransferObject
     #[MapFrom('content')]
     public ?string $content;
 
+    #[MapFrom('summary')]
+    public ?string $summary;
+
+
     #[MapFrom('images')]
     public ?string $image;
 
@@ -132,5 +136,10 @@ class Article extends DataTransferObject
     public function getTimeToRead(): ?string
     {
         return $this->timetoread;
+    }
+
+    public function getSummary(): ?string
+    {
+        return $this->summary;
     }
 }

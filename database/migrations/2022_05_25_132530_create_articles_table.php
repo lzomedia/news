@@ -20,6 +20,7 @@ return new class () extends Migration {
             $table->string('image')->index()->nullable(true);
             $table->string('author')->index();
             $table->binary('content');
+            $table->text('summary')->nullable(true);
             $table->string('source')->index()->nullable();
             $table->foreign('feed_id')->references('id')->on('feeds')->onDelete('cascade');
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');

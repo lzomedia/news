@@ -38,6 +38,7 @@ class ArticleRepository implements ArticleContract
                 'title' => $articleDTO->getTitle(),
                 'image' => $articleDTO->getImage(),
                 'content' => $articleDTO->getContent(),
+                'summary' => $articleDTO->getSummary(),
                 'author' => $articleDTO->getAuthors(),
                 'source' => $articleDTO->getSource(),
             ]

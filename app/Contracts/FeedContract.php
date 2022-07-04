@@ -10,7 +10,7 @@ interface FeedContract
 {
     public function getFeedById(int $feedId): mixed;
 
-    public function deleteFeed(Feed | Model $feed): bool | null;
+    public function deleteFeed(Feed $feed): bool ;
 
     public function createFeed(array $feed): mixed;
 

@@ -2,9 +2,10 @@
 
 namespace App\Contracts;
 
+use Flobbos\Crudable\Contracts\Crud;
 use Illuminate\Database\Eloquent\Collection;
 
-interface CategoryContract
+interface CategoryContract extends Crud
 {
     public function getAllCategories(): Collection;
 }

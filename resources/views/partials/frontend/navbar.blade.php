@@ -10,6 +10,11 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                 @guest
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('website.about') }}">{{ __('About') }}</a>
+                    </li>
+
                     @if (Route::has('login'))
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>

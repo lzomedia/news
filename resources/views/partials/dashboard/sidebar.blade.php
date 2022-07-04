@@ -15,6 +15,12 @@
             </li>
 
             <li class="list-group-item">
+                <a href="{{ route('dashboard.categories') }}">
+                    Categories
+                </a>
+            </li>
+
+            <li class="list-group-item">
                 <a href="{{ route('dashboard.feeds') }}">
                     Feeds
                 </a>

@@ -29,4 +29,13 @@ class ArticleApiController extends ApiController
             ))->response()->getData()
         ]);
     }
+
+    public function getArticle(int $articleID): JsonResponse
+    {
+        return response()->json([
+            'success' => 'true',
+            'message'=>'Request successful',
+            'result' => new ArticleResource($this->articleContract->getArticleById($articleID))
+        ]);
+    }
 }

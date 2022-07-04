@@ -1,6 +1,22 @@
+
+
 <footer class="py-5 bg-dark">
     <div class="container">
-        <div class="row">
+        <div class="row d-flex justify-content-center">
+
+            <p class="text-center text-white">
+                <a href="{{ route('website.about') }}" class="text-white">
+                    About
+                </a>
+                |
+                <a href="#" class="text-white">
+                    Terms & Conditions
+                </a>
+                |
+                <a href="{{ route('website.demo') }}" class="text-white">
+                    Demo
+                </a>
+            </p>
             <p class="m-0 text-center text-white">Copyright &copy; News Reader {{ date('Y') }}</p>
         </div>
     </div>
@@ -22,3 +38,13 @@
 
 
 @stack('scripts')
+<style>
+  .footer{
+      display: flex;
+      align-items: center;
+      margin: 0 0 20px;
+      padding: 0;
+      list-style: none;
+      justify-content: center;
+  }
+</style>

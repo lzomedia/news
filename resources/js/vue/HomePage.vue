@@ -28,7 +28,8 @@
                         </div>
                     </div>
 
-                    <div v-else class="row">
+                    <div v-else>
+
                         <div class="card mb-4">
                             <div class="card-body">
                                 <div class="small text-muted">

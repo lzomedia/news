@@ -31,11 +31,11 @@
 
 
                     <!-- Post Summary-->
-                    <section class="mb-5">
-                        <p class="fs-5 mb-4">
-                            {!!  $article->summary !!}
-                        </p>
-                    </section>
+{{--                    <section class="mb-5">--}}
+{{--                        <p class="fs-5 mb-4">--}}
+{{--                            {!!  $article->summary !!}--}}
+{{--                        </p>--}}
+{{--                    </section>--}}
 
 
                     <!-- Post content-->

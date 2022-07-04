@@ -11,4 +11,9 @@ class DemoController extends FrontendController
     {
         return view('demo');
     }
+
+    public function about(): View
+    {
+        return view('about');
+    }
 }

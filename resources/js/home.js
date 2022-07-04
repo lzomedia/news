@@ -1,4 +1,4 @@
-require('./bootstrap');
+
 //
 require('alpinejs');
 
@@ -62,4 +62,4 @@ app.component('format', {
 
 app.mount('#home');
 
-require("./bootstrap");
+

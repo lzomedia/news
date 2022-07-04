@@ -34,6 +34,7 @@
 </main>
 
 <!-- Footer -->
+@include('partials.frontend.cta')
 @include('partials.frontend.footer')
 
 </body>

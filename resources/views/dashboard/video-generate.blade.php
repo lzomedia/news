@@ -19,6 +19,20 @@
                         </h4>
                     </div>
                     <div class="card-body">
+                        <h5>
+                            {{$article->title}} }}
+                        </h5>
+
+                        <div>
+                            <p>
+                                Article Summary:
+                            </p>
+                        </div>
+
+                        <div>
+                            {!! $article->summary !!}
+                        </div>
+
                         <div id="videoGenerator" v-demo="{ color: 'white', text: 'hello!' }">
                         </div>
                       </div>

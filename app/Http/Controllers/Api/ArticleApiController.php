@@ -38,4 +38,5 @@ class ArticleApiController extends ApiController
             'result' => new ArticleResource($this->articleContract->getArticleById($articleID))
         ]);
     }
+
 }

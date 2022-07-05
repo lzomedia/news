@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\ArticleApiController;
 use App\Http\Controllers\Api\CategoryApiController;
 use App\Http\Controllers\Api\FeedsApiController;
+use App\Http\Controllers\Api\VideoApiController;
 use App\Http\Controllers\Dashboard\DashBoardArticle;
 use App\Http\Controllers\Dashboard\DashboardFeeds;
 use App\Http\Controllers\Dashboard\VideoGenerator;
@@ -10,7 +11,7 @@ use App\Http\Controllers\Dashboard\CategoryController as DashboardCategory;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Frontend\ArticleController;
 use App\Http\Controllers\Frontend\CategoryController;
-use App\Http\Controllers\Frontend\DemoController;
+use App\Http\Controllers\Frontend\PagesController;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\RateLimiter;
@@ -29,7 +30,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('homepage');
+    return view('pages.homepage');
 })->name('home');
 
 Auth::routes();
@@ -43,6 +44,7 @@ Route::group(['prefix' => '/api/v1'], static function () {
     Route::get('/feeds', [FeedsApiController::class, 'index']);
     Route::post('/feeds/save', [FeedsApiController::class, 'save']);
     Route::get('/feeds/find/{topic}', [FeedsApiController::class, 'find']);
+    Route::post('/generator/{articleID}/audio', [VideoApiController::class, 'generateAudio']);
 });
 
 RateLimiter::for('articles', static function (Request $request) {
@@ -53,8 +55,9 @@ RateLimiter::for('articles', static function (Request $request) {
 
 Route::get('/articles/{id}/{slug}', [ArticleController::class, 'view'])->name('article.view');
 Route::get('/categories', [CategoryController::class, 'view'])->name('categories.view');
-Route::get('/demo', [DemoController::class, 'index'])->name('website.demo');
-Route::get('/about', [DemoController::class, 'about'])->name('website.about');
+Route::get('/demo', [PagesController::class, 'index'])->name('website.demo');
+Route::get('/about', [PagesController::class, 'about'])->name('website.about');
+Route::get('/terms', [PagesController::class, 'terms'])->name('website.terms');
 
 
 

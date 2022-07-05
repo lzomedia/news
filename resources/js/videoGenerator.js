@@ -10,6 +10,8 @@ import moment from 'moment';
 import InfiniteLoading from "v3-infinite-loading";
 
 import "v3-infinite-loading/lib/style.css"; //required if you're not going to override default slots
+import MasonryWall from '@yeger/vue-masonry-wall'
+
 
 const app = createApp(VideoGenerator);
 
@@ -29,6 +31,7 @@ app.config.globalProperties.$filters = {
 console.log(app.config.globalProperties.$filters);
 
 app.component("infinite-loading", InfiniteLoading);
+
 
 let formatter = {
     date: function (value, format) {
@@ -62,6 +65,7 @@ app.directive('demo', function (el, binding) {
     console.log(binding.value.color) // => "white"
     console.log(binding.value.text)  // => "hello!"
 })
+app.use(MasonryWall)
 
 app.mount('#videoGenerator');
 

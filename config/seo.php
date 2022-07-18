@@ -13,9 +13,9 @@ return [
     'canonical_link' => true,
     'favicon' => null,
     'title' => [
-        'infer_title_from_url' => false,
-        'suffix' => '',
-        'homepage_title' => "Developer news daily",
+        'infer_title_from_url' => true,
+        'suffix' => ' - your daily development news',
+        'homepage_title' => "Your daily development news",
     ],
 
     'description' => [

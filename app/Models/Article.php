@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Query\Builder as QueryBuilder;
 use RalphJSmit\Laravel\SEO\SchemaCollection;
 use RalphJSmit\Laravel\SEO\Support\HasSEO;
+use RalphJSmit\Laravel\SEO\Support\ImageMeta;
 use RalphJSmit\Laravel\SEO\Support\SEOData;
 
 /**
@@ -77,11 +78,27 @@ class Article extends Model
     {
         return new SEOData(
             $this->title,
-            $this->content,
-            $this->image,
+            $this->summary,
             $this->author,
-            $this->published_at,
-            SchemaCollection::initialize()->addArticle()
+            $this->image,
+            $this->getUrl(),
+            true,
+            $this->imageMeta(),
         );
+    }
+
+
+    private function getUrl(): string
+    {
+        return route('articles.show', $this->id);
+    }
+
+    private function imageMeta()
+    {
+        if ( $this->image ) {
+            return new ImageMeta($this->image);
+        }
+
+        return $this->image;
     }
 }

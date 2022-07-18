@@ -8,7 +8,7 @@
             <div class="col-lg-8 py-3">
                 <!-- Preview image figure-->
                 <figure class="mb-4" >
-                    <img style="width: 100%;max-height:200px" class="rounded" src="{{ $article->image }}" alt="{{ $article->title }}">
+                    <img class="card-img-top h-100" src="{{ $article->image }}" alt="{{ $article->title }}">
                 </figure>
 
                 <!-- Post content-->

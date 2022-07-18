@@ -37,25 +37,29 @@
                         </div>
 
                         <div v-else>
-                            <div class="card mb-2">
-                                <div class="small text-muted col-lg-2 pull-left">
-                                    <img :src="'https://ui-avatars.com/api/?name=' + article.author " class="img-fluid"/>
-                                    <format class="text-muted" :value="article.published_at" fn="ago"/>
-                                </div>
 
-                                <div class="card-body col-lg-10" style="float:right">
-                                    <h3 class="card-title">
-                                        <a :href="article.url">{{ article.title }}</a>
-                                    </h3>
-                                    <p v-html="article.excerpt"></p>
-                                    <small>
-                                        <a class="badge bg-secondary text-decoration-none link-light"
-                                           :href="article.category.url">
-                                            {{ article.category.name }}
-                                        </a>
-                                    </small>
+
+                            <div class="card mb-3">
+                                <div class="row g-0">
+                                    <div class="col-md-4">
+                                        <img :src="article.image" class="card-img-top h-100"/>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="card-body">
+                                            <h3 class="card-title">
+                                                <a :href="article.url">{{ article.title }}</a>
+                                            </h3>
+                                            <p class="card-text">
+                                                {{ article.excerpt }}
+                                            </p>
+                                            <p class="card-text"><small class="text-muted">
+                                                <format class="text-muted" :value="article.published_at" fn="ago"/>
+                                            </small></p>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
+
                         </div>
                     </div>
                     <infinite-loading @distance="1" @infinite="handleLoadMore"></infinite-loading>

@@ -9,7 +9,7 @@
             @include('partials.frontend.left-sidebar')
 
             <!-- Articles !-->
-            <div id="home" class="col-lg-6"></div>
+            <div id="home" class="col-lg-8"></div>
 
 
             <!-- Side widgets-->

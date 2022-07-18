@@ -1,4 +1,4 @@
-<div class="col-lg-3">
+<div class="col-lg-2">
     <!-- Search widget-->
     <div class="card mb-4">
         <div class="card-header">Search</div>

@@ -20,7 +20,7 @@ class FeedRepository implements FeedContract
         return Feed::where('user_id', $userContract->getUserId())->get();
     }
 
-    public function deleteFeed(Feed | Model $feed): bool | null
+    public function deleteFeed(Feed | Model $feed): bool
     {
         return $feed->delete();
     }

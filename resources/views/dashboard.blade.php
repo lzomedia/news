@@ -7,9 +7,7 @@
 
         <div class="row justify-content-center">
 
-
             @include('partials.dashboard.sidebar')
-
 
             <div class="col-md-10">
                 <div class="card" style="margin-bottom: 5vh">

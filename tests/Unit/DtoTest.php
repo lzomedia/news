@@ -19,6 +19,7 @@ class DtoTest extends TestCase
             'source' => 'https://test.com',
             'date' => '2020-01-01 00:00:00',
             'content' => 'content',
+            'summary' => 'summary',
             'images' => 'images',
             'timetoread' => '1',
         ];

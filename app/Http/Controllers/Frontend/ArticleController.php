@@ -11,23 +11,18 @@ class ArticleController extends Controller
 {
     private ArticleContract $articleContract;
 
-    public function __construct(
-        ArticleContract $articleContract
-    ) {
+    public function __construct(ArticleContract $articleContract)
+    {
         $this->articleContract = $articleContract;
     }
 
-
     public function view(Request $request): View
     {
-        $id = $request->id;
 
-        $article = $this->articleContract->getArticleById($id);
+        $article = $this->articleContract->getArticleById($request->id);
 
-        return view(
-            'article-view',
-            [
-            'article' =>$article,
+        return view('pages.article-view', [
+                'article' =>$article,
             ]
         );
     }

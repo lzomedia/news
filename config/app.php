@@ -199,6 +199,7 @@ return [
 
         //Custom providers
         Yajra\DataTables\DataTablesServiceProvider::class,
+        Flobbos\Crudable\CrudableServiceProvider::class,
 
     ],
 

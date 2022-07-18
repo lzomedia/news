@@ -27,6 +27,10 @@ class Article extends DataTransferObject
     #[MapFrom('content')]
     public ?string $content;
 
+    #[MapFrom('summary')]
+    public ?string $summary;
+
+
     #[MapFrom('images')]
     public ?string $image;
 
@@ -114,7 +118,7 @@ class Article extends DataTransferObject
             $exists = Feed::where('url', 'LIKE', $domain)->exists();
 
             if (!$exists) {
-                dispatch(new DiscoverFeeds($domain));
+                dispatch(new DiscoverFeeds($domain))->onQueue('low');
             }
         }
     }
@@ -132,5 +136,10 @@ class Article extends DataTransferObject
     public function getTimeToRead(): ?string
     {
         return $this->timetoread;
+    }
+
+    public function getSummary(): ?string
+    {
+        return $this->summary;
     }
 }

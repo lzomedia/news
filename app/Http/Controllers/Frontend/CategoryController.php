@@ -17,7 +17,8 @@ class CategoryController extends Controller
 
     public function view(): View
     {
-        return view('category-view', [
+
+        return view('pages.category-view', [
             'categories' => $this->categoryContract->getAllCategories()
         ]);
     }

@@ -14,6 +14,7 @@ use Illuminate\Database\Query\Builder as QueryBuilder;
  * @property int $id
  * @property string $title
  * @property string $content
+ * @property string $summary
  * @property string $image
  * @property string $author
  * @property int $category_id
@@ -29,6 +30,7 @@ class Article extends Model
     protected $fillable = [
         'title',
         'content',
+        'summary',
         'feed_id',
         'category_id',
         'pubDate',

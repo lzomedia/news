@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Gate;
 use Laravel\Horizon\Horizon;
 use Laravel\Horizon\HorizonApplicationServiceProvider;
@@ -19,7 +20,7 @@ class HorizonServiceProvider extends HorizonApplicationServiceProvider
         Gate::define(
             'viewHorizon',
             static function ($user) {
-                return $user->email === 'stefan@lzomedia.com';
+                return $user->email === Config::get('config.admin_email');
             }
         );
     }

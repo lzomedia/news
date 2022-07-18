@@ -30,9 +30,10 @@ class FeedFinder extends DataTransferObject
                 'image' => @$feed['coverUrl'],
                 'subscribers' => $feed['subscribers'],
                 'description' => @$feed['description'],
-                'topics' => $feed['topics'],
+                'topics' => @$feed['topics'],
                 'website' => @$feed['website'],
                 'score'=> $feed['leoScore'] ?? 0,
+                'last_update' => $feed['updated'],
                 'url' => $url,
             ];
 

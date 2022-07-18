@@ -38,6 +38,25 @@
                             {!!  $article->content !!}
                         </p>
                     </section>
+
+                    <section class="mb-5">
+                        <div id="disqus_thread"></div>
+                        <script>
+                            var disqus_config = function () {
+                                this.page.url = '<?php echo URL::current();?>';
+                                this.page.identifier = '<?php echo md5(URL::current());?>';
+                            };
+                            (function() { // DON'T EDIT BELOW THIS LINE
+                                var d = document, s = d.createElement('script');
+                                s.src = 'https://developmentsh.disqus.com/embed.js';
+                                s.setAttribute('data-timestamp', +new Date());
+                                (d.head || d.body).appendChild(s);
+                            })();
+                        </script>
+                        <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+                    </section>
+
                 </article>
             </div>
             <!-- Side widgets-->

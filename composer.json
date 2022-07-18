@@ -14,6 +14,7 @@
         "laravel/tinker": "^2.7",
         "laravel/ui": "^3.4",
         "predis/predis": "^1.1",
+        "sentry/sentry-laravel": "^2.13",
         "spatie/data-transfer-object": "^3.8",
         "symfony/dom-crawler": "^6.1",
         "yajra/laravel-datatables": "^9.0"

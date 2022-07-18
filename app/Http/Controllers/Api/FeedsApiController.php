@@ -54,6 +54,8 @@ class FeedsApiController extends Controller
             json_decode($data, true, 512, JSON_THROW_ON_ERROR)
         );
 
+
+
         $data = [
             'feeds' => $finder->getFeeds(),
             'topics' => $finder->getTopics(),

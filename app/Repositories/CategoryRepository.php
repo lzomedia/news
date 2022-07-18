@@ -12,12 +12,13 @@ class CategoryRepository implements CategoryContract
 {
     use Crudable\Crudable;
 
+
     public function __construct(Category $category) {
         $this->model = $category;
     }
 
     public function getAllCategories(): Collection
     {
-        return Category::orderBy('count', 'desc')->get();
+        return Category::with('articles')->orderBy('count', 'desc')->get();
     }
 }

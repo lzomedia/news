@@ -1,10 +1,16 @@
 @extends('layouts.app')
-
 @section('content')
-
-    <div class="container mt-5">
+    <div class="container-fluid ">
         <div class="row">
-            <div class="col-lg-8">
+            <!-- Side widgets-->
+            @include('partials.article.left-sidebar')
+            <!-- Article !-->
+            <div class="col-lg-8 py-3">
+                <!-- Preview image figure-->
+                <figure class="mb-4" >
+                    <img style="width: 100%;max-height:200px" class="rounded" src="{{ $article->image }}" alt="{{ $article->title }}">
+                </figure>
+
                 <!-- Post content-->
                 <article>
                     <!-- Post header-->
@@ -24,18 +30,6 @@
                             <a class="badge bg-secondary text-decoration-none link-light" href="">{{ $tag->name }}</a>
                         @endforeach
                     </header>
-                    <!-- Preview image figure-->
-                    <figure class="mb-4" style="width: 100%">
-                        <img style="width: 100%" class="rounded" src="{{ $article->image }}" alt="{{ $article->title }}">
-                    </figure>
-
-
-                    <!-- Post Summary-->
-{{--                    <section class="mb-5">--}}
-{{--                        <p class="fs-5 mb-4">--}}
-{{--                            {!!  $article->summary !!}--}}
-{{--                        </p>--}}
-{{--                    </section>--}}
 
 
                     <!-- Post content-->
@@ -47,12 +41,9 @@
                 </article>
             </div>
             <!-- Side widgets-->
-           @include('partials.frontend.sidebar')
+           @include('partials.article.right-sidebar')
         </div>
-
     </div>
-    <!-- Footer-->
-
 @endsection
 @push('scripts')
     <style>
@@ -60,12 +51,7 @@
             width: 100%;
         }
     </style>
-
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/default.min.css">
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js"></script>
-    <!-- and it's easy to individually load additional languages -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/languages/go.min.js"></script>
     <script>hljs.highlightAll();</script>
-
 @endpush

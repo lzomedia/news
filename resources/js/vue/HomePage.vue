@@ -38,25 +38,22 @@
 
                         <div v-else>
                             <div class="card mb-2">
-                                <div class="col-lg-2">
-                                    Author
+                                <div class="small text-muted col-lg-2 pull-left">
+                                    <img :src="'https://ui-avatars.com/api/?name=' + article.author " class="img-fluid"/>
+                                    <format class="text-muted" :value="article.published_at" fn="ago"/>
                                 </div>
-                                <div class="col-lg-10">
-                                    <div class="card-body">
-                                        <div class="small text-muted">
-                                            <format class="text-muted" :value="article.published_at" fn="ago"/>
-                                        </div>
-                                        <h3 class="card-title">
-                                            <a :href="article.url">{{ article.title }}</a>
-                                        </h3>
-                                        <p v-html="article.excerpt"></p>
-                                        <small>
-                                            <a class="badge bg-secondary text-decoration-none link-light"
-                                               :href="article.category.url">
-                                                {{ article.category.name }}
-                                            </a>
-                                        </small>
-                                    </div>
+
+                                <div class="card-body col-lg-10" style="float:right">
+                                    <h3 class="card-title">
+                                        <a :href="article.url">{{ article.title }}</a>
+                                    </h3>
+                                    <p v-html="article.excerpt"></p>
+                                    <small>
+                                        <a class="badge bg-secondary text-decoration-none link-light"
+                                           :href="article.category.url">
+                                            {{ article.category.name }}
+                                        </a>
+                                    </small>
                                 </div>
                             </div>
                         </div>

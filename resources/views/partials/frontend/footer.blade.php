@@ -1,6 +1,6 @@
 
 
-<footer class=" bg-dark fixed-bottom">
+<footer class="bg-dark">
 
     <div class="container">
         <div class="row d-flex justify-content-center">

@@ -23,7 +23,7 @@ class ArticleController extends Controller
 
         $article = $this->articleContract->getArticleById($request->id);
         if ($article === null) {
-           abort(404, "Article not found");
+            abort(404, "Article not found");
         }
 
         return view('pages.article-view', [

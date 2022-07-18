@@ -10,7 +10,8 @@ class CategoryService implements Crud {
 
     use Crudable\Crudable;
 
-    public function __construct(Category $category) {
+    public function __construct(Category $category)
+    {
         $this->model = $category;
     }
 

@@ -2,5 +2,5 @@
 
 return [
     "admin_email" => "stefan@lzomedia.com",
-    "enable_discovery_feeds" => True,
+    "enable_discovery_feeds" => true,
 ];

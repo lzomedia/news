@@ -13,7 +13,8 @@ class CategoryRepository implements CategoryContract
     use Crudable\Crudable;
 
 
-    public function __construct(Category $category) {
+    public function __construct(Category $category)
+    {
         $this->model = $category;
     }
 

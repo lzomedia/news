@@ -15,10 +15,10 @@
                             <p class="card-text">
                               <?php
                                     $article = App\Models\Article::orderBy('id', 'desc')->where('category_id', $category->id)->first();
-                                    if(!is_null($article)){
-                                        echo $article->title;
-                                    }
-                              ?>
+                              if (!is_null($article)) {
+                                  echo $article->title;
+                              }
+                                ?>
                             </p>
                             <a href="#" class="card-link">Card link</a>
                         </div>

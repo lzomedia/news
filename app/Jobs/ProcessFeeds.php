@@ -74,10 +74,9 @@ class ProcessFeeds implements ShouldQueue
                         );
 
                         if (json_last_error() === 0) {
-
                             $dto = new ArticleDTO($data);
 
-                            if(Config::get('cms.enable_discovery_feeds')){
+                            if (Config::get('cms.enable_discovery_feeds')) {
                                 $dto->discoverFeeds();
                             }
 

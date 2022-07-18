@@ -67,7 +67,7 @@ class ArticleResource extends JsonResource
     {
         $images = collect();
 
-        $articleTags->each(function (Tag $tag) use($images) {
+        $articleTags->each(function (Tag $tag) use ($images) {
 
             $search = Http::get('https://www.bing.com/images/search?q='.$tag->name.'&qs=MM&form=QBIR&sp=2&pq=raspberry&sk=MM1&sc=8-9&cvid=3A8B8D8A6BC44248BD8EB60FAB99B4E1&first=1&tsc=ImageHoverTitle');
 

@@ -8,7 +8,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!-- Seo Stuff -->
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    {!! seo() !!}
 
     <!-- Scripts -->
 

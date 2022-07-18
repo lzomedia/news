@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Query\Builder as QueryBuilder;
+use RalphJSmit\Laravel\SEO\SchemaCollection;
+use RalphJSmit\Laravel\SEO\Support\HasSEO;
+use RalphJSmit\Laravel\SEO\Support\SEOData;
 
 /**
  * @mixin    EloquentBuilder
@@ -25,6 +28,8 @@ use Illuminate\Database\Query\Builder as QueryBuilder;
  */
 class Article extends Model
 {
+    use HasSEO;
+
     protected $table = 'articles';
 
     protected $fillable = [
@@ -65,5 +70,18 @@ class Article extends Model
     public function getFeedId(): int
     {
         return $this->feed_id;
+    }
+
+
+    public function getDynamicSEOData(): SEOData
+    {
+        return new SEOData(
+            $this->title,
+            $this->content,
+            $this->image,
+            $this->author,
+            $this->published_at,
+            SchemaCollection::initialize()->addArticle()
+        );
     }
 }

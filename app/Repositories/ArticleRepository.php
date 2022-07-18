@@ -9,10 +9,11 @@ use App\Models\ArticleInfo;
 use App\Models\Tag;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ArticleRepository implements ArticleContract
 {
-    public function getArticleById(mixed $articleId): Model
+    public function getArticleById(mixed $articleId): ?Model
     {
         return Article::with('category')
             ->with('tags')
@@ -29,6 +30,7 @@ class ArticleRepository implements ArticleContract
             ->orderBy('created_at', 'desc');
     }
 
+    //todo implement here the creation of the seo model
     public function createArticle(ArticleDTO $articleDTO): Model
     {
         $articleModel =  (new Article())->updateOrCreate(

@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Builder;
 
 interface ArticleContract
 {
-    public function getArticleById(mixed $articleId): Model;
+    public function getArticleById(mixed $articleId): ?Model;
 
     public function getAllArticles(): Builder;
 

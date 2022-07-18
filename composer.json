@@ -5,7 +5,7 @@
     "keywords": ["framework", "laravel"],
     "license": "MIT",
     "require": {
-        "php": "^7.4|^8.1",
+        "php": "^8.0|^8.1",
         "flobbos/laravel-crudable": "^4.0",
         "guzzlehttp/guzzle": "^7.2",
         "laravel/framework": "^9.11",
@@ -14,6 +14,7 @@
         "laravel/tinker": "^2.7",
         "laravel/ui": "^3.4",
         "predis/predis": "^1.1",
+        "ralphjsmit/laravel-seo": "^1.0",
         "sentry/sentry-laravel": "^2.13",
         "spatie/data-transfer-object": "^3.8",
         "symfony/dom-crawler": "^6.1",
@@ -65,7 +66,10 @@
     "config": {
         "optimize-autoloader": true,
         "preferred-install": "dist",
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
     },
     "minimum-stability": "dev",
     "prefer-stable": true

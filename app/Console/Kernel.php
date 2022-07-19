@@ -10,12 +10,11 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule): void
     {
         $schedule->command('inspire')->hourly();
+        $schedule->command('content:extractor')->hourly();
     }
 
     protected function commands(): void
     {
         $this->load(__DIR__.'/Commands');
-
-        include base_path('routes/console.php');
     }
 }

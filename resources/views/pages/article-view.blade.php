@@ -16,21 +16,23 @@
                     <!-- Post header-->
                     <header class="mb-4">
                         <!-- Post title-->
-                        <h1 class="fw-bolder mb-1">
-                            {{ $article->title }}
+                        <h1 class="fw-bolder mb-1" title="{{ $article->title }}">
+                            <a href="<?php echo URL::current();?>" title="{{ $article->title }}">
+                                {{ $article->title }}
+                            </a>
                         </h1>
                         <div class="text-muted fst-italic mb-2">Posted on {{ $article->published_at }} by {{ $article->author }}</div>
                         <div class="text-muted fst-italic mb-2">Time to read 1 min </div>
                         <div class="text-muted fst-italic mb-2">
                             Sentiment of the text
                         </div>
-
-
-                    @foreach($article->tags as $tag)
-                            <a class="badge bg-secondary text-decoration-none link-light" href="">{{ $tag->name }}</a>
-                        @endforeach
                     </header>
 
+                    <section>
+                        @foreach($article->tags as $tag)
+                            <a class="badge bg-secondary text-decoration-none link-light" title="articles about {{ $tag->name }}" href="#">#{{ $tag->name }}</a>
+                        @endforeach
+                    </section>
 
                     <!-- Post content-->
                     <section class="mb-5">

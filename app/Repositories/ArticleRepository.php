@@ -31,6 +31,10 @@ class ArticleRepository implements ArticleContract
     }
 
     //todo implement here the creation of the seo model
+
+    /**
+     * @throws \JsonException
+     */
     public function createArticle(ArticleDTO $articleDTO): Model
     {
         $articleModel =  (new Article())->updateOrCreate(

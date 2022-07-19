@@ -5,20 +5,20 @@
     <div class="container">
         <div class="row d-flex justify-content-center">
 
-            <p class="text-center text-white no-margins">
-                <a href="{{ route('website.about') }}" class="text-white">
+            <p class="text-center text-white no-margins pt-2">
+                <a href="{{ route('website.about') }}" title="about" class="text-white">
                     About
                 </a>
                 |
-                <a href="{{ route('website.terms') }}" class="text-white">
+                <a href="{{ route('website.terms') }}" title="terms" class="text-white">
                     Terms & Conditions
                 </a>
                 |
-                <a href="{{ route('website.demo') }}" class="text-white">
+                <a href="{{ route('website.demo') }}" title="demo" class="text-white">
                     Demo
                 </a>
             </p>
-            <p class="m-0 text-center text-white">Copyright &copy; News Reader {{ date('Y') }}</p>
+            <p class="m-0 text-center text-white pb-2">Copyright &copy; News Reader {{ date('Y') }}</p>
         </div>
     </div>
 </footer>
@@ -41,19 +41,18 @@
 
 
 @stack('scripts')
-<link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
-
-<!-- Include the Quill library -->
-<script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
-
-<!-- Initialize Quill editor -->
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-Z1M69DNZYX"></script>
 <script>
-    var quill = new Quill('#editor', {
-        theme: 'snow'
-    });
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-Z1M69DNZYX');
 </script>
 <style>
   .footer{
+      padding-top: 1vh;
       display: flex;
       align-items: center;
       margin: 0 0 20px;

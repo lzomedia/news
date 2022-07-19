@@ -6,15 +6,15 @@
         <div class="row d-flex justify-content-center">
 
             <p class="text-center text-white no-margins pt-2">
-                <a href="{{ route('website.about') }}" class="text-white">
+                <a href="{{ route('website.about') }}" title="about" class="text-white">
                     About
                 </a>
                 |
-                <a href="{{ route('website.terms') }}" class="text-white">
+                <a href="{{ route('website.terms') }}" title="terms" class="text-white">
                     Terms & Conditions
                 </a>
                 |
-                <a href="{{ route('website.demo') }}" class="text-white">
+                <a href="{{ route('website.demo') }}" title="demo" class="text-white">
                     Demo
                 </a>
             </p>

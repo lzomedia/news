@@ -37,12 +37,12 @@
 
                             @if($sentiment > 0.5)
                                 <p class="badge bg-success text-decoration-none link-light">
-                                    Sentiment of the text is positive
+                                    Sentiment of the text is positive.
                                 </p>
 
                             @elseif($sentiment < 0.5)
                                     <p class="badge bg-danger text-decoration-none link-light">
-                                        Sentiment of the text is positive
+                                        Sentiment of the text is negative.
                                     </p>
                             @endif
                         </div>
@@ -68,7 +68,30 @@
             </div>
 
             <!-- Side widgets-->
-            @include('partials.article.right-sidebar')
+            <div class="col-lg-3 pt-3">
+                <!-- Side widget-->
+                <div class="card mb-4">
+                    <div class="card-header">Top Articles</div>
+                    <div class="card-body">
+                        @foreach($topArticles as $article)
+                            <div class="media">
+                                <img class="mr-3" src="{{ $article->image }}" alt="{{ $article->title }}" width="64" height="64">
+                                <div class="media-body">
+                                    <h5 class="mt-0">
+                                        <a href="{{ url("/") }}/articles/{{ $article->id .'/'. Str::slug($article->title) }}" title="{{ $article->title }}">
+                                            {{ $article->title }}
+                                        </a>
+                                    </h5>
+                                    <div class="text-muted fst-italic mb-2">
+                                        {{ $article->published_at }}
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 

@@ -5,6 +5,8 @@ namespace App\Contracts;
 use Illuminate\Database\Eloquent\Model;
 use App\DTO\Article as ArticleDTO;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Query\Builder as DatabaseBuilder;
+use Illuminate\Support\Collection;
 
 interface ArticleContract
 {
@@ -21,4 +23,5 @@ interface ArticleContract
 
     public function checkIfArticleExists(ArticleDTO $articleDTO): bool;
 
+    public function getTopArticles(): Collection;
 }

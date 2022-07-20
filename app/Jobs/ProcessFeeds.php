@@ -41,7 +41,6 @@ class ProcessFeeds implements ShouldQueue
         $this->articleContract = $articleContract;
     }
 
-
     final public function handle(): void
     {
         $feedRepo = new FeedRepository();
@@ -58,13 +57,11 @@ class ProcessFeeds implements ShouldQueue
                     $feed->url,
                 ]
             );
-            //increased the time of a process to 3 minutes
             $process->setTimeout(180);
 
             $process->run(
                 function ($type, $buffer) {
                     if (strlen($buffer) > 10) {
-                        Log::error("Output: $buffer");
 
                         $data = json_decode(
                             $buffer,
@@ -74,6 +71,7 @@ class ProcessFeeds implements ShouldQueue
                         );
 
                         if (json_last_error() === 0) {
+
                             $dto = new ArticleDTO($data);
 
                             if (Config::get('cms.enable_discovery_feeds')) {

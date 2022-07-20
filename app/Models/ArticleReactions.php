@@ -6,10 +6,11 @@ namespace App\Models;
  * @property int $article_id
  * @property string $time_to_read
  * @method   firstOrCreate(array $array)
+ * @method   where(array $array)
  */
-class ArticleInfo extends BaseModel
+class ArticleReactions extends BaseModel
 {
-    protected $table = 'article_info';
+    protected $table = 'article_reactions';
 
     protected $fillable = [
         'article_id',
@@ -20,4 +21,5 @@ class ArticleInfo extends BaseModel
     protected $casts = [
         'vader' => 'array'
     ];
+
 }

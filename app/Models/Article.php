@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -31,6 +32,8 @@ class Article extends Model
 {
     use HasSEO;
 
+    use HasFactory;
+
     protected $table = 'articles';
 
     protected $fillable = [
@@ -57,9 +60,9 @@ class Article extends Model
         return $this->belongsTo(Category::class);
     }
 
-    public function info(): BelongsTo
+    public function reactions(): BelongsTo
     {
-        return $this->belongsTo(ArticleInfo::class);
+        return $this->belongsTo(ArticleReactions::class);
     }
 
     public function tags(): BelongsToMany

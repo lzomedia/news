@@ -62,7 +62,6 @@ class Article extends Model
         return $this->belongsTo(ArticleInfo::class);
     }
 
-
     public function tags(): BelongsToMany
     {
         return $this->belongsToMany(Tag::class);
@@ -71,6 +70,11 @@ class Article extends Model
     public function getFeedId(): int
     {
         return $this->feed_id;
+    }
+
+    public function getCategoryId(): int
+    {
+        return $this->category_id;
     }
 
 

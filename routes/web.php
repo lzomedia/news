@@ -12,6 +12,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Frontend\ArticleController;
 use App\Http\Controllers\Frontend\CategoryController;
 use App\Http\Controllers\Frontend\PagesController;
+use App\Http\Controllers\Frontend\SitemapController;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\RateLimiter;
@@ -58,6 +59,7 @@ Route::get('/categories', [CategoryController::class, 'view'])->name('categories
 Route::get('/demo', [PagesController::class, 'index'])->name('website.demo');
 Route::get('/about', [PagesController::class, 'about'])->name('website.about');
 Route::get('/terms', [PagesController::class, 'terms'])->name('website.terms');
+Route::get('/sitemap.xml', [SitemapController::class, 'index']);
 
 
 

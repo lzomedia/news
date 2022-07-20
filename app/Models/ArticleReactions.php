@@ -7,6 +7,7 @@ namespace App\Models;
  * @property string $time_to_read
  * @method   firstOrCreate(array $array)
  * @method   static where(array $array)
+ * @method   static groupBy(array $array)
  */
 class ArticleReactions extends BaseModel
 {

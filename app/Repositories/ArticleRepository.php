@@ -9,7 +9,11 @@ use App\Models\ArticleReactions;
 use App\Models\Tag;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
+use JsonException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Illuminate\Database\Query\Builder as DatabaseBuilder;
 
 class ArticleRepository implements ArticleContract
 {
@@ -31,11 +35,11 @@ class ArticleRepository implements ArticleContract
     }
 
     /**
-     * @throws \JsonException
+     * @throws JsonException
      */
     public function createArticle(ArticleDTO $articleDTO): Model
     {
-        $articleModel =  (new Article())->updateOrCreate(
+        $articleModel = (new Article())->updateOrCreate(
             [
                 'feed_id' => $articleDTO->getFeedId(),
                 'category_id' => ($articleDTO->getCategory())->id,
@@ -48,7 +52,6 @@ class ArticleRepository implements ArticleContract
             ]
         );
         /** @var Article $articleModel */
-
         $articleModel->category()->increment('count');
 
         foreach ($articleDTO->getKeywords() as $tag) {
@@ -71,5 +74,44 @@ class ArticleRepository implements ArticleContract
     public function checkIfArticleExists(ArticleDTO $articleDTO): bool
     {
         return Article::where('source', $articleDTO->getSource())->exists();
+    }
+
+    //todo rewrite this
+    public function getTopArticles(): Collection
+    {
+
+        $articlesReactions = ArticleReactions::orderBy('created_at')->get();
+
+        $collection = collect();
+
+        foreach ($articlesReactions as $articlesReaction) {
+
+            $data = collect(json_decode($articlesReaction->vader, false));
+
+            if ($data["compound"] > 0.95) {
+                $collection->push(
+                    collect([
+                        'article_id' => $articlesReaction->article_id,
+                        'compound' => $data["compound"],
+                        'created_at' => $articlesReaction->created_at,
+                    ])
+                );
+            }
+        }
+
+        $collection = (collect($collection->toArray())->sortByDesc('compound'));
+
+        $articles = collect();
+
+        foreach ($collection as $item) {
+            $articles->push(
+                Article::with('category')
+                    ->with('tags')
+                    ->with('feed')
+                    ->with('reactions')
+                    ->find($item['article_id'])
+            );
+        }
+        return ($articles);
     }
 }

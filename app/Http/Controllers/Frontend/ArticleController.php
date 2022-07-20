@@ -13,9 +13,8 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class ArticleController extends Controller
 {
     private ArticleContract $articleContract;
-    private ReactionContract $reactionContract;
 
-    private Request $request;
+    private ReactionContract $reactionContract;
 
     public function __construct(
         ArticleContract $articleContract,
@@ -26,7 +25,6 @@ class ArticleController extends Controller
 
         $this->reactionContract =$reactionContract;
 
-        $this->request = Request::capture();
     }
 
     public function view(Request $request): View
@@ -37,8 +35,7 @@ class ArticleController extends Controller
 
         $reactions =  $this->reactionContract->getReactions($request->id);
 
-//        dd($reactions);
-
+        $topArticles = $this->articleContract->getTopArticles();
 
         if ($article === null) {
             abort(404, "Article not found");
@@ -46,7 +43,8 @@ class ArticleController extends Controller
 
         return view('pages.article-view', [
             'article' => $article,
-            'reactions' => $reactions
+            'reactions' => $reactions,
+            'topArticles' => $topArticles,
         ]);
 
 

@@ -59,7 +59,7 @@ Route::get('/categories', [CategoryController::class, 'view'])->name('categories
 Route::get('/demo', [PagesController::class, 'index'])->name('website.demo');
 Route::get('/about', [PagesController::class, 'about'])->name('website.about');
 Route::get('/terms', [PagesController::class, 'terms'])->name('website.terms');
-Route::get('/sitemap.xml', [SitemapController::class, 'index']);
+Route::get('/sitemap.xml', [SitemapController::class, 'index'])->name('website.sitemap');
 
 
 

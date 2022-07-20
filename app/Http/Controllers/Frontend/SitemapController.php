@@ -11,6 +11,7 @@ class SitemapController extends FrontendController
     public function index(ArticleContract $articleContract): View
     {
         $articles = $articleContract->getAllArticles()->get();
+
         return view('pages.sitemap', compact('articles'));
     }
 }

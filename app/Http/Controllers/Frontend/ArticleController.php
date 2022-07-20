@@ -30,12 +30,11 @@ class ArticleController extends Controller
     public function view(Request $request): View
     {
 
-
         $article = $this->articleContract->getArticleById($request->id);
 
         $reactions =  $this->reactionContract->getReactions($request->id);
 
-        $topArticles = $this->articleContract->getTopArticles();
+        $topArticles = $this->articleContract->getTopArticles()->take(10);
 
         if ($article === null) {
             abort(404, "Article not found");

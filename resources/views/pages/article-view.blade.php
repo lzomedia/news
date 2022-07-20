@@ -22,7 +22,7 @@
                             </a>
                         </h1>
                         <div class="text-muted fst-italic mb-2">Posted on {{ $article->published_at }} by {{ $article->author }}</div>
-                        <div class="text-muted fst-italic mb-2">Time to read 1 min </div>
+                        <div class="text-muted fst-italic mb-2">Time to read {{ json_encode($article->info) }} </div>
                         <div class="text-muted fst-italic mb-2">
                             Sentiment of the text
                         </div>

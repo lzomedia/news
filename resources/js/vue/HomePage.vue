@@ -17,7 +17,9 @@
                     <div v-for="(article, index) in Articles">
                         <div v-if="index ===0">
                             <div class="card mb-4">
-                                <a href="#!"><img class="card-img-top" :src="article.image"/></a>
+                                <a href="#!">
+                                    <img alt="article.title" @change="selectedFile"  class="card-img-top" :src="article.image"/>
+                                </a>
                                 <div class="card-body">
                                     <div class="small text-muted">
                                         <format class="text-muted" :value="article.published_at" fn="ago"/>
@@ -42,7 +44,7 @@
                             <div class="card mb-3">
                                 <div class="row g-0">
                                     <div class="col-md-4">
-                                        <img :src="article.image" class="card-img-top h-100"/>
+                                        <img :src="article.image " @change="selectedFile"  class="card-img-top h-100"/>
                                     </div>
                                     <div class="col-md-8">
                                         <div class="card-body">
@@ -53,7 +55,7 @@
                                                 {{ article.excerpt }}
                                             </p>
                                             <p class="card-text"><small class="text-muted">
-                                                <format class="text-muted" :value="article.published_at" fn="ago"/>
+                                                {{ article.published_at  }}
                                             </small></p>
                                         </div>
                                     </div>
@@ -83,6 +85,7 @@ export default {
             Articles: [],
             Categories: [],
             page: 1,
+            imageLoaded: false,
         }
     },
     methods: {
@@ -106,6 +109,33 @@ export default {
         imageLoadError() {
             console.log('imageLoadError')
             console.log('Image failed to load');
+        },
+        selectedFile() {
+            this.imageLoaded = false;
+
+            let file = this.$refs.myFile.files[0];
+            if(!file || file.type.indexOf('image/') !== 0) return;
+
+            this.image.size = file.size;
+
+            let reader = new FileReader();
+
+            reader.readAsDataURL(file);
+
+            reader.onload = evt => {
+                let img = new Image();
+                img.onload = () => {
+                    this.image.width = img.width;
+                    this.image.height = img.height;
+                    this.imageLoaded = true;
+                }
+                img.src = evt.target.result;
+            }
+
+            reader.onerror = evt => {
+                console.error(evt);
+            }
+
         }
     },
     mounted() {

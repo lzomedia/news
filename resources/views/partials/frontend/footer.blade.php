@@ -17,6 +17,10 @@
                 <a href="{{ route('website.demo') }}" title="demo" class="text-white">
                     Demo
                 </a>
+                |
+                <a href="{{ route('website.sitemap') }}" title="sitemap" class="text-white">
+                    Sitemap
+                </a>
             </p>
             <p class="m-0 text-center text-white pb-2">Copyright &copy; News Reader {{ date('Y') }}</p>
         </div>

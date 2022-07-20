@@ -8,7 +8,7 @@ return new class () extends Migration {
 
     public function up(): void
     {
-        Schema::create('article_info', function (Blueprint $table) {
+        Schema::create('article_reactions', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('article_id');
             $table->string('time_to_read')->nullable();
@@ -21,6 +21,6 @@ return new class () extends Migration {
 
     public function down(): void
     {
-        Schema::dropIfExists('article_info');
+        Schema::dropIfExists('article_reactions');
     }
 };

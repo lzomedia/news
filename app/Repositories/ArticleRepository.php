@@ -5,7 +5,7 @@ namespace App\Repositories;
 use App\Contracts\ArticleContract;
 use App\DTO\Article as ArticleDTO;
 use App\Models\Article;
-use App\Models\ArticleInfo;
+use App\Models\ArticleReactions;
 use App\Models\Tag;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
@@ -17,7 +17,7 @@ class ArticleRepository implements ArticleContract
     {
         return Article::with('category')
             ->with('tags')
-            ->with('info')
+            ->with('reactions')
             ->find($articleId);
     }
 
@@ -26,11 +26,9 @@ class ArticleRepository implements ArticleContract
         return Article::with('category')
             ->with('tags')
             ->with('feed')
-            ->with('info')
+            ->with('reactions')
             ->orderBy('created_at', 'desc');
     }
-
-    //todo implement here the creation of the seo model
 
     /**
      * @throws \JsonException
@@ -59,7 +57,7 @@ class ArticleRepository implements ArticleContract
             );
         }
 
-        (new ArticleInfo())->firstOrCreate(
+        (new ArticleReactions())->firstOrCreate(
             [
                 'article_id' => $articleModel->id,
                 'time_to_read' => $articleDTO->getTimeToRead(),

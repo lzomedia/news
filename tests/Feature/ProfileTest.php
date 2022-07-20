@@ -27,6 +27,13 @@ class ProfileTest extends TestCase
         $response->assertSeeText('Login');
     }
 
+    public function test_can_access_sitemap(): void
+    {
+        $response = $this->get('/sitemap.xml');
+        $response->assertStatus(200);
+    }
+
+
     public function test_can_see_reset(): void
     {
         $response = $this->get('/password/reset');

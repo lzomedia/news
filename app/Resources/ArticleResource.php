@@ -43,7 +43,6 @@ class ArticleResource extends JsonResource
             'published_at' => Carbon()->parse($this->published_at)->format('d m y H:i:s'),
             'category' => $this->formatCategory($this->category),
             'feed' => $this->feed,
-            'reactions' => $this->reactions,
             'author' => $this->author,
             'url'=> url('articles/' . $this->id . '/' . Str::slug($this->title)),
             'created_at' => $this->created_at,

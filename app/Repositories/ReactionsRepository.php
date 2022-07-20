@@ -18,8 +18,8 @@ class ReactionsRepository implements ReactionContract
     public function getReactions(string $articleId): Reactions
     {
 
-        $reactions = ArticleReactions::where('article_id', $articleId)->get()->first();
+        $reactions = ArticleReactions::where('article_id', $articleId)->get();
 
-        return new Reactions($reactions->toArray());
+        return new Reactions($reactions->first()->toArray());
     }
 }

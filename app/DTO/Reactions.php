@@ -19,5 +19,5 @@ class Reactions extends DataTransferObject
     public ?string $timeToRead;
 
     #[MapFrom('vader')]
-    public string $vader;
+    public ?string $vader;
 }

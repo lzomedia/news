@@ -32,9 +32,6 @@ class ArticleRepository implements ArticleContract
 
     /**
      * @throws \JsonException
-     * @todo Add validation for the DTO.
-     * @todo Add validation for the model.
-     * @param Add reactions to the article.
      */
     public function createArticle(ArticleDTO $articleDTO): Model
     {

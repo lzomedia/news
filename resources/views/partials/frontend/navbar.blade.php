@@ -4,7 +4,7 @@
 
             <div class="col-lg-4">
 
-                <a class="navbar-brand" href="{{ route('home') }}">
+                <a class="navbar-brand" href="{{ route('website.homepage') }}">
                     {{ config('app.name', 'News Reader') }}
                 </a>
             </div>

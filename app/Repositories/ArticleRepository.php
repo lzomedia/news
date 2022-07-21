@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Contracts\ArticleContract;
 use App\DTO\Article as ArticleDTO;
+use App\Jobs\PingPost;
 use App\Models\Article;
 use App\Models\ArticleReactions;
 use App\Models\Tag;
@@ -36,6 +37,7 @@ class ArticleRepository implements ArticleContract
 
     /**
      * @throws JsonException
+     * @throws \Exception
      */
     public function createArticle(ArticleDTO $articleDTO): Model
     {
@@ -67,6 +69,8 @@ class ArticleRepository implements ArticleContract
                 'vader' => json_encode($articleDTO->getVader(), JSON_THROW_ON_ERROR),
             ]
         );
+
+        dispatch(new PingPost($articleModel))->delay(now()->addSeconds(random_int(1, 10)));
 
         return $articleModel;
     }

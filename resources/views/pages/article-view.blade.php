@@ -69,27 +69,40 @@
 
             <!-- Side widgets-->
             <div class="col-lg-3 pt-3">
+
                 <!-- Side widget-->
                 <div class="card mb-4">
-                    <div class="card-header">Top Articles</div>
+                    <div class="card-header">Author</div>
                     <div class="card-body">
-                        @foreach($topArticles as $article)
-                            <div class="media">
-                                <img class="mr-3" src="{{ $article->image }}" alt="{{ $article->title }}" width="64" height="64">
-                                <div class="media-body">
-                                    <h5 class="mt-0">
-                                        <a href="{{ url("/") }}/articles/{{ $article->id .'/'. Str::slug($article->title) }}" title="{{ $article->title }}">
-                                            {{ $article->title }}
-                                        </a>
-                                    </h5>
-                                    <div class="text-muted fst-italic mb-2">
-                                        {{ $article->published_at }}
-                                    </div>
-                                </div>
-                            </div>
-                        @endforeach
+                        <p class="card-text">
+                            {{ $article->author }} is a member of our community since 2020, and he wrote for us over 200 articles.
+                        </p>
                     </div>
                 </div>
+
+                <!-- Side widget-->
+                <div class="sticky-top">
+                    <div class="card mb-4 ">
+                        <div class="card-header">Top Articles</div>
+                        <div class="card-body">
+                            @foreach($topArticles as $article)
+                                <div class="media">
+                                    <div class="media-body">
+                                        <h5 class="mt-0">
+                                            <a href="{{ url("/") }}/articles/{{ $article->id .'/'. Str::slug($article->title) }}" title="{{ $article->title }}">
+                                                {{ $article->title }}
+                                            </a>
+                                        </h5>
+                                        <div class="text-muted fst-italic mb-2">
+                                            {{ $article->created_at->format('M d, Y') }}
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+
             </div>
 
         </div>

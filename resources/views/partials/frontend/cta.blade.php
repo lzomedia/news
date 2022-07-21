@@ -2,9 +2,11 @@
     <div class="container grid-container">
         <div class="benefits-inner c-7-12 text-center">
             <div class="section-header title-separator-top separator-left">
-                <h3 class="section-title">Grow Your Website With Us</h3>
+                <h3 class="section-title">
+                    The AI news reader a tool to read news.
+                </h3>
                 <div class="section-description">
-                    We offer a variety of services to help you grow your website.
+                    The AI news reader is a new tool that can be used by anyone, without any cost. It is an artificial intelligence assistant that will read the news for you and provide you with relevant information.
                 </div>
             </div>
         </div>

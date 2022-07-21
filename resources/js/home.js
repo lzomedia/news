@@ -6,7 +6,6 @@ import {createApp} from 'vue';
 
 import HomePage from './vue/HomePage.vue';
 
-import moment from 'moment';
 
 import InfiniteLoading from "v3-infinite-loading";
 

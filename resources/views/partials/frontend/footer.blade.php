@@ -14,10 +14,6 @@
                     Terms & Conditions
                 </a>
                 |
-                <a href="{{ route('website.demo') }}" title="demo" class="text-white">
-                    Demo
-                </a>
-                |
                 <a href="{{ route('website.sitemap') }}" title="sitemap" class="text-white">
                     Sitemap
                 </a>
@@ -64,4 +60,5 @@
       list-style: none;
       justify-content: center;
   }
+  .sticky-top { top: 5vh; }
 </style>

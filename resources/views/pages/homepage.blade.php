@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <div class="container-fluid py-2">
+    <div class="container-fluid pt-5">
         <!-- Side widgets-->
         <div class="row">
 

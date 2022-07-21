@@ -24,15 +24,14 @@
 
 </head>
 <body>
-
 <!-- Responsive navbar-->
-@include('partials.frontend.navbar')
-
+<header class="p-3 bg-dark text-white">
+    @include('partials.frontend.navbar')
+</header>
 <!-- Main Block -->
 <main>
     @yield('content')
 </main>
-
 <!-- Footer -->
 @include('partials.frontend.cta')
 @include('partials.frontend.footer')

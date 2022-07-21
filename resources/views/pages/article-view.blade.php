@@ -1,9 +1,7 @@
 @extends('layouts.app')
 @section('content')
     <div class="container-fluid pt-3">
-
         <div class="row">
-
             <!-- Article !-->
             <div class="col-lg-9 py-3">
                 <!-- Preview image figure-->
@@ -66,7 +64,6 @@
                 </article>
 
             </div>
-
             <!-- Side widgets-->
             <div class="col-lg-3 pt-3">
 
@@ -106,9 +103,19 @@
                 </div>
 
             </div>
-
         </div>
     </div>
+    <div class="container-fluid pt-3">
+        <div class="row">
+            <div class="col-lg-12">
+                <h3>Related Articles</h3>
+                <div id="related-articles" :title="Welcome"></div>
+            </div>
+        </div>
+    </div>
+@endsection
+@push('scripts')
+    <script src="{{ asset('js/related.js') }}"></script>
     <script type="application/ld+json">
         {
              "@context": "https://schema.org",
@@ -125,8 +132,6 @@
          }
 
     </script>
-@endsection
-@push('scripts')
     <style>
         article img {
             max-width: 100%;
@@ -136,12 +141,4 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/default.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js"></script>
     <script>hljs.highlightAll();</script>
-    <script>
-        $(document).ready(function () {
-            $("img.card-img-top").load(function () {
-                console.log($(this).height());
-                console.log($(this).width());
-            });
-        });
-    </script>
 @endpush

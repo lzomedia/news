@@ -41,7 +41,7 @@
                                     </h5>
                                 </div>
                                 <div class="card-body">
-                                    <p class="card-text">{{ $article->excerpt }}</p>
+                                    <p class="card-text">{{ Str::words($article->summary, 25)}}</p>
                                 </div>
                             </div>
                         @endforeach

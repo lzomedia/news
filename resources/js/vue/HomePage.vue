@@ -30,7 +30,7 @@
                 <div class="card mb-3">
                     <div class="row g-0">
                         <div class="col-md-4">
-                            <img :src="article.image " @change="selectedFile" class="card-img-top h-100"/>
+                            <img :src="article.image " class="card-img-top h-100"/>
                         </div>
                         <div class="col-md-8">
                             <div class="card-body">
@@ -40,9 +40,11 @@
                                 <p class="card-text">
                                     {{ article.excerpt }}
                                 </p>
-                                <p class="card-text"><small class="text-muted">
-                                    {{ article.published_at }}
-                                </small></p>
+                                <p class="card-text">
+                                    <span class="text-muted">
+                                        <timeago :datetime="article.created_at"/>
+                                    </span>
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -55,8 +57,13 @@
 </template>
 <script>
 console.log('HomePage');
+import TimeAgo from "vue3-timeago";
+
 export default {
     name: 'HomePage',
+    components: {
+        TimeAgo
+    },
     data() {
         return {
             message: this.message,
@@ -89,33 +96,6 @@ export default {
             console.log('imageLoadError')
             console.log('Image failed to load');
         },
-        selectedFile() {
-            this.imageLoaded = false;
-
-            let file = this.$refs.myFile.files[0];
-            if (!file || file.type.indexOf('image/') !== 0) return;
-
-            this.image.size = file.size;
-
-            let reader = new FileReader();
-
-            reader.readAsDataURL(file);
-
-            reader.onload = evt => {
-                let img = new Image();
-                img.onload = () => {
-                    this.image.width = img.width;
-                    this.image.height = img.height;
-                    this.imageLoaded = true;
-                }
-                img.src = evt.target.result;
-            }
-
-            reader.onerror = evt => {
-                console.error(evt);
-            }
-
-        }
     },
     mounted() {
         console.log("Welcome to the app!");

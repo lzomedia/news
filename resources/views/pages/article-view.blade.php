@@ -99,7 +99,7 @@
 @push('scripts')
     <style>
         article img {
-            width: 100%;
+            max-width: 100%;
         }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/default.min.css">

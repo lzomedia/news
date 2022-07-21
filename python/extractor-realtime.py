@@ -58,7 +58,7 @@ class Extractor:
         return summary
 
     def extractArticle(url):
-        article = Article(url, keep_article_html=True)
+        article = Article(url, keep_article_html=True, MIN_WORD_COUNT=500)
         article.download()
         article.parse()
         article.nlp()

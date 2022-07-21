@@ -24,11 +24,14 @@ class PingPost implements ShouldQueue
         $this->article = $article;
     }
 
-    public function handle(): bool
+    public function handle(): void
     {
-        return (new \Garf\LaravelPinger\Pinger)->pingAll(
+        $response = (new \Garf\LaravelPinger\Pinger)->pingAll(
             $this->article->title,
             url(''). 'articles/'.$this->article->id.'/'.Str::slug($this->article->title),
         );
+        if($response){
+            $this->delete();
+        }
     }
 }

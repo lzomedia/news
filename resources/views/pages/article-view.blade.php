@@ -31,8 +31,8 @@
                         </div>
                         <div class="text-muted fst-italic mb-2">
                             <?php
-                                $sentiment = json_decode($reactions->vader);
-                                $sentiment =  ($sentiment->compound);
+                            $sentiment = json_decode($reactions->vader);
+                            $sentiment = ($sentiment->compound);
                             ?>
 
                             @if($sentiment > 0.5)
@@ -41,9 +41,9 @@
                                 </p>
 
                             @elseif($sentiment < 0.5)
-                                    <p class="badge bg-danger text-decoration-none link-light">
-                                        Sentiment of the text is negative.
-                                    </p>
+                                <p class="badge bg-danger text-decoration-none link-light">
+                                    Sentiment of the text is negative.
+                                </p>
                             @endif
                         </div>
                     </header>
@@ -75,7 +75,8 @@
                     <div class="card-header">Author</div>
                     <div class="card-body">
                         <p class="card-text">
-                            {{ $article->author }} is a member of our community since 2020, and he wrote for us over 200 articles.
+                            {{ $article->author }} is a member of our community since 2020, and he wrote for us over 200
+                            articles.
                         </p>
                     </div>
                 </div>
@@ -89,7 +90,8 @@
                                 <div class="media">
                                     <div class="media-body">
                                         <h5 class="mt-0">
-                                            <a href="{{ url("/") }}/articles/{{ $article->id .'/'. Str::slug($article->title) }}" title="{{ $article->title }}">
+                                            <a href="{{ url("/") }}/articles/{{ $article->id .'/'. Str::slug($article->title) }}"
+                                               title="{{ $article->title }}">
                                                 {{ $article->title }}
                                             </a>
                                         </h5>
@@ -107,12 +109,28 @@
 
         </div>
     </div>
+    <script type="application/ld+json">
+        {
+             "@context": "https://schema.org",
+             "@type": "Article",
+             "headline": "{{ $article->title }}",
+             "image": "{{ $article->image }}",
+             "author": "{{ $article->author }}",
+             "keywords": "{{ $article->tags->pluck('name')->implode(', ') }}",
+             "datePublished": "{{ $article->published_at }}",
+             "dateCreated": "{{ $article->created_at }}",
+             "dateModified": "{{ $article->updated_at }}",
+             "description": "{{ $article->summary }}",
+             "articleBody": "{{ $article->content }}"
+         }
 
+    </script>
 @endsection
 @push('scripts')
     <style>
         article img {
             max-width: 100%;
+            padding-bottom: 1vh;
         }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/default.min.css">

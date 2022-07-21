@@ -9,20 +9,20 @@
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav me-auto mb-2 mb-md-0">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="{{ route('website.about') }}">
+                    <a class="nav-link active" title="about" aria-current="page" href="{{ route('website.about') }}">
                         {{ __('About') }}
                     </a>
                 </li>
                 @guest
                     @if (Route::has('login'))
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                            <a class="nav-link" title="login" href="{{ route('login') }}">{{ __('Login') }}</a>
                         </li>
                     @endif
 
                     @if (Route::has('register'))
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                            <a class="nav-link" title="register" href="{{ route('register') }}">{{ __('Register') }}</a>
                         </li>
                     @endif
                 @else

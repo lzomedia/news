@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "21e717a303ef845762cebe8e10828564",
+    "content-hash": "60beb352c191efd8f9fa2485950a604e",
     "packages": [
         {
             "name": "brick/math",
@@ -896,6 +896,58 @@
                 }
             ],
             "time": "2022-02-20T15:07:15+00:00"
+        },
+        {
+            "name": "garf/laravel-pinger",
+            "version": "v2.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/garf/laravel-pinger.git",
+                "reference": "8d38ad22a9081e9dca35849a549d5fe5923cb9e1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/garf/laravel-pinger/zipball/8d38ad22a9081e9dca35849a549d5fe5923cb9e1",
+                "reference": "8d38ad22a9081e9dca35849a549d5fe5923cb9e1",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": ">=4.2",
+                "php": ">=5.4.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Garf\\LaravelPinger\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Dinar Garipov",
+                    "email": "garipov.dinar@gmail.com"
+                }
+            ],
+            "description": "Ping search engines about website updates",
+            "keywords": [
+                "bing",
+                "google",
+                "laravel",
+                "ping",
+                "ping-o-matic",
+                "pingomatic",
+                "search engines",
+                "yahoo",
+                "yandex"
+            ],
+            "support": {
+                "issues": "https://github.com/garf/laravel-pinger/issues",
+                "source": "https://github.com/garf/laravel-pinger/tree/master"
+            },
+            "time": "2017-01-07T12:06:08+00:00"
         },
         {
             "name": "graham-campbell/result-type",

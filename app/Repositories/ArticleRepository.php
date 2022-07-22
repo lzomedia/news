@@ -22,10 +22,7 @@ class ArticleRepository implements ArticleContract
 {
     public function getArticleById(mixed $articleId): ?Model
     {
-        return Article::with('category')
-            ->with('tags')
-            ->with('reactions')
-            ->find($articleId);
+        return Article::find($articleId);
     }
 
     public function getAllArticles(): Builder
@@ -125,8 +122,6 @@ class ArticleRepository implements ArticleContract
         foreach ($collection as $item) {
             $articles->push(
                 Article::with('category')
-                    ->with('tags')
-                    ->with('feed')
                     ->with('reactions')
                     ->find($item['article_id'])
             );

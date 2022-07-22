@@ -26,6 +26,7 @@ use RalphJSmit\Laravel\SEO\Support\SEOData;
  * @property int $feed_id
  * @method   firstOrCreate(array $array)
  * @method   static where(string $string, $value)
+ * @method   static find(int $id)
  * @method updateOrCreate(array $array)
  */
 class Article extends Model

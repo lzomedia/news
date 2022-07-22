@@ -10,6 +10,7 @@ use App\Models\ArticleReactions;
 use App\Models\Tag;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
@@ -22,10 +23,7 @@ class ArticleRepository implements ArticleContract
 {
     public function getArticleById(mixed $articleId): ?Model
     {
-        return Article::with('category')
-            ->with('tags')
-            ->with('reactions')
-            ->find($articleId);
+        return Article::find($articleId);
     }
 
     public function getAllArticles(): Builder
@@ -99,7 +97,9 @@ class ArticleRepository implements ArticleContract
     public function getTopArticles(): Collection
     {
 
-        $articlesReactions = ArticleReactions::orderBy('created_at')->get();
+        $articlesReactions = ArticleReactions::orderBy('created_at')
+            ->where('created_at', '>=', Carbon::now()->subDay()->toDateTimeString())
+            ->get();
 
         $collection = collect();
 
@@ -125,8 +125,6 @@ class ArticleRepository implements ArticleContract
         foreach ($collection as $item) {
             $articles->push(
                 Article::with('category')
-                    ->with('tags')
-                    ->with('feed')
                     ->with('reactions')
                     ->find($item['article_id'])
             );

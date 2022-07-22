@@ -55,7 +55,6 @@ RateLimiter::for('articles', static function (Request $request) {
 
 
 Route::get('/', [PagesController::class, 'homepage'])->name('website.homepage');
-Route::get('/demo', [PagesController::class, 'index'])->name('website.demo');
 Route::get('/about', [PagesController::class, 'about'])->name('website.about');
 Route::get('/terms', [PagesController::class, 'terms'])->name('website.terms');
 Route::get('/categories', [CategoryController::class, 'view'])->name('categories.view');

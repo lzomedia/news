@@ -10,11 +10,6 @@ use Illuminate\Support\Collection;
 
 interface ArticleContract
 {
-    /**
-     * This will return an article.
-     * @param mixed $articleId
-     * @return Model|null
-     */
     public function getArticleById(mixed $articleId): ?Model;
 
     public function getAllArticles(): Builder;

@@ -23,11 +23,6 @@ class PagesController extends FrontendController
         return view('pages.homepage' , compact("topArticles"));
     }
 
-    public function demo(): View
-    {
-        return view('pages.demo');
-    }
-
     public function about(): View
     {
         return view('pages.about');

@@ -41,6 +41,13 @@ class ArticleRepository implements ArticleContract
      */
     public function createArticle(ArticleDTO $articleDTO): Model
     {
+
+        $wordCount = Str::wordCount($articleDTO->content);
+
+        if ($wordCount < 100) {
+            throw new \Exception('Article must contain at least 100 words');
+        }
+
         $articleModel = (new Article())->updateOrCreate(
             [
                 'feed_id' => $articleDTO->getFeedId(),

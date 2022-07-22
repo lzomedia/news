@@ -19,4 +19,6 @@ interface ArticleContract
     public function checkIfArticleExists(ArticleDTO $articleDTO): bool;
 
     public function getTopArticles(): Collection;
+
+    public function getArticleByTag(string $tag): ?Model;
 }

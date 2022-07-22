@@ -107,14 +107,14 @@
     </div>
     <div class="container-fluid pt-3">
         <div class="row">
-            <div class="col-lg-12">
-                <h3>Related Articles</h3>
-                <div id="related-articles" :title="Welcome"></div>
-            </div>
+            <div id="related-articles"></div>
         </div>
     </div>
 @endsection
 @push('scripts')
+    <script>
+        window.article = {!! $article !!};
+    </script>
     <script src="{{ asset('js/related.js') }}"></script>
     <script type="application/ld+json">
         {

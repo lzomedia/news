@@ -1,23 +1,34 @@
 <template>
-    <div>
-        <carousel :items-to-show="2.5">
-            <slide v-for="slide in 10" :key="slide">
-                <div class="card mr-2 ml-2">
+    <div class="col-lg-12">
+        <div>
+            <h3>
+                Related Articles
+            </h3>
+        </div>
+    </div>
+
+    <div class="col-lg-12 d-xs-none">
+        <carousel :items-to-show="4">
+            <slide v-for="slide in Articles" :key="slide">
+                <div class="col-lg-10">
                     <div class="card-body">
-                        <h5 class="card-title">
-                           Title
-                        </h5>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        <a :href="slide.url" class="card-text">
+                            {{slide.title}}
+                        </a>
                     </div>
                 </div>
             </slide>
         </carousel>
     </div>
+
+
+
 </template>
 <script>
 import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel';
 import 'vue3-carousel/dist/carousel.css';
 console.error('Welcome to related');
+console.log(window.article);
 export default {
     name: 'Related',
     components: {
@@ -28,22 +39,29 @@ export default {
     },
     data() {
         return {
-
-            articleId: 1,
+            articleId:  window.article.id,
             Articles: [],
         }
     },
     methods: {
         getArticles() {
+
+            console.log('getArticles');
+
             fetch('/api/v1/articles/related/' + this.articleId)
                 .then(res => {
                     return res.json();
                 }).then(res => {
-                    this.Articles = [];
-                })  .catch(error => {
-                    console.error('There was an error!', error);
-                });
+                    this.Articles = res.result.data;
+                    console.log(res);
+            })  .catch(error => {
+                console.error('There was an error!', error);
+            });
+
         },
-    }
+    },
+    mounted() {
+        this.getArticles();
+    },
 }
 </script>

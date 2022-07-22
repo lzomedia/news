@@ -129,4 +129,14 @@ class ArticleRepository implements ArticleContract
         }
         return ($articles);
     }
+
+    public function getArticleByTag(string $tag): ?Model
+    {
+        return Article::with('tags')
+            ->whereHas('tags', function (Builder $query) use ($tag) {
+                $query->where('name', $tag);
+            })
+            ->orderBy('created_at', 'desc')
+            ->first();
+    }
 }

@@ -1,10 +1,10 @@
 <template>
-    <div class="py-2">
+    <div>
         <div v-for="(article, index) in Articles">
             <div v-if="index ===0">
-                <div class="card mb-4">
-                    <a href="#!">
-                        <img alt="article.title" @change="selectedFile" class="card-img-top" :src="article.image"/>
+                <div style="border-top:0;" class="card mb-4">
+                    <a :href="article.url">
+                        <img alt="article.title" class="card-img-top" :src="article.image"/>
                     </a>
                     <div class="card-body">
                         <div class="small text-muted">
@@ -25,8 +25,6 @@
             </div>
 
             <div v-else>
-
-
                 <div class="card mb-3">
                     <div class="row g-0">
                         <div class="col-md-4">

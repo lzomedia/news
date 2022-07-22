@@ -7,6 +7,7 @@
     "require": {
         "php": "^8.0|^8.1",
         "flobbos/laravel-crudable": "^4.0",
+        "garf/laravel-pinger": "^2.0",
         "guzzlehttp/guzzle": "^7.2",
         "laravel/framework": "^9.11",
         "laravel/horizon": "^5.9",
@@ -21,7 +22,7 @@
         "yajra/laravel-datatables": "^9.0"
     },
     "require-dev": {
-
+        "barryvdh/laravel-debugbar": "^3.7",
         "fakerphp/faker": "^1.9.1",
         "laravel/pint": "^0.1.1",
         "laravel/sail": "^1.0.1",

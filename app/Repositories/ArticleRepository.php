@@ -4,13 +4,16 @@ namespace App\Repositories;
 
 use App\Contracts\ArticleContract;
 use App\DTO\Article as ArticleDTO;
+use App\Jobs\PingPost;
 use App\Models\Article;
 use App\Models\ArticleReactions;
 use App\Models\Tag;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 use JsonException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Illuminate\Database\Query\Builder as DatabaseBuilder;
@@ -36,9 +39,17 @@ class ArticleRepository implements ArticleContract
 
     /**
      * @throws JsonException
+     * @throws \Exception
      */
     public function createArticle(ArticleDTO $articleDTO): Model
     {
+
+        $wordCount = Str::wordCount($articleDTO->content);
+
+        if ($wordCount < 100) {
+            throw new \Exception('Article must contain at least 100 words');
+        }
+
         $articleModel = (new Article())->updateOrCreate(
             [
                 'feed_id' => $articleDTO->getFeedId(),
@@ -68,6 +79,12 @@ class ArticleRepository implements ArticleContract
             ]
         );
 
+        try{
+            dispatch(new PingPost($articleModel))->delay(now()->addSeconds(random_int(1, 10)));
+        }catch (\Exception $e){
+            throw new \Exception('Ping Exception: '.$e->getMessage());
+        }
+
         return $articleModel;
     }
 
@@ -76,7 +93,9 @@ class ArticleRepository implements ArticleContract
         return Article::where('source', $articleDTO->getSource())->exists();
     }
 
-    //todo rewrite this
+    /**
+     * @throws JsonException
+     */
     public function getTopArticles(): Collection
     {
 
@@ -86,7 +105,7 @@ class ArticleRepository implements ArticleContract
 
         foreach ($articlesReactions as $articlesReaction) {
 
-            $data = collect(json_decode($articlesReaction->vader, false));
+            $data = collect(json_decode($articlesReaction->vader, false, 512, JSON_THROW_ON_ERROR));
 
             if ($data["compound"] > 0.95) {
                 $collection->push(
@@ -102,7 +121,7 @@ class ArticleRepository implements ArticleContract
         $collection = (collect($collection->toArray())->sortByDesc('compound'));
 
         $articles = collect();
-
+        Cache::forget('top_articles');
         foreach ($collection as $item) {
             $articles->push(
                 Article::with('category')
@@ -112,6 +131,19 @@ class ArticleRepository implements ArticleContract
                     ->find($item['article_id'])
             );
         }
+        Cache::remember('top_articles', now()->addMinutes(5), static function () use ($articles) {
+            return $articles;
+        });
         return ($articles);
+    }
+
+    public function getArticleByTag(string $tag): ?Model
+    {
+        return Article::with('tags')
+            ->whereHas('tags', function (Builder $query) use ($tag) {
+                $query->where('name', $tag);
+            })
+            ->orderBy('created_at', 'desc')
+            ->first();
     }
 }

@@ -1,9 +1,7 @@
 @extends('layouts.app')
 @section('content')
-    <div class="container-fluid ">
-
+    <div class="container-fluid pt-3">
         <div class="row">
-
             <!-- Article !-->
             <div class="col-lg-9 py-3">
                 <!-- Preview image figure-->
@@ -31,8 +29,8 @@
                         </div>
                         <div class="text-muted fst-italic mb-2">
                             <?php
-                                $sentiment = json_decode($reactions->vader);
-                                $sentiment =  ($sentiment->compound);
+                            $sentiment = json_decode($reactions->vader);
+                            $sentiment = ($sentiment->compound);
                             ?>
 
                             @if($sentiment > 0.5)
@@ -41,9 +39,9 @@
                                 </p>
 
                             @elseif($sentiment < 0.5)
-                                    <p class="badge bg-danger text-decoration-none link-light">
-                                        Sentiment of the text is negative.
-                                    </p>
+                                <p class="badge bg-danger text-decoration-none link-light">
+                                    Sentiment of the text is negative.
+                                </p>
                             @endif
                         </div>
                     </header>
@@ -66,51 +64,82 @@
                 </article>
 
             </div>
-
             <!-- Side widgets-->
             <div class="col-lg-3 pt-3">
+
                 <!-- Side widget-->
                 <div class="card mb-4">
-                    <div class="card-header">Top Articles</div>
+                    <div class="card-header">Author</div>
                     <div class="card-body">
-                        @foreach($topArticles as $article)
-                            <div class="media">
-                                <img class="mr-3" src="{{ $article->image }}" alt="{{ $article->title }}" width="64" height="64">
-                                <div class="media-body">
-                                    <h5 class="mt-0">
-                                        <a href="{{ url("/") }}/articles/{{ $article->id .'/'. Str::slug($article->title) }}" title="{{ $article->title }}">
-                                            {{ $article->title }}
-                                        </a>
-                                    </h5>
-                                    <div class="text-muted fst-italic mb-2">
-                                        {{ $article->published_at }}
-                                    </div>
-                                </div>
-                            </div>
-                        @endforeach
+                        <p class="card-text">
+                            {{ $article->author }} is a member of our community since 2020, and he wrote for us over 200
+                            articles.
+                        </p>
                     </div>
                 </div>
-            </div>
 
+                <!-- Side widget-->
+                <div class="sticky-top">
+                    <div class="card mb-4 ">
+                        <div class="card-header">Top Articles</div>
+                        <div class="card-body">
+                            @foreach($topArticles as $article)
+                                <div class="media">
+                                    <div class="media-body">
+                                        <h5 class="mt-0">
+                                            <a href="{{ url("/") }}/articles/{{ $article->id .'/'. Str::slug($article->title) }}"
+                                               title="{{ $article->title }}">
+                                                {{ $article->title }}
+                                            </a>
+                                        </h5>
+                                        <div class="text-muted fst-italic mb-2">
+                                            {{ $article->created_at->format('M d, Y') }}
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+
+            </div>
         </div>
     </div>
-
+    <div class="container-fluid pt-3">
+        <div class="row">
+            <div id="related-articles"></div>
+        </div>
+    </div>
 @endsection
-@push('scripts')
+@section('scripts')
+
+    <script>
+        window.articleID = {{ $article->id }};
+    </script>
+    <script src="{{ asset('js/related.js') }}"></script>
+    <script type="application/ld+json">
+        {
+             "@context": "https://schema.org",
+             "@type": "Article",
+             "headline": "{{ $article->title }}",
+             "image": "{{ $article->image }}",
+             "author": "{{ $article->author }}",
+             "keywords": "{{ $article->tags->pluck('name')->implode(', ') }}",
+             "datePublished": "{{ $article->published_at }}",
+             "dateCreated": "{{ $article->created_at }}",
+             "dateModified": "{{ $article->updated_at }}",
+             "description": "{{ $article->summary }}",
+             "articleBody": "{{ $article->content }}"
+         }
+
+    </script>
     <style>
         article img {
             max-width: 100%;
+            padding-bottom: 1vh;
         }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/default.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js"></script>
     <script>hljs.highlightAll();</script>
-    <script>
-        $(document).ready(function () {
-            $("img.card-img-top").load(function () {
-                console.log($(this).height());
-                console.log($(this).width());
-            });
-        });
-    </script>
-@endpush
+@endsection

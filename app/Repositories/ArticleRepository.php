@@ -10,6 +10,7 @@ use App\Models\ArticleReactions;
 use App\Models\Tag;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
@@ -96,7 +97,9 @@ class ArticleRepository implements ArticleContract
     public function getTopArticles(): Collection
     {
 
-        $articlesReactions = ArticleReactions::orderBy('created_at')->get();
+        $articlesReactions = ArticleReactions::orderBy('created_at')
+            ->where('created_at', '>=', Carbon::now()->subDay()->toDateTimeString())
+            ->get();
 
         $collection = collect();
 

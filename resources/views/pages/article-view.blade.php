@@ -111,7 +111,7 @@
         </div>
     </div>
 @endsection
-@push('scripts')
+@section('scripts')
 
     <script>
         window.articleID = {{ $article->id }};
@@ -142,4 +142,4 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/default.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js"></script>
     <script>hljs.highlightAll();</script>
-@endpush
+@endsection

@@ -11,6 +11,7 @@ use App\Models\Tag;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use JsonException;
@@ -92,6 +93,9 @@ class ArticleRepository implements ArticleContract
         return Article::where('source', $articleDTO->getSource())->exists();
     }
 
+    /**
+     * @throws JsonException
+     */
     public function getTopArticles(): Collection
     {
 
@@ -101,7 +105,7 @@ class ArticleRepository implements ArticleContract
 
         foreach ($articlesReactions as $articlesReaction) {
 
-            $data = collect(json_decode($articlesReaction->vader, false));
+            $data = collect(json_decode($articlesReaction->vader, false, 512, JSON_THROW_ON_ERROR));
 
             if ($data["compound"] > 0.95) {
                 $collection->push(
@@ -117,7 +121,7 @@ class ArticleRepository implements ArticleContract
         $collection = (collect($collection->toArray())->sortByDesc('compound'));
 
         $articles = collect();
-
+        Cache::forget('top_articles');
         foreach ($collection as $item) {
             $articles->push(
                 Article::with('category')
@@ -127,6 +131,9 @@ class ArticleRepository implements ArticleContract
                     ->find($item['article_id'])
             );
         }
+        Cache::remember('top_articles', now()->addMinutes(5), static function () use ($articles) {
+            return $articles;
+        });
         return ($articles);
     }
 

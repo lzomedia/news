@@ -35,6 +35,8 @@
 <!-- Footer -->
 @include('partials.frontend.cta')
 @include('partials.frontend.footer')
+<!-- Scripts -->
+@yield('scripts')
 
 </body>
 </html>

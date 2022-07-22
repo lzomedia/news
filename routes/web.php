@@ -42,14 +42,14 @@ Auth::routes();
 
 Route::group(['prefix' => '/api/v1'], static function () {
     Route::get('/articles', [ArticleApiController::class, 'index']);
-    Route::get('/bot', [NewsBotApiController::class, '__invoke']);
     Route::get('/articles/related/{articleID}', [RelatedApiController::class, '__invoke']);
     Route::get('/article/{articleID}', [ArticleApiController::class, 'getArticle']);
     Route::get('/categories', [CategoryApiController::class, 'index']);
-    Route::get('/feeds', [FeedsApiController::class, 'index']);
-    Route::post('/feeds/save', [FeedsApiController::class, 'save']);
     Route::get('/feeds/find/{topic}', [FeedsApiController::class, 'find']);
+    Route::get('/feeds', [FeedsApiController::class, 'index']);
+    Route::post('/bot', [NewsBotApiController::class, '__invoke']);
     Route::post('/generator/{articleID}/audio', [VideoApiController::class, 'generateAudio']);
+    Route::post('/feeds/save', [FeedsApiController::class, 'save']);
 });
 
 RateLimiter::for('articles', static function (Request $request) {

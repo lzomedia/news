@@ -30,7 +30,7 @@
                     AI for your day
                 </h3>
                 <p>
-                    Whether you are a busy professional or a stay-at-home parent, News.sh will provide you with the
+                    Whether you are a <b>busy professional</b> or a stay-at-home parent, Development.sh will provide you with the
                     latest business and lifestyle updates in your area of interest, so you never have to worry about
                     missing out on anything.
                 </p>
@@ -40,8 +40,8 @@
                     Enjoy the content
                 </h3>
                 <p>
-                    Development.sh is built by engineers with AI expertise to deliver the best quality and breadth of
-                    content in one place. You can enjoy reading the latest articles from CNN, BBC, Reuters and more -
+                    Development.sh <b>is built by engineers</b> with AI expertise to deliver the best quality and breadth of
+                    content in one place. You can enjoy <b>reading the latest articles from CNN, BBC, Reuters</b> and more -
                     all conveniently in one place!
                 </p>
             </div>
@@ -50,9 +50,9 @@
                     Recommendations
                 </h3>
                 <p>
-                    A powerful recommendation engine uses machine learning to identify your preferences based on
-                    articles you read and topics you're interested in - helping us recommend only the most relevant
-                    content to you.
+                    A <b>powerful recommendation engine</b> uses machine learning to identify your preferences based on
+                    articles you read and topics you're interested in - helping us recommend only the <b>most relevant
+                        news</b> to you.
                 </p>
             </div>
         </div>
@@ -79,20 +79,12 @@
                             </p>
                         </div>
                     </div>
-                    <div class="col-md-8 mx-auto">
-                        <div class="mb-3">
-                            <label for="exampleFormControlInput1" class="form-label">
-                                Enter Url Address
-                            </label>
-                            <input type="url" class="form-control" id="exampleFormControlInput1"
-                                   placeholder="https://">
-                        </div>
-                    </div>
+                   <div id="news-bot"></div>
                 </div>
             </div>
         </div>
     </div>
 @endsection
 @section('scripts')
-    <script src="{{ asset('js/article.js') }}"></script>
+    <script src="{{ asset('js/newsBot.js') }}"></script>
 @endsection

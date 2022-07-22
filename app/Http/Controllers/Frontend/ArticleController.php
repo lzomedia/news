@@ -34,7 +34,7 @@ class ArticleController extends Controller
 
         $reactions =  $this->reactionContract->getReactions($request->id);
 
-        $topArticles = $this->articleContract->getTopArticles()->take(10);
+        $topArticles = $this->articleContract->getTopArticles()->take(15);
 
         if ($article === null) {
             abort(404, "Article not found");

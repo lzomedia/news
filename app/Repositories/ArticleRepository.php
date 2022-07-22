@@ -107,7 +107,7 @@ class ArticleRepository implements ArticleContract
 
             $data = collect(json_decode($articlesReaction->vader, false, 512, JSON_THROW_ON_ERROR));
 
-            if ($data["compound"] > 0.95) {
+            if ($data["compound"] > 0.75) {
                 $collection->push(
                     collect([
                         'article_id' => $articlesReaction->article_id,

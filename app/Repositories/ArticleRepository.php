@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 use JsonException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Illuminate\Database\Query\Builder as DatabaseBuilder;
@@ -91,7 +92,6 @@ class ArticleRepository implements ArticleContract
         return Article::where('source', $articleDTO->getSource())->exists();
     }
 
-    //todo rewrite this
     public function getTopArticles(): Collection
     {
 

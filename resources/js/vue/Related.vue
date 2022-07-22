@@ -27,8 +27,7 @@
 <script>
 import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel';
 import 'vue3-carousel/dist/carousel.css';
-console.error('Welcome to related');
-console.log(window.article);
+console.log(window.articleID);
 export default {
     name: 'Related',
     components: {
@@ -39,7 +38,7 @@ export default {
     },
     data() {
         return {
-            articleId:  window.article.id,
+            articleID:  window.articleID,
             Articles: [],
         }
     },
@@ -48,7 +47,7 @@ export default {
 
             console.log('getArticles');
 
-            fetch('/api/v1/articles/related/' + this.articleId)
+            fetch('/api/v1/articles/related/' + this.articleID)
                 .then(res => {
                     return res.json();
                 }).then(res => {

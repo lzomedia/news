@@ -112,8 +112,9 @@
     </div>
 @endsection
 @push('scripts')
+
     <script>
-        window.article = {!! $article !!};
+        window.articleID = {{ $article->id }};
     </script>
     <script src="{{ asset('js/related.js') }}"></script>
     <script type="application/ld+json">

@@ -33,11 +33,9 @@
 @if(Request::is('/'))
 <script src="{{ asset('js/home.js') }}"></script>
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
-
 @elseif(Request::has('/articles'))
 <script src="{{ asset('js/article.js') }}"></script>
 @endif
-
 
 
 @stack('scripts')
@@ -47,7 +45,6 @@
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
-
     gtag('config', 'G-Z1M69DNZYX');
 </script>
 <style>
@@ -56,7 +53,6 @@
       display: flex;
       align-items: center;
       margin: 0 0 20px;
-      padding: 0;
       list-style: none;
       justify-content: center;
   }

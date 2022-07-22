@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\ArticleApiController;
 use App\Http\Controllers\Api\CategoryApiController;
 use App\Http\Controllers\Api\FeedsApiController;
+use App\Http\Controllers\Api\NewsBotApiController;
 use App\Http\Controllers\Api\RelatedApiController;
 use App\Http\Controllers\Api\VideoApiController;
 use App\Http\Controllers\Dashboard\DashBoardArticle;
@@ -41,6 +42,7 @@ Auth::routes();
 
 Route::group(['prefix' => '/api/v1'], static function () {
     Route::get('/articles', [ArticleApiController::class, 'index']);
+    Route::get('/bot', [NewsBotApiController::class, '__invoke']);
     Route::get('/articles/related/{articleID}', [RelatedApiController::class, '__invoke']);
     Route::get('/article/{articleID}', [ArticleApiController::class, 'getArticle']);
     Route::get('/categories', [CategoryApiController::class, 'index']);

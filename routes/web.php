@@ -47,7 +47,7 @@ Route::group(['prefix' => '/api/v1'], static function () {
     Route::get('/categories', [CategoryApiController::class, 'index']);
     Route::get('/feeds/find/{topic}', [FeedsApiController::class, 'find']);
     Route::get('/feeds', [FeedsApiController::class, 'index']);
-    Route::post('/bot', [NewsBotApiController::class, '__invoke']);
+    Route::post('/bot', [NewsBotApiController::class, '__invoke'])->middleware('throttle:10,1');
     Route::post('/generator/{articleID}/audio', [VideoApiController::class, 'generateAudio']);
     Route::post('/feeds/save', [FeedsApiController::class, 'save']);
 });

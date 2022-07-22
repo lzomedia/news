@@ -17,7 +17,7 @@
                 <span class="visually-hidden">Loading...</span>
             </div>
             <div v-else>
-                The result will show here.
+                <pre>{{ content }}</pre>
             </div>
         </div>
 
@@ -29,8 +29,9 @@
 export default {
     data() {
         return {
-            url: 'http://feeds.bbci.co.uk/news/england/london/rss.xml',
-            loading : false
+            url: 'https://www.bbc.co.uk/news/62261164',
+            loading : false,
+            content : '',
         }
     },
     methods: {
@@ -42,13 +43,17 @@ export default {
                 body: JSON.stringify({ url: this.url })
             };
             console.log(JSON.stringify(this.url));
-            fetch("/api/v1/bot", requestOptions)
-                .then(
-                    response => {
-                        this.loading = false;
-                    }
-                )
-                .then(data => (this.postId = data.id));
+
+            fetch('/api/v1/bot', requestOptions)
+                .then(res => {
+                    return res.json();
+                }).then(res => {
+                this.loading = false;
+                this.content = res.result;
+            }).catch(error => {
+                this.loading = false;
+            });
+
         },
     }
 }

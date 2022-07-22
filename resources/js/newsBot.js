@@ -7,6 +7,12 @@ import "v3-infinite-loading/lib/style.css"; //required if you're not going to ov
 
 const app = createApp(NewsBot);
 
+app.config.globalProperties.$filters = {
+    pretty: function(value) {
+        return JSON.stringify(JSON.parse(value), null, 2);
+    }
+}
+
 app.component("infinite-loading", InfiniteLoading);
 app.mount('#news-bot');
 

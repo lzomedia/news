@@ -14,6 +14,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Frontend\ArticleController;
 use App\Http\Controllers\Frontend\CategoryController;
 use App\Http\Controllers\Frontend\PagesController;
+use App\Http\Controllers\Frontend\RssController;
 use App\Http\Controllers\Frontend\SitemapController;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Support\Facades\Auth;
@@ -64,6 +65,7 @@ Route::get('/terms', [PagesController::class, 'terms'])->name('website.terms');
 Route::get('/categories', [CategoryController::class, 'view'])->name('categories.view');
 Route::get('/articles/{id}/{slug}', [ArticleController::class, 'view'])->name('article.view');
 Route::get('/sitemap.xml', [SitemapController::class, 'index'])->name('website.sitemap');
+Route::get('/feed', [RssController::class, 'index'])->name('website.feed');
 
 
 

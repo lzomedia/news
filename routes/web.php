@@ -106,6 +106,9 @@ Route::group(['prefix' => 'dashboard'], static function () {
 //API Subdomain
 Route::domain('api.' . env('APP_URL'))->group(function () {
 
+    Route::get('/', function () {
+        return json_encode(['status' => 'success', 'message' => 'API is working']);
+    })->name('api.home');
 
     Route::group(['prefix' => '/api/v1'], static function () {
         Route::get('/articles', [ArticleApiController::class, 'index']);

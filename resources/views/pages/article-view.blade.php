@@ -93,7 +93,7 @@
                                             </a>
                                         </h5>
                                         <div class="text-muted fst-italic mb-2">
-                                            {{ $article->created_at->format('M d, Y') }}
+                                            {{ $article->created_at->format('d M Y, H:m') }}
                                         </div>
                                     </div>
                                 </div>
@@ -101,7 +101,6 @@
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
@@ -116,6 +115,7 @@
     <script>
         window.articleID = {{ $article->id }};
     </script>
+    <script src="{{ asset('js/bootstrap.js') }}"></script>
     <script src="{{ asset('js/related.js') }}"></script>
     <script type="application/ld+json">
         {

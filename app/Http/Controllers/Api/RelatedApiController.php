@@ -39,7 +39,7 @@ class RelatedApiController extends Controller
             'success' => 'true',
             'message'=>'Request successful',
             'result' => ArticleResource::collection((
-                $relatedArticles->unique()->take(10)
+                $relatedArticles->unique()->random()->take(10)
             ))->response()->getData()
         ]);
     }

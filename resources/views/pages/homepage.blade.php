@@ -26,7 +26,6 @@
 
                 <div class="tab-content" id="nav-tabContent">
 
-
                     <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-profile-tab">
                         <div id="home"></div>
                     </div>
@@ -34,13 +33,14 @@
                     <div class="tab-pane fade show " id="nav-profile" role="tabpanel" aria-labelledby="nav-home-tab">
                         @foreach($topArticles as $article)
                             <div class="card mb-4">
-                                <div class="card-header">
+                                <div class="card-body">
                                     <h5 class="card-title">
                                         <a href="{{ url("/") }}/articles/{{ $article->id .'/'. Str::slug($article->title) }}"
                                            title="{{ $article->title }}">{{ $article->title }}</a>
                                     </h5>
-                                </div>
-                                <div class="card-body">
+                                    <p class="lead">
+                                        {{ $article->created_at->toDayDateTimeString() }}
+                                    </p>
                                     <p class="card-text">{{ Str::words($article->summary, 25)}}</p>
                                 </div>
                             </div>
@@ -66,5 +66,4 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script src="{{ asset('js/bootstrap.js') }}"></script>
     <script src="{{ asset('js/home.js') }}"></script>
-
 @endsection

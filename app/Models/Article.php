@@ -27,7 +27,8 @@ use RalphJSmit\Laravel\SEO\Support\SEOData;
  * @method   firstOrCreate(array $array)
  * @method   static where(string $string, $value)
  * @method   static find(int $id)
- * @method updateOrCreate(array $array)
+ * @method   static updateOrCreate(array $array)
+ * @method   static orderBy(string $what, string $value)
  */
 class Article extends Model
 {

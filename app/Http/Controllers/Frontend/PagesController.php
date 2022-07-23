@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Contracts\ArticleContract;
+use App\Contracts\CategoryContract;
 use App\Http\Controllers\FrontendController;
 use Illuminate\View\View;
 
@@ -14,7 +15,6 @@ class PagesController extends FrontendController
     {
         $this->articleContract = $articleContract;
     }
-
 
     public function homepage(): View
     {
@@ -32,4 +32,5 @@ class PagesController extends FrontendController
     {
         return view('pages.terms');
     }
+
 }

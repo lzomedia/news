@@ -64,8 +64,8 @@ Route::get('/about', [PagesController::class, 'about'])->name('website.about');
 Route::get('/terms', [PagesController::class, 'terms'])->name('website.terms');
 Route::get('/categories', [CategoryController::class, 'view'])->name('categories.view');
 Route::get('/articles/{id}/{slug}', [ArticleController::class, 'view'])->name('article.view');
-Route::get('/sitemap.xml', [SitemapController::class, 'index'])->name('website.sitemap');
 Route::get('/feed', [RssController::class, 'index'])->name('website.feed');
+Route::get('/sitemap.xml', [SitemapController::class, 'index'])->name('website.sitemap');
 
 
 
@@ -101,4 +101,29 @@ Route::group(['prefix' => 'dashboard'], static function () {
         Route::get('/generator/{article}', [VideoGenerator::class, 'generate'])->name('video.generate');
         Route::get('/upload/{article}', [VideoGenerator::class, 'upload'])->name('video.upload');
     });
+});
+
+//API Subdomain
+Route::domain('api.' . env('APP_URL'))->group(function () {
+
+    Route::get('/', function () {
+        return json_encode(['status' => 'success', 'message' => 'API is working']);
+    })->name('api.home');
+
+    Route::group(['prefix' => '/api/v1'], static function () {
+        Route::get('/articles', [ArticleApiController::class, 'index']);
+        Route::get('/articles/related/{articleID}', [RelatedApiController::class, '__invoke']);
+        Route::get('/article/{articleID}', [ArticleApiController::class, 'getArticle']);
+        Route::get('/categories', [CategoryApiController::class, 'index']);
+        Route::get('/feeds/find/{topic}', [FeedsApiController::class, 'find']);
+        Route::get('/feeds', [FeedsApiController::class, 'index']);
+        Route::post('/bot', [NewsBotApiController::class, '__invoke'])->middleware('throttle:10,1');
+        Route::post('/generator/{articleID}/audio', [VideoApiController::class, 'generateAudio']);
+        Route::post('/feeds/save', [FeedsApiController::class, 'save']);
+    });
+
+    RateLimiter::for('articles', static function (Request $request) {
+        return Limit::none();
+    });
+
 });

@@ -29,17 +29,18 @@ class RelatedApiController extends Controller
 
         $relatedArticles = collect();
 
-        foreach ($article->tags as $tag) {
+        foreach ($article?->tags as $tag) {
 
             $relatedArticles->push($articleContract->getArticleByTag($tag->name));
 
         }
 
+        $relatedArticles = $relatedArticles->random(1);
         return response()->json([
             'success' => 'true',
             'message'=>'Request successful',
             'result' => ArticleResource::collection((
-                $relatedArticles->unique()->random()->take(10)
+                $relatedArticles->unique()->take(10)
             ))->response()->getData()
         ]);
     }

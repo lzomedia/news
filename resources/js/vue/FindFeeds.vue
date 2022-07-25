@@ -9,7 +9,7 @@
                 </p>
                 <form @submit.prevent="search">
                     <input type="text" v-model="topic">
-                    <button type="submit">
+                    <button type="submit" v-on:click="search">
                         Search Topic
                     </button>
                 </form>
@@ -93,9 +93,9 @@ export default {
         }
     },
     methods: {
-        search(topic) {
+        search() {
            this.loading = true;
-           this.topic = topic;
+
            fetch('/api/v1/feeds/find/' + this.topic)
                 .then(res => {
                     return res.json();
@@ -103,6 +103,7 @@ export default {
                     this.Topics = res.topics;
                     this.Feeds = res.feeds;
                     this.loading = false;
+
             })  .catch(error => {
                this.loading = false;
                console.error('There was an error!', error);

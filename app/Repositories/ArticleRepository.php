@@ -77,12 +77,6 @@ class ArticleRepository implements ArticleContract
             ]
         );
 
-        try{
-            dispatch(new PingPost($articleModel))->delay(now()->addSeconds(random_int(1, 10)));
-        }catch (\Exception $e){
-            throw new \Exception('Ping Exception: '.$e->getMessage());
-        }
-
         return $articleModel;
     }
 

@@ -18,6 +18,6 @@
 
 @endsection
 
-@push('scripts')
+@section('scripts')
    <script src="{{ asset('js/findFeeds.js') }}"></script>
-@endpush
+@endsection

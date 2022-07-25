@@ -6,7 +6,6 @@
     "license": "MIT",
     "require": {
         "php": "^8.0|^8.1",
-        "flobbos/laravel-crudable": "^4.0",
         "garf/laravel-pinger": "^2.0",
         "guzzlehttp/guzzle": "^7.2",
         "laravel/framework": "^9.11",
@@ -14,12 +13,13 @@
         "laravel/sanctum": "^2.14.1",
         "laravel/tinker": "^2.7",
         "laravel/ui": "^3.4",
+        "livewire/livewire": "^2.10",
         "predis/predis": "^1.1",
         "ralphjsmit/laravel-seo": "^1.0",
         "sentry/sentry-laravel": "^2.13",
         "spatie/data-transfer-object": "^3.8",
         "symfony/dom-crawler": "^6.1",
-        "yajra/laravel-datatables": "^9.0"
+        "zofe/rapyd-livewire": "^0.8.14"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.7",

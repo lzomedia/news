@@ -11,7 +11,7 @@ use Flobbos\Crudable;
 
 class CategoryRepository implements CategoryContract
 {
-    use Crudable\Crudable;
+
 
     public function getAllCategories(): Builder
     {

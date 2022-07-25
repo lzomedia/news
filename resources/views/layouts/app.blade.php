@@ -10,12 +10,15 @@
     <!-- Seo Stuff -->
     {!! seo() !!}
 
-    <!-- Scripts -->
+    <!-- Styles -->
+    @livewireStyles
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
-
+    <link href="https://fonts.googleapis.com/css?family=Nunito&swamp" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200;0,6..72,300;0,6..72,400;0,6..72,500;0,6..72,600;0,6..72,700;0,6..72,800;1,6..72,200;1,6..72,300;1,6..72,400;1,6..72,500;1,6..72,600;1,6..72,700;1,6..72,800&display=swap" rel="stylesheet">
     <!-- Styles -->
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <!-- Scripts -->
@@ -36,6 +39,8 @@
 @include('partials.frontend.cta')
 @include('partials.frontend.footer')
 <!-- Scripts -->
+@livewireScripts
+
 @yield('scripts')
 
 </body>

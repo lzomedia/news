@@ -6,6 +6,7 @@ use App\Contracts\ArticleContract;
 use App\DTO\Article as ArticleDTO;
 
 
+use App\Models\Article;
 use App\Repositories\FeedRepository;
 use Illuminate\Bus\Queueable;
 
@@ -80,8 +81,20 @@ class ProcessFeeds implements ShouldQueue
 
 
                             if (!$this->articleContract->checkIfArticleExists($dto)) {
-                                $this->articleContract->createArticle($dto);
+                                /** @var Article $articleModel */
+                                $article = $this->articleContract->createArticle($dto);
+
+                                if (Config::get('cms.enable_ping_feeds')) {
+                                    dispatch(new PingPost($this->articleContract,$article->id ))
+                                    ->onQueue('ping')
+                                    ->delay(now()->addSeconds(random_int(1, 10)));
+                                }
                             }
+
+
+
+
+
                         }
                     }
                 }

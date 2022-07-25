@@ -16,6 +16,7 @@ use App\Http\Controllers\Frontend\CategoryController;
 use App\Http\Controllers\Frontend\PagesController;
 use App\Http\Controllers\Frontend\RssController;
 use App\Http\Controllers\Frontend\SitemapController;
+use App\Http\Livewire\ArticleComponent;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\RateLimiter;
@@ -84,9 +85,12 @@ Route::group(['prefix' => 'dashboard'], static function () {
         Route::get('/single/sync/{feed}', [DashboardFeeds::class, 'syncSingle'])->name('feeds.sync-single');
     });
 
+
     Route::group(['prefix' => 'articles'], static function () {
-        Route::get('/', [DashBoardArticle::class, 'articles'])->name('dashboard.articles');
+        Route::get('/', ArticleComponent::class)->name('dashboard.articles');
     });
+
+
 
     Route::group(['prefix' => 'categories'], static function () {
         Route::get('/', [DashboardCategory::class, 'index'])->name('dashboard.categories');
@@ -107,7 +111,7 @@ Route::group(['prefix' => 'dashboard'], static function () {
 Route::domain('api.' . env('APP_URL'))->group(function () {
 
     Route::get('/', function () {
-        return json_encode(['status' => 'success', 'message' => 'API is working']);
+        return json_encode(['status' => 'success', 'message' => 'API is working'], JSON_THROW_ON_ERROR);
     })->name('api.home');
 
     Route::group(['prefix' => '/api/v1'], static function () {

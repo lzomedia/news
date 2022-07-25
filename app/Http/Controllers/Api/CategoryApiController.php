@@ -17,6 +17,8 @@ class CategoryApiController extends ApiController
 
     public function index(): JsonResponse
     {
-        return response()->json(new CategoryResource($this->categoryContract->getAllCategories()));
+        return response()->json(
+            new CategoryResource($this->categoryContract->getAllCategories()->get())
+        );
     }
 }

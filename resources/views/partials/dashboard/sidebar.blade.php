@@ -26,12 +26,6 @@
                 </a>
             </li>
 
-            <li class="list-group-item">
-                <a href="{{ route('feeds.finder') }}">
-                    Feeds Finder
-                </a>
-            </li>
-
         </ul>
     </div>
 </div>

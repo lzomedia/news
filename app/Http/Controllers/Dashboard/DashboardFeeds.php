@@ -11,6 +11,7 @@ use App\Requests\SaveFileRequest;
 use App\Tables\FeedsTable;
 use App\Traits\UserErrorTrait;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
@@ -41,9 +42,9 @@ class DashboardFeeds extends Controller
         $this->middleware('auth');
     }
 
-    public function index(FeedsTable $feedsTable): mixed
+    public function index(Request $request): mixed
     {
-        return $feedsTable->render('dashboard.feeds');
+        return view('dashboard.feeds');
     }
 
     public function syncSingle(Feed $feed): RedirectResponse
@@ -115,8 +116,4 @@ class DashboardFeeds extends Controller
     }
 
 
-    public function find(): View
-    {
-        return view('dashboard.feeds-find');
-    }
 }

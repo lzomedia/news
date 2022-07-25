@@ -1,11 +1,14 @@
 <template>
-    <!-- Page content-->
-    <div class="container">
+    <section class="container">
         <div class="row">
             <div class="col-lg-12">
-                <p>
-                    Welcome to feeds finder.
-                    <small>Please press search</small>
+
+                <h5>
+                    Welcome to the feeds finder.
+                </h5>
+                <p class="card-text">
+                    This is a simple application that allows you to find the feeds that are most relevant to you.
+                    Once you have found the feeds that are most relevant to you, you can then subscribe to them.
                 </p>
                 <form @submit.prevent="search">
                     <input type="text" v-model="topic">
@@ -13,8 +16,6 @@
                         Search Topic
                     </button>
                 </form>
-
-
             </div>
             <div class="col-lg-12 py-2">
                 <p class="mb-0">
@@ -64,8 +65,11 @@
                                 </span>
                             </td>
                             <td>
-                                <a href="#" @click.prevent="saveFeed(feed)">
-                                    Save Feed
+                                <a v-if="!feed.exists" href="#" @click.prevent="saveFeed(feed)">
+                                   Subscribe
+                                </a>
+                                <a class="badge bg-danger" v-else href="#" @click.prevent="deleteFeed(feed)">
+                                    Unsubscribe
                                 </a>
                             </td>
                         </tr>
@@ -74,7 +78,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </section>
 </template>
 <script>
 
@@ -118,6 +122,25 @@ export default {
             };
             console.log(JSON.stringify(feed));
             fetch("/api/v1/feeds/save", requestOptions)
+                .then(
+                    response => {
+                        this.loading = false;
+                        this.setTopic(feed.topic);
+                        this.search(feed.topic);
+                    }
+                )
+                .then(data => (this.postId = data.id));
+        },
+
+        deleteFeed(feed) {
+            this.loading = true;
+            const requestOptions = {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(feed)
+            };
+            console.log(JSON.stringify(feed));
+            fetch("/api/v1/feeds/delete", requestOptions)
                 .then(
                     response => {
                         this.loading = false;

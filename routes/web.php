@@ -46,7 +46,6 @@ Route::group(['prefix' => '/api/v1'], static function () {
     Route::get('/articles', [ArticleApiController::class, 'index']);
     Route::get('/articles/related/{articleID}', [RelatedApiController::class, '__invoke']);
     Route::get('/article/{articleID}', [ArticleApiController::class, 'getArticle']);
-    Route::get('/categories', [CategoryApiController::class, 'index']);
     Route::get('/feeds/find/{topic}', [FeedsApiController::class, 'find']);
     Route::get('/feeds', [FeedsApiController::class, 'index']);
     Route::post('/bot', [NewsBotApiController::class, '__invoke'])->middleware('throttle:10,1');
@@ -80,7 +79,6 @@ Route::group(['prefix' => 'dashboard'], static function () {
     Route::group(['prefix' => 'feeds'], static function () {
         Route::get('/', [DashboardFeeds::class, 'index'])->name('dashboard.feeds');
         Route::post('/import', [DashboardFeeds::class, 'import'])->name('feeds.import');
-        Route::get('/find', [DashboardFeeds::class, 'find'])->name('feeds.finder');
         Route::get('/syncAll', [DashboardFeeds::class, 'syncAll'])->name('feeds.sync-all');
         Route::get('/single/sync/{feed}', [DashboardFeeds::class, 'syncSingle'])->name('feeds.sync-single');
     });
@@ -118,7 +116,6 @@ Route::domain('api.' . env('APP_URL'))->group(function () {
         Route::get('/articles', [ArticleApiController::class, 'index']);
         Route::get('/articles/related/{articleID}', [RelatedApiController::class, '__invoke']);
         Route::get('/article/{articleID}', [ArticleApiController::class, 'getArticle']);
-        Route::get('/categories', [CategoryApiController::class, 'index']);
         Route::get('/feeds/find/{topic}', [FeedsApiController::class, 'find']);
         Route::get('/feeds', [FeedsApiController::class, 'index']);
         Route::post('/bot', [NewsBotApiController::class, '__invoke'])->middleware('throttle:10,1');

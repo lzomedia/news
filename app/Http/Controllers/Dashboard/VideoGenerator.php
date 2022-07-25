@@ -16,13 +16,6 @@ use Illuminate\View\View;
 
 class VideoGenerator extends Controller
 {
-    private VideoContract $videoContract;
-
-    public function __construct(VideoContract $videoContract)
-    {
-        $this->videoContract = $videoContract;
-    }
-
     public function generate(Article $article): View
     {
         return view('dashboard.video-generate', [
@@ -33,52 +26,6 @@ class VideoGenerator extends Controller
     public function upload(Article $article): void
     {
         Log::info('Uploading video for article: ' . $article->id);
-    }
-
-    public function import(SaveFileRequest $request): RedirectResponse
-    {
-        //todo improve this
-        $request->validated();
-
-        $request->file('file')?->store('public');
-
-        $parser = new OpmlParser();
-
-        $localFile = Storage::get(('public/'.$request->file('file')?->hashName()));
-
-        $parser->ParseOPML($localFile);
-
-        $collection = (collect($parser->getContents()));
-
-        $collection->each(
-            function ($data, $index) {
-                if (array_key_exists('xmlurl', $data)  || array_key_exists('xmlUrl', $data)) {
-                    try {
-                        $feed = $this->feedDatabaseContract->createFeed(
-                            [
-                                'title' => $data['title'] ?? 'Title' . $index,
-                                'url' => $data['xmlurl'] ?? $data['xmlUrl'],
-                                'status' => Feed::INITIAL,
-                                'user_id' => $this->userContract->getUserId()
-                            ]
-                        );
-
-                        $userID = $this->userContract->getUserId();
-
-                        $feedID = $feed->id;
-
-                        $this->syncContract->syncSingle($feedID, $userID);
-                    } catch (\Exception $e) {
-                        Session::flash('status', 'Error while importing feeds');
-                    }
-                }
-            }
-        );
-
-
-        Session::flash('status', 'Feeds imported successfully');
-
-        return redirect($this->redirectTo);
     }
 
 }

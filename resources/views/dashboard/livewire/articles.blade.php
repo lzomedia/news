@@ -31,8 +31,8 @@
                                 <th>
                                     <x-rpd::sort model="id" label="id" />
                                 </th>
-                                <th>title</th>
-                                <th>body</th>
+                                <th>Title</th>
+
                             </tr>
                             </thead>
                             <tbody>
@@ -42,7 +42,6 @@
                                         <a href="#">{{ $article->id }}</a>
                                     </td>
                                     <td>{{ $article->title }}</td>
-                                    <td>{{ Str::limit($article->summary,10) }}</td>
                                 </tr>
                             @endforeach
                             </tbody>

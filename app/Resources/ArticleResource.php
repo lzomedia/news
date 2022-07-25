@@ -11,6 +11,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
+use Laravel\Horizon\Tags;
 use Symfony\Component\DomCrawler\Crawler;
 
 /**
@@ -42,6 +43,7 @@ class ArticleResource extends JsonResource
             'image' => $this->image,
             'published_at' => Carbon()->parse($this->published_at)->format('d m y H:i:s'),
             'category' => $this->formatCategory($this->category),
+            'tags' => $this->tags,
             'feed' => $this->feed,
             'author' => $this->author,
             'url'=> url('articles/' . $this->id . '/' . Str::slug($this->title)),
@@ -60,6 +62,8 @@ class ArticleResource extends JsonResource
             'url' => url('categories/' . $category->id . '/' . Str::slug($category->name)),
         ];
     }
+
+
 
     private function getImages(Collection $articleTags): array
     {

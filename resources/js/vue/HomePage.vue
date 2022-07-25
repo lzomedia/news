@@ -35,6 +35,8 @@
                                 <h3 class="card-title">
                                     <a :href="article.url">{{ article.title }}</a>
                                 </h3>
+                                <a  v-for="(tag, index) in article.tags" class="badge me-2 bg-secondary text-decoration-none link-light" title="articles about" :href="'articles/'+ tag.name "> #{{ tag.name }}</a>
+
                                 <p class="card-text">
                                     {{ article.excerpt }}
                                 </p>
@@ -68,6 +70,7 @@ export default {
             errored: false,
             Articles: [],
             Categories: [],
+            Tags: [],
             page: 1,
             imageLoaded: false,
         }
@@ -79,6 +82,7 @@ export default {
                     return res.json();
                 }).then(res => {
                 this.Categories = res.categories;
+                console.log(this.tags);
 
                 $.each(res.result.data, (key, value) => {
                     this.Articles.push(value);

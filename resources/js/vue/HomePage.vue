@@ -35,9 +35,25 @@
                                 <h3 class="card-title">
                                     <a :href="article.url">{{ article.title }}</a>
                                 </h3>
+                                <a  v-for="(tag, index) in article.tags" class="badge me-2 bg-secondary text-decoration-none link-light" title="articles about" :href="'articles/'+ tag.name "> #{{ tag.name }}</a>
+
+                                <h5 class="card-text mt-2">
+                                    <small>
+                                        <i>
+                                            Time to read -  {{ article.reactions.timeToRead }} minutes
+                                        </i>
+                                    </small>
+                                </h5>
+
+                                <h6 class="card-text mt-2 h6">
+                                  <i style="font-size: 3rem" :class="getReactionSentimentCssClass(article.reactions.vader)"></i>
+                                </h6>
                                 <p class="card-text">
-                                    {{ article.excerpt }}
+                                    <small class="text-muted">
+                                        <format class="text-muted" :value="article.published_at" fn="ago"/>
+                                    </small>
                                 </p>
+
                                 <p class="card-text">
                                     <span class="text-muted">
                                         <timeago :datetime="article.created_at"/>
@@ -68,6 +84,7 @@ export default {
             errored: false,
             Articles: [],
             Categories: [],
+            Tags: [],
             page: 1,
             imageLoaded: false,
         }
@@ -79,6 +96,7 @@ export default {
                     return res.json();
                 }).then(res => {
                 this.Categories = res.categories;
+                console.log(this.tags);
 
                 $.each(res.result.data, (key, value) => {
                     this.Articles.push(value);
@@ -90,18 +108,40 @@ export default {
         showArticle(article) {
             console.log(article)
         },
-        imageLoadError() {
-            console.log('imageLoadError')
-            console.log('Image failed to load');
+        getReactionSentimentCssClass(reaction) {
+
+            try {
+                let jsonCompound = JSON.parse(reaction);
+                console.log(jsonCompound);
+                if(jsonCompound.compound > "0.50") {
+                    return 'ri-emotion-happy-line';
+                } else {
+                    return 'ri-emotion-unhappy-line';
+                }
+            }
+            catch(err) {
+                return "Negative"
+            }
+
         },
     },
     mounted() {
         console.log("Welcome to the app!");
-    }
+    },
+    filters: {
+    },
 }
 </script>
 <style>
 .hearth:hover {
+    color: red;
+}
+.ri-emotion-happy-line {
+    font-size: 3rem;
+    color: green;
+}
+.ri-emotion-unhappy-line {
+    font-size: 3rem;
     color: red;
 }
 </style>

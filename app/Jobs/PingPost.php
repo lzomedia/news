@@ -17,21 +17,31 @@ class PingPost implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    protected Article $article;
+    protected ArticleContract $article;
 
-    public function __construct(Article $article)
+    protected int $articleId;
+
+    public function __construct(ArticleContract $article, int $articleId)
     {
         $this->article = $article;
+
+        $this->articleId = $articleId;
     }
 
     public function handle(): void
     {
-        $response = (new \Garf\LaravelPinger\Pinger)->pingAll(
-            $this->article->title,
-            url(''). 'articles/'.$this->article->id.'/'.Str::slug($this->article->title),
-        );
-        if($response){
-            $this->delete();
+        /** @var Article $article */
+        $article = $this->article->getArticleById($this->articleId);
+
+        if ($article !== null) {
+            $ping = new Pinger();
+            $ping->pingAll(
+                $article->title,
+                url(''). 'articles/'.$article->id.'/'.Str::slug($article->title),
+            );
         }
+
+
+
     }
 }

@@ -20,6 +20,10 @@ class ReactionsRepository implements ReactionContract
 
         $reactions = ArticleReactions::where('article_id', $articleId)->get();
 
+        if ($reactions->isEmpty()) {
+            throw new \RuntimeException('Reactions not found');
+        }
+
         return new Reactions($reactions->first()->toArray());
     }
 }

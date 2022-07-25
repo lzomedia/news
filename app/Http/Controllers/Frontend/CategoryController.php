@@ -19,7 +19,7 @@ class CategoryController extends Controller
     {
 
         return view('pages.categories', [
-            'categories' => $this->categoryContract->getAllCategories()
+            'categories' => $this->categoryContract->getAllCategories()->simplePaginate(25),
         ]);
     }
 }

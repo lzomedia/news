@@ -2,16 +2,20 @@
 
 namespace App\Resources;
 
+use App\Contracts\ReactionContract;
 use App\Models\ArticleTags;
 use App\Models\Category;
 use App\Models\Tag;
+use App\Repositories\ReactionsRepository;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
+use Laravel\Horizon\Tags;
 use Symfony\Component\DomCrawler\Crawler;
+use App\Models\Article;
 
 /**
  * @property int $id
@@ -30,6 +34,9 @@ use Symfony\Component\DomCrawler\Crawler;
  */
 class ArticleResource extends JsonResource
 {
+    private ReactionsRepository $reactions;
+
+
     public function toArray($request): array
     {
         return [
@@ -42,9 +49,11 @@ class ArticleResource extends JsonResource
             'image' => $this->image,
             'published_at' => Carbon()->parse($this->published_at)->format('d m y H:i:s'),
             'category' => $this->formatCategory($this->category),
+            'tags' => $this->tags,
             'feed' => $this->feed,
             'author' => $this->author,
-            'url'=> url('articles/' . $this->id . '/' . Str::slug($this->title)),
+            'reactions' => $this->getReactions($this->id),
+            'url' => url('articles/' . $this->id . '/' . Str::slug($this->title)),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];
@@ -61,18 +70,19 @@ class ArticleResource extends JsonResource
         ];
     }
 
+
     private function getImages(Collection $articleTags): array
     {
         $images = collect();
 
         $articleTags->each(function (Tag $tag) use ($images) {
 
-            $search = Http::get('https://www.bing.com/images/search?q='.$tag->name.'&qs=MM&form=QBIR&sp=2&pq=raspberry&sk=MM1&sc=8-9&cvid=3A8B8D8A6BC44248BD8EB60FAB99B4E1&first=1&tsc=ImageHoverTitle');
+            $search = Http::get('https://www.bing.com/images/search?q=' . $tag->name . '&qs=MM&form=QBIR&sp=2&pq=raspberry&sk=MM1&sc=8-9&cvid=3A8B8D8A6BC44248BD8EB60FAB99B4E1&first=1&tsc=ImageHoverTitle');
 
-            $content =  ($search->body());
+            $content = ($search->body());
             $crawler = new Crawler($content);
 
-            $images->push ($crawler->filter('img.mimg')->each(function (Crawler $node) {
+            $images->push($crawler->filter('img.mimg')->each(function (Crawler $node) {
                 return $node->attr('src');
             }));
 
@@ -80,6 +90,12 @@ class ArticleResource extends JsonResource
 
         return $images->flatten()->toArray();
 
+    }
+
+
+    private function getReactions(string $article_id): array
+    {
+        return (new ReactionsRepository())->getReactions($article_id)->toArray();
     }
 
 }

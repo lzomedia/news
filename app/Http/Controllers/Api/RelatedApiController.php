@@ -35,7 +35,6 @@ class RelatedApiController extends Controller
 
         }
 
-        $relatedArticles = $relatedArticles->random(1);
         return response()->json([
             'success' => 'true',
             'message'=>'Request successful',

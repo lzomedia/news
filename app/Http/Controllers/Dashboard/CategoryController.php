@@ -14,7 +14,7 @@ use Illuminate\Validation\ValidationException;
 class CategoryController extends Controller
 {
 
-    protected Crud $categories;
+    protected CategoryContract $categories;
 
     public function __construct(CategoryContract $categories)
     {
@@ -24,7 +24,7 @@ class CategoryController extends Controller
 
     public function index()
     {
-        return view('dashboard.categories.index')->with(['categories' => $this->categories->get()]);
+        return view('dashboard.categories.index')->with(['categories' => $this->categories->getAllCategories()->get()]);
     }
 
 

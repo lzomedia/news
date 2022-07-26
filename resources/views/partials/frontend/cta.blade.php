@@ -1,12 +1,19 @@
 <section id="benefits" class="site-section bg-gradient-dark pt-lg-5 pb-lg-5">
     <div class="container grid-container">
-        <div class="benefits-inner c-7-12 text-center">
+        <div class="c-7-12 text-center">
             <div class="section-header title-separator-top separator-left">
                 <h3 class="section-title">
-                    The AI news reader a tool to read news.
+                    Newsly App the alternative news website
                 </h3>
+
                 <div class="section-description">
-                    The AI news reader is a new tool that can be used by anyone, without any cost. It is an artificial intelligence assistant that will read the news for you and provide you with relevant information.
+                    This is an app that can be used by anyone, without any cost. It is an artificial intelligence assistant that will read the news for you and provide you with relevant information.
+                </div>
+
+                <div class="section-description">
+                    <a href="{{ route('website.about') }}" class="mt-3 btn btn-lg btn-primary">
+                        Learn more
+                    </a>
                 </div>
             </div>
         </div>

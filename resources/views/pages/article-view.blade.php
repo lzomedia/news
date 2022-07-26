@@ -82,19 +82,22 @@
                 <div class="sticky-top">
                     <div class="card mb-4 ">
                         <div class="card-header">Top Articles</div>
-                        <div class="card-body">
+                        <div>
                             @foreach($topArticles as $article)
-                                <div class="media">
-                                    <div class="media-body">
-                                        <h5 class="mt-0">
+                                <div class="card mb-2 bg-dark text-white">
+                                    <a href="{{ url("/") }}/articles/{{ $article->id .'/'. Str::slug($article->title) }}"
+                                       title="{{ $article->title }}">
+                                        <img style="opacity: 0.50" src="{{ $article->image }}" class="card-img" alt="...">
+                                    </a>
+
+                                    <div class="card-img-overlay">
+                                        <h5 class="card-title">
                                             <a href="{{ url("/") }}/articles/{{ $article->id .'/'. Str::slug($article->title) }}"
+                                               class="text-white"
                                                title="{{ $article->title }}">
                                                 {{ $article->title }}
                                             </a>
                                         </h5>
-                                        <div class="text-muted fst-italic mb-2">
-                                            {{ $article->created_at->format('d M Y, H:m') }}
-                                        </div>
                                     </div>
                                 </div>
                             @endforeach

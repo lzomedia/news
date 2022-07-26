@@ -10,8 +10,8 @@
     <!-- Seo Stuff -->
     {!! seo() !!}
 
-    <!-- Styles -->
-    @livewireStyles
+
+
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -39,8 +39,6 @@
 @include('partials.frontend.cta')
 @include('partials.frontend.footer')
 <!-- Scripts -->
-@livewireScripts
-
 @yield('scripts')
 
 </body>

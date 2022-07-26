@@ -47,14 +47,14 @@ class FeedsApiController extends Controller
      */
     public function find(Request $request): JsonResponse
     {
+        //todo implement service here or contract
         $data = Http::get('https://feedly.com/v3/recommendations/topics/'.$request->topic.'?locale=en')
             ->body();
+
 
         $finder = new FeedFinder(
             json_decode($data, true, 512, JSON_THROW_ON_ERROR)
         );
-
-
 
         $data = [
             'feeds' => $finder->getFeeds(),

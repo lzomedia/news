@@ -5,18 +5,20 @@
         <div class="container">
             <div class="row pt-5 pb-5">
                 <div class="col-md-12">
-                    <h1>
-                        Ai-powered news analysis
+                    <h1 class="mt-5">
+                        Newsly.app is a Ai-powered news analysis app.
                     </h1>
+                    <h2 class="fs-5 mb-3 pt-5">
+                        Newsly.app is design to pull and dissect the content from your favorite news channels.
+                    </h2>
                     <h2 class="fs-5 mb-5">
-                        Development.sh is an ai-powered news reader that pulls in and dissects the content of your
-                        favorite news channels. It then provides you with a personalized article feed based on your
+                        And then provides you with a personalized article feed based on your
                         interests.
                     </h2>
 
                     <div class="mb-5">
                         <a href="{{ url('register') }}" class="btn btn-primary btn-lg px-4">
-                            Launch the app and start reading!
+                            Start reading!
                         </a>
                     </div>
                 </div>
@@ -30,7 +32,7 @@
                     AI for your day
                 </h3>
                 <p>
-                    Whether you are a <b>busy professional</b> or a stay-at-home parent, Development.sh will provide you with the
+                    Whether you are a <b>busy professional</b> or a stay-at-home parent, <b>Development.sh</b> will provide you with the
                     latest business and lifestyle updates in your area of interest, so you never have to worry about
                     missing out on anything.
                 </p>
@@ -40,7 +42,7 @@
                     Enjoy the content
                 </h3>
                 <p>
-                    Development.sh <b>is built by engineers</b> with AI expertise to deliver the best quality and breadth of
+                    Newsly.app <b>is built by engineers</b> with AI expertise to deliver the best quality and breadth of
                     content in one place. You can enjoy <b>reading the latest articles from CNN, BBC, Reuters</b> and more -
                     all conveniently in one place!
                 </p>
@@ -65,7 +67,7 @@
                     <div class="col-md-12">
                         <div class="py-5 text-center">
                             <h2>
-                                Give News Bot a try today
+                                Give Newsly.app a try today.
                             </h2>
                             <p class="lead">
                                 The <b>AI news reader</b> is a new tool that can be used to create and share
@@ -80,6 +82,33 @@
                         </div>
                     </div>
                    <div id="news-bot"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="p-5 mb-4 rounded-3">
+                            <div class="container-fluid py-5">
+                                <h1 class="display-5 fw-bold">
+                                    About the project
+                                </h1>
+                                <p class="col-md-8 fs-4">
+                                    This is a laravel application that allows you to read the latest news from your favorite news channels.
+                                </p>
+                                <p class="col-md-8 fs-4">
+                                    The application is built using <b> PHP8.1</b> <b>Laravel 9</b>, <b>Python</b>, <b>Spacy NLP library</b> and <b>Vader Sentiment</b>.
+                                    The application is currently in beta stage and it will be available for everyone soon.
+                                </p>
+                                <a target="_blank" href="https://github.com/lzomedia/news" class="btn btn-primary btn-lg" type="button">
+                                    Github
+                                </a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

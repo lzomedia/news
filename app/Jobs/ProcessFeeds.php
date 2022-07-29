@@ -3,6 +3,8 @@
 namespace App\Jobs;
 
 use App\Contracts\ArticleContract;
+use App\Contracts\SyncContract;
+use App\Contracts\UserContract;
 use App\DTO\Article as ArticleDTO;
 
 
@@ -31,20 +33,24 @@ class ProcessFeeds implements ShouldQueue
 
     private const PYTHON_FILE_EXTRACT_REALTIME = './python/extractor-realtime.py';
 
-    public ArticleContract $articleContract;
 
     private int $feedID;
 
-    public function __construct(int $feedID, ArticleContract $articleContract)
+    public function __construct(int $feedID)
     {
         $this->feedID = $feedID;
-
-        $this->articleContract = $articleContract;
     }
 
     final public function handle(): void
     {
-        $feedRepo = new FeedRepository();
+
+        $userContract = app(UserContract::class);
+
+        $syncContract = app(SyncContract::class);
+
+        $articleContract = app(ArticleContract::class);
+
+        $feedRepo = new FeedRepository($userContract);
 
         $feed = $feedRepo->getFeedById($this->feedID);
 
@@ -61,7 +67,7 @@ class ProcessFeeds implements ShouldQueue
             $process->setTimeout(180);
 
             $process->run(
-                function ($type, $buffer) {
+                function ($type, $buffer) use ($articleContract) {
                     if (strlen($buffer) > 10) {
 
                         $data = json_decode(
@@ -80,21 +86,17 @@ class ProcessFeeds implements ShouldQueue
                             }
 
 
-                            if (!$this->articleContract->checkIfArticleExists($dto)) {
+                            if (!$articleContract->checkIfArticleExists($dto)) {
                                 /** @var Article $articleModel */
-                                $article = $this->articleContract->createArticle($dto);
+                                $article = $articleContract->createArticle($dto);
 
-                                if (Config::get('cms.enable_ping_feeds')) {
-                                    dispatch(new PingPost($this->articleContract,$article->id ))
+                                if (Config::get('cms.enable_ping_feeds'))
+                                {
+                                    dispatch(new PingPost($articleContract,$article->id ))
                                     ->onQueue('ping')
                                     ->delay(now()->addSeconds(random_int(1, 10)));
                                 }
                             }
-
-
-
-
-
                         }
                     }
                 }

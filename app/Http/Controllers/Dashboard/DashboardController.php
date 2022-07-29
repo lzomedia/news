@@ -24,16 +24,16 @@ class DashboardController
 
     public function categories(): View
     {
-        $categories = $this->categories->getAllCategories()->get();
-        return view('dashboard.categories.index', compact('categories'));
+        return view('dashboard.categories.index');
     }
 
-    public function articles(ArticlesComponent $articlesComponent): View
+    public function articles(): View
     {
         return view('dashboard.articles.index');
     }
 
-    public function feeds(): View
+
+    public function feeds():View
     {
         return view('dashboard.feeds.index');
     }

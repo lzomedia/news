@@ -23,4 +23,10 @@ class UserRepository implements UserContract
     {
         return Auth::user();
     }
+
+    public function setUser(Authenticatable $user): self
+    {
+        Auth::login($user);
+        return $this;
+    }
 }

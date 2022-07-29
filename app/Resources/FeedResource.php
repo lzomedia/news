@@ -21,7 +21,6 @@ class FeedResource extends JsonResource
 {
     public function toArray($request): array
     {
-        Log::info('FeedResource::toArray' . $request->url());
         return [
             'id' => $this->id,
             'user_id' => $this->user_id,

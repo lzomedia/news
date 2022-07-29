@@ -37,13 +37,15 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr v-for="(feed, index) in Feeds">
+                        <tr v-for="(category, index) in Categories">
                             <th scope="row">{{index}}</th>
                             <td>
-                                Category
+                                <a v-bind:href="'/categories/' + category.id">
+                                    {{category.name}}
+                                </a>
                             </td>
                             <td>
-                              100
+                                {{category.count}}
                             </td>
                             <td>
                                 Actions
@@ -84,8 +86,7 @@ export default {
                 .then(res => {
                     return res.json();
                 }).then(res => {
-                    this.Topics = res.topics;
-                    this.Feeds = res.feeds;
+                    this.Categories = res.data;
                     this.loading = false;
 
             })  .catch(error => {

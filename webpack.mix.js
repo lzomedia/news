@@ -14,6 +14,7 @@ const mix = require('laravel-mix');
 mix.js('resources/js/home.js', 'public/js').vue()
     .js('resources/js/findFeeds.js', 'public/js').vue()
     .js('resources/js/CategoriesApp.js', 'public/js').vue()
+    .js('resources/js/ArticlesApp.js', 'public/js').vue()
     .js('resources/js/newsBot.js', 'public/js').vue()
     .js('resources/js/related.js', 'public/js').vue()
     .js('resources/js/videoGenerator.js', 'public/js').vue()

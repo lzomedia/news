@@ -2,7 +2,10 @@
 
 namespace App\Contracts;
 
+use Illuminate\Support\Collection;
+
 interface VideoContract
 {
-    public function generateVideo(mixed $article): void;
+    public function find(string $query):Collection;
+    public function generate(mixed $article): void;
 }

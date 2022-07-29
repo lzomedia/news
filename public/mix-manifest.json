@@ -2,6 +2,7 @@
     "/js/home.js": "/js/home.js",
     "/js/findFeeds.js": "/js/findFeeds.js",
     "/js/CategoriesApp.js": "/js/CategoriesApp.js",
+    "/js/ArticlesApp.js": "/js/ArticlesApp.js",
     "/js/newsBot.js": "/js/newsBot.js",
     "/js/related.js": "/js/related.js",
     "/js/videoGenerator.js": "/js/videoGenerator.js",

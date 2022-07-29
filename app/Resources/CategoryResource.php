@@ -17,7 +17,6 @@ class CategoryResource extends JsonResource
 {
     public function toArray($request): array
     {
-        Log::info('CategoryResource::toArray' . $request->url());
 
         return [
             'data' => $this->resource->toArray()

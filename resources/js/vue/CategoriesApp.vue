@@ -38,9 +38,9 @@
                         </thead>
                         <tbody>
                         <tr v-for="(category, index) in Categories">
-                            <th scope="row">{{index}}</th>
+                            <th scope="row">{{category.id}}</th>
                             <td>
-                                <a v-bind:href="'/categories/' + category.id">
+                                <a v-bind:href="'/categories/show/' + category.id">
                                     {{category.name}}
                                 </a>
                             </td>
@@ -48,7 +48,10 @@
                                 {{category.count}}
                             </td>
                             <td>
-                                Actions
+
+                                <a href="#" v-on:click="deleteCategory(category.id)">
+                                    <i class="fas fa-edit"></i>Delete
+                                </a>
                             </td>
                         </tr>
                         </tbody>
@@ -94,37 +97,23 @@ export default {
                console.error('There was an error!', error);
            });
         },
-        saveCategory(category) {
-            this.loading = true;
+
+        deleteCategory(category) {
+            console.log('deleteCategory');
+            this.loading = false;
             const requestOptions = {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(category)
+                body: JSON.stringify({
+                    id: category,
+                })
             };
             console.log(JSON.stringify(category));
-            fetch("/api/v1/categories/save", requestOptions)
-                .then(
-                    response => {
-                        this.loading = false;
-                    }
-                )
-                .then(data => (this.postId = data.id));
-        },
-
-        deleteCategory(feed) {
-            this.loading = true;
-            const requestOptions = {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(feed)
-            };
-            console.log(JSON.stringify(feed));
             fetch("/api/v1/categories/delete", requestOptions)
                 .then(
                     response => {
                         this.loading = false;
-                        this.setTopic(feed.topic);
-                        this.search(feed.topic);
+                        this.search();
                     }
                 )
                 .then(data => (this.postId = data.id));
@@ -132,7 +121,7 @@ export default {
     },
     mounted()
     {
-        this.search("laravel");
+        this.search();
     }
 }
 </script>

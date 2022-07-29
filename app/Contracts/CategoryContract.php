@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Collection;
 interface CategoryContract
 {
     public function getAllCategories(): Builder;
+    public function getCategoryById(int $id): Builder;
+    public function delete(int $id): int;
 }

@@ -27,6 +27,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::group(['prefix' => '/v1'], static function () {
     Route::get('/articles', [ArticleApiController::class, 'index']);
     Route::get('/categories', [CategoryApiController::class, 'index']);
+    Route::get('/categories/show/{id}', [CategoryApiController::class, 'show']);
+    Route::post('/categories/delete', [CategoryApiController::class, 'delete']);
     Route::get('/articles/related/{articleID}', [RelatedApiController::class, '__invoke']);
     Route::get('/article/{articleID}', [ArticleApiController::class, 'getArticle']);
     Route::get('/feeds/find/{topic}', [FeedsApiController::class, 'find']);

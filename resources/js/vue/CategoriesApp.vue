@@ -11,11 +11,12 @@
                 </p>
             </div>
             <div class="col-lg-12 py-2">
-                <div v-for="topic in Topics" style="margin-right: 5px" class="badge bg-secondary text-decoration-none link-light">
-                    <a v-on:click="setTopic(topic.topic)">
-                        {{topic.topic}}
-                    </a>
-                </div>&nbsp;
+                <form @submit.prevent="searchCategory">
+                    <input type="text" v-model="search">
+                    <button type="submit" v-on:click="searchCategory">
+                        Search Category
+                    </button>
+                </form>
             </div>
         </div>
 
@@ -73,16 +74,14 @@ export default {
     name: 'CategoriesApp',
     data() {
         return {
-            message: this.message,
             errored: false,
-            topic: "laravel",
+            search: "told",
             loading: true,
             Categories: [],
-            Topics: [],
         }
     },
     methods: {
-        search() {
+        loadData() {
            this.loading = true;
 
            fetch('/api/v1/categories/')
@@ -113,15 +112,27 @@ export default {
                 .then(
                     response => {
                         this.loading = false;
-                        this.search();
+                        this.loadData();
                     }
                 )
                 .then(data => (this.postId = data.id));
         },
+        searchCategory() {
+            console.log('searchCategory');
+            fetch('/api/v1/categories/find/' + this.search)
+                .then(res => {
+                    return res.json();
+                }).then(res => {
+                    this.Categories = res.data;
+            })  .catch(error => {
+                this.loading = false;
+                console.error('There was an error!', error);
+            });
+        }
     },
     mounted()
     {
-        this.search();
+        this.loadData();
     }
 }
 </script>

@@ -39,4 +39,13 @@ class CategoryApiController extends ApiController
             ]
         );
     }
+
+    public function find(Request $request): JsonResponse
+    {
+        return response()->json([
+            'success' => true,
+            'message' => 'Request successful',
+            'data' =>  $this->categoryContract->getCategoryByName($request->category)->get()->toArray()
+        ]);
+    }
 }

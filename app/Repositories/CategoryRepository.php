@@ -6,8 +6,6 @@ use App\Contracts\CategoryContract;
 use App\Models\Category;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
-use Flobbos\Crudable\Contracts\Crud;
-use Flobbos\Crudable;
 
 class CategoryRepository implements CategoryContract
 {
@@ -26,4 +24,10 @@ class CategoryRepository implements CategoryContract
     {
         return Category::where('id', $id)->delete();
     }
+
+    public function getCategoryByName(string $name): Builder
+    {
+        return Category::where('name', $name);
+    }
+
 }

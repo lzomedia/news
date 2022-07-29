@@ -7,7 +7,7 @@ use App\DTO\Article as ArticleDTO;
 
 
 use App\Models\ArticleReactions;
-use App\Repositories\FeedRepository;
+use App\Repositories\OldFeedsRepository;
 use Illuminate\Bus\Queueable;
 
 use Illuminate\Contracts\Queue\ShouldQueue;

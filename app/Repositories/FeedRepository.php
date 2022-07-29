@@ -3,21 +3,30 @@
 namespace App\Repositories;
 
 use App\Contracts\FeedContract;
+use App\Contracts\SyncContract;
 use App\Contracts\UserContract;
 use App\Models\Feed;
+use App\Parsers\OpmlParser;
+use App\Requests\SaveFileRequest;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
 
 class FeedRepository implements FeedContract
 {
+    protected UserContract $userContract;
+
+
+    public function __construct(UserContract $userContract)
+    {
+        $this->userContract = $userContract;
+    }
+
     public function getFeedById(int $feedId): mixed
     {
         return Feed::find($feedId);
-    }
-
-    public function getAllFeeds(UserContract $userContract): Collection
-    {
-        return Feed::where('user_id', $userContract->getUserId())->get();
     }
 
     public function deleteFeed(Feed | Model $feed): bool
@@ -30,8 +39,13 @@ class FeedRepository implements FeedContract
         return Feed::firstOrCreate($feed);
     }
 
-    public function getFeedsForUser(UserContract $userContract): Collection
+    public function getAllFeeds(UserContract $userContract): Collection
     {
+        if ($userContract->getUserId() === null) {
+            return Feed::all();
+        }
+
         return Feed::where('user_id', $userContract->getUserId())->get();
     }
+
 }

@@ -104,8 +104,8 @@ export default {
                 .then(res => {
                     return res.json();
                 }).then(res => {
-                    this.Topics = res.topics;
-                    this.Feeds = res.feeds;
+                    this.Topics = res.result.topics;
+                    this.Feeds = res.result.feeds;
                     this.loading = false;
 
             })  .catch(error => {

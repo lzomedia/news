@@ -9,10 +9,10 @@ class ExtractorFactory
 {
     private const DELAY = 30;
 
-    public static function extract(int $feedID, ArticleContract $articleContract): void
+    public static function extract(int $feedID): void
     {
         $timeToWait = now()->addSeconds(self::DELAY);
 
-        dispatch(new ProcessFeeds($feedID, $articleContract))->delay($timeToWait);
+        dispatch(new ProcessFeeds($feedID))->delay($timeToWait);
     }
 }

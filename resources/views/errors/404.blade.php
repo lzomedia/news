@@ -9,7 +9,7 @@
                     <div class="cont_error">
                         <h1>Oops</h1>
                         <p>
-                            {{ $exception->getMessage() }}
+                           Page is missing
                         </p>
                     </div>
                 </div>

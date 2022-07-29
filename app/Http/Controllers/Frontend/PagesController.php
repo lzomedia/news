@@ -18,7 +18,7 @@ class PagesController extends FrontendController
 
     public function homepage(): View
     {
-        $topArticles = $this->articleContract->getTopArticles()->take(15);
+        $topArticles = $this->articleContract->getTopArticles()->take(25);
 
         return view('pages.homepage' , compact("topArticles"));
     }

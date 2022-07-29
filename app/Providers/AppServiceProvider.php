@@ -9,13 +9,14 @@ use App\Contracts\ReactionContract;
 use App\Contracts\SyncContract;
 use App\Contracts\UserContract;
 use App\Contracts\VideoContract;
+use App\Managers\SyncManager;
 use App\Repositories\ArticleRepository;
 use App\Repositories\CategoryRepository;
 use App\Repositories\FeedRepository;
+use App\Repositories\OldFeedsRepository;
 use App\Repositories\ReactionsRepository;
 use App\Repositories\UserRepository;
-use App\Services\SyncManager;
-use App\Services\VideoManager;
+use App\Services\VideoService;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -32,6 +33,6 @@ class AppServiceProvider extends ServiceProvider
 
         //Managers
         $this->app->bind(SyncContract::class, SyncManager::class);
-        $this->app->bind(VideoContract::class, VideoManager::class);
+        $this->app->bind(VideoContract::class, VideoService::class);
     }
 }

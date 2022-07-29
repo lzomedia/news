@@ -3,7 +3,8 @@
 namespace App\Console\Commands;
 
 use App\Contracts\ArticleContract;
-use App\Services\VideoManager;
+use App\Managers\VideoManager;
+use App\Services\VideoService;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
 
@@ -29,9 +30,10 @@ class VideoGenerator extends Command
         $article = $this->articleContract->getArticleById(3);
 
         try {
-            $manager = new VideoManager();
+            $manager = new VideoService();
 
-            $manager->generateVideo($article);
+            $manager->generate($article);
+
         } catch (\Exception $e) {
             Log::error($e->getMessage());
         }
